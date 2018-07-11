@@ -4415,11 +4415,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj",
+      "projectUniqueName": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj",
       "projectName": "Test.Domain",
-      "projectPath": "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj",
+      "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj",
       "packagesPath": "C:\\Users\\Lee\\.nuget\\packages\\",
-      "outputPath": "C:\\Project\\Personal\\TestProject\\Test.Domain\\obj\\",
+      "outputPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

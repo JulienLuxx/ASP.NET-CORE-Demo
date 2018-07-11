@@ -4486,11 +4486,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Project\\Personal\\TestProject\\Test.BLL\\Test.Service.csproj",
+      "projectUniqueName": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.BLL\\Test.Service.csproj",
       "projectName": "Test.Service",
-      "projectPath": "C:\\Project\\Personal\\TestProject\\Test.BLL\\Test.Service.csproj",
+      "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.BLL\\Test.Service.csproj",
       "packagesPath": "C:\\Users\\Lee\\.nuget\\packages\\",
-      "outputPath": "C:\\Project\\Personal\\TestProject\\Test.BLL\\obj\\",
+      "outputPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4510,8 +4510,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj": {
-              "projectPath": "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj"
+            "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj": {
+              "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj"
             }
           }
         }
