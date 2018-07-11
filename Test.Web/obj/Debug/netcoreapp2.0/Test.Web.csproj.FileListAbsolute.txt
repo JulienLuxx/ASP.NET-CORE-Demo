@@ -1,0 +1,51 @@
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.deps.json
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.json
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.dev.json
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.dll
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.pdb
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csprojResolveAssemblyReference.cache
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CoreCompileInputs.cache
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfoInputs.cache
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfo.cs
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.dll
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.pdb
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.dll
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.pdb
+C:\Project\.Net Core\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CopyComplete
+C:\Project\.Net Core\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.xml
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.deps.json
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.json
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.dev.json
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.dll
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.pdb
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.dll
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.dll
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.pdb
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.xml
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.pdb
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.xml
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CopyComplete
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.dll
+C:\Users\Administrator\Desktop\WorkSpace\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.pdb
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.deps.json
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.json
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.runtimeconfig.dev.json
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.dll
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Web.pdb
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.dll
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.dll
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.pdb
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Service.xml
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.pdb
+C:\Project\Personal\TestProject\Test.Web\bin\Debug\netcoreapp2.0\Test.Domain.xml
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csprojAssemblyReference.cache
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CoreCompileInputs.cache
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfoInputs.cache
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.AssemblyInfo.cs
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.csproj.CopyComplete
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.dll
+C:\Project\Personal\TestProject\Test.Web\obj\Debug\netcoreapp2.0\Test.Web.pdb
