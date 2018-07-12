@@ -22,27 +22,44 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto();
             dto.CreateTime = DateTime.Now;
-            var data = _mapper.Map<Comment>(dto);
-            TestDB.Add(data);
-            var flag = TestDB.SaveChanges();
-            if (flag > 0)
+            try
             {
-                res.ActionResult = true;
-                res.Msg = "Success";
+                var data = _mapper.Map<Comment>(dto);
+                TestDB.Add(data);
+                var flag = TestDB.SaveChanges();
+                if (flag > 0)
+                {
+                    res.ActionResult = true;
+                    res.Msg = "Success";
+                }
             }
+            catch (Exception ex)
+            {
+                res.Msg = ex.Message;
+            }
+
             return res;
         }
 
         public ResultDto Delete(string ids)
         {
             var res = new ResultDto();
-            var idArray = ids.Split(',');
-            var dataList = TestDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
-            foreach (var item in dataList)
+            try
             {
-                item.IsDelete = true;
+                var idArray = ids.Split(',');
+                var dataList = TestDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
+                foreach (var item in dataList)
+                {
+                    item.IsDelete = true;
+                }
+                TestDB.SaveChanges();
+                res.ActionResult = true;
+                res.Msg = "Sucess";
             }
-            TestDB.SaveChanges();
+            catch (Exception ex)
+            {
+                res.Msg = ex.Message;
+            }
             return res;
         }
 
