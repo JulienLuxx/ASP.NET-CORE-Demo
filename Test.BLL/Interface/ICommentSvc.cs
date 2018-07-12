@@ -12,6 +12,8 @@ namespace Test.Service.Interface
     {
         ResultDto AddSingle(CommentDto dto);
 
+        ResultDto Delete(string ids);
+
         ResultDto Edit(CommentDto dto);
 
         Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel);

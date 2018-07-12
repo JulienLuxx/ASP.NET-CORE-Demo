@@ -38,6 +38,11 @@ namespace Test.Service.Impl
             var res = new ResultDto();
             var idArray = ids.Split(',');
             var dataList = TestDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
+            foreach (var item in dataList)
+            {
+                item.IsDelete = true;
+            }
+            TestDB.SaveChanges();
             return res;
         }
 
