@@ -63,6 +63,8 @@ namespace Test.Service.Impl
             return res;
         }
 
+
+
         public ResultDto Edit(CommentDto dto)
         {
             var res = new ResultDto();
@@ -95,6 +97,7 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto<CommentDto>();
             var query=TestDB.Comment.AsNoTracking();
+            query = query.Where(x => qModel.State.HasValue && x.State == qModel.State);
             var queryData = query.Select(x => new CommentDto()
             {
                 Id = x.Id,
