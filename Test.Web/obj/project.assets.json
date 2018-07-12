@@ -7170,7 +7170,7 @@
       ]
     },
     "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
-      "sha512": "H6ZsQzxYw/6k2DfEQRXdC+vQ6obd6Uba3uGJrnJ2vG4PRXjQZ7seB13JdCfE72abp8E6Fk3gGgDzfJiLZi5ZpQ==",
+      "sha512": "UMlN++q5qqzQ2HH+uOrKxN5fmBXMQDhrYkSaPJxhmyzfJaFPirrVr1raim/Ocq1psAZoB9+7JSAf0GDAX35wUg==",
       "type": "package",
       "path": "microsoft.extensions.platformabstractions/1.1.0",
       "files": [
@@ -13192,11 +13192,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Web\\Test.Web.csproj",
+      "projectUniqueName": "C:\\Project\\Personal\\TestProject\\Test.Web\\Test.Web.csproj",
       "projectName": "Test.Web",
-      "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Web\\Test.Web.csproj",
+      "projectPath": "C:\\Project\\Personal\\TestProject\\Test.Web\\Test.Web.csproj",
       "packagesPath": "C:\\Users\\Lee\\.nuget\\packages\\",
-      "outputPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Web\\obj\\",
+      "outputPath": "C:\\Project\\Personal\\TestProject\\Test.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13216,11 +13216,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.BLL\\Test.Service.csproj": {
-              "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.BLL\\Test.Service.csproj"
+            "C:\\Project\\Personal\\TestProject\\Test.BLL\\Test.Service.csproj": {
+              "projectPath": "C:\\Project\\Personal\\TestProject\\Test.BLL\\Test.Service.csproj"
             },
-            "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj": {
-              "projectPath": "C:\\Project\\GitProject\\ASP.NET-CORE-Demo\\Test.Domain\\Test.Domain.csproj"
+            "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj": {
+              "projectPath": "C:\\Project\\Personal\\TestProject\\Test.Domain\\Test.Domain.csproj"
             }
           }
         }

@@ -14,6 +14,8 @@ namespace Test.Service.Interface
 
         Task<ResultDto> AddSingleAsync(ArticleDto dto);
 
+        ResultDto Edit(ArticleDto dto);
+
         Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel);
 
         Task<ResultDto<ArticleDetailDto>> GetSingleDataAsync(int Id);

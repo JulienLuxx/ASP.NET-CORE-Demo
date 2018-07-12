@@ -33,6 +33,42 @@ namespace Test.Service.Impl
             return res;
         }
 
+        public ResultDto Delete(string ids)
+        {
+            var res = new ResultDto();
+            var idArray = ids.Split(',');
+            var dataList = TestDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
+            return res;
+        }
+
+        public ResultDto Edit(CommentDto dto)
+        {
+            var res = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = TestDB.Comment.Where(x => x.IsDelete == false && x.Id == dto.Id).FirstOrDefault();
+                if (null == data)
+                {
+                    return res;
+                }
+                dto.IsDeleted = data.IsDelete;
+                data = _mapper.Map(dto, data);
+                TestDB.Update(data);
+                var flag= TestDB.SaveChanges();
+                if (0 < flag)
+                {
+                    res.ActionResult = true;
+                    res.Msg = "success";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Msg = ex.Message;
+            }
+            return res;
+        }
+
         public async Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel)
         {
             var res = new ResultDto<CommentDto>();

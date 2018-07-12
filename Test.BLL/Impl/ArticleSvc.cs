@@ -21,13 +21,20 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto();
             dto.CreateTime = DateTime.Now;
-            var data = _mapper.Map<Article>(dto);
-            TestDB.Add(data);
-            var flag = TestDB.SaveChanges();
-            if (flag > 0)
+            try
             {
-                res.ActionResult = true;
-                res.Msg = "Success";
+                var data = _mapper.Map<Article>(dto);
+                TestDB.Add(data);
+                var flag = TestDB.SaveChanges();
+                if (flag > 0)
+                {
+                    res.ActionResult = true;
+                    res.Msg = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Msg = ex.Message;
             }
             return res;
         }
@@ -42,6 +49,34 @@ namespace Test.Service.Impl
             {
                 res.ActionResult = true;
                 res.Msg = "Success";
+            }
+            return res;
+        }
+
+        public ResultDto Edit(ArticleDto dto)
+        {
+            var res = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = TestDB.Article.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                if (null == data)
+                {
+                    return res;
+                }
+                dto.IsDeleted = data.IsDeleted;
+                data = _mapper.Map(dto, data);
+                TestDB.Update(data);
+                var flag= TestDB.SaveChanges();
+                if (0 < flag)
+                {
+                    res.ActionResult = true;
+                    res.Msg = "success";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Msg = ex.Message;
             }
             return res;
         }
