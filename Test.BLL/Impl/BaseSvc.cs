@@ -11,11 +11,14 @@ namespace Test.Service.Impl
     {
         protected IMapper _mapper;
 
-        protected TestDBContext TestDB = new TestDBContext();
+        //protected TestDBContext TestDB = new TestDBContext();
 
-        protected BaseSvc(IMapper mapper)
+        protected TestDBContext _testDB { get; set; }
+
+        protected BaseSvc(IMapper mapper,TestDBContext testDB)
         {
             _mapper = mapper;
+            _testDB = testDB;
         }
     }
 }

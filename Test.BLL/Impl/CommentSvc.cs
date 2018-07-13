@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
 using Test.Service.Interface;
@@ -14,7 +15,7 @@ namespace Test.Service.Impl
 {
     public class CommentSvc : BaseSvc,ICommentSvc
     {
-        public CommentSvc(IMapper mapper) : base(mapper)
+        public CommentSvc(IMapper mapper, TestDBContext testDB) : base(mapper,testDB)
         {
         }
 
@@ -25,8 +26,8 @@ namespace Test.Service.Impl
             try
             {
                 var data = _mapper.Map<Comment>(dto);
-                TestDB.Add(data);
-                var flag = TestDB.SaveChanges();
+                _testDB.Add(data);
+                var flag = _testDB.SaveChanges();
                 if (flag > 0)
                 {
                     res.ActionResult = true;
@@ -47,12 +48,12 @@ namespace Test.Service.Impl
             try
             {
                 var idArray = ids.Split(',');
-                var dataList = TestDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
+                var dataList = _testDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
                 foreach (var item in dataList)
                 {
                     item.IsDelete = true;
                 }
-                TestDB.SaveChanges();
+                _testDB.SaveChanges();
                 res.ActionResult = true;
                 res.Msg = "Sucess";
             }
@@ -71,15 +72,15 @@ namespace Test.Service.Impl
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = TestDB.Comment.Where(x => x.IsDelete == false && x.Id == dto.Id).FirstOrDefault();
+                var data = _testDB.Comment.Where(x => x.IsDelete == false && x.Id == dto.Id).FirstOrDefault();
                 if (null == data)
                 {
                     return res;
                 }
                 dto.IsDeleted = data.IsDelete;
                 data = _mapper.Map(dto, data);
-                TestDB.Update(data);
-                var flag= TestDB.SaveChanges();
+                _testDB.Update(data);
+                var flag= _testDB.SaveChanges();
                 if (0 < flag)
                 {
                     res.ActionResult = true;
@@ -96,7 +97,7 @@ namespace Test.Service.Impl
         public async Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel)
         {
             var res = new ResultDto<CommentDto>();
-            var query=TestDB.Comment.AsNoTracking();
+            var query=_testDB.Comment.AsNoTracking();
             query = query.Where(x => qModel.State.HasValue && x.State == qModel.State);
             var queryData = query.Select(x => new CommentDto()
             {

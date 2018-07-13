@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
 using Test.Service.Interface;
@@ -14,7 +15,7 @@ namespace Test.Service.Impl
 {
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
-        public ArticleSvc(IMapper mapper) :base(mapper)
+        public ArticleSvc(IMapper mapper,TestDBContext testDB) :base(mapper,testDB)
         {
         }
         public ResultDto AddSingle(ArticleDto dto)
@@ -24,8 +25,8 @@ namespace Test.Service.Impl
             try
             {
                 var data = _mapper.Map<Article>(dto);
-                TestDB.Add(data);
-                var flag = TestDB.SaveChanges();
+                _testDB.Add(data);
+                var flag = _testDB.SaveChanges();
                 if (flag > 0)
                 {
                     res.ActionResult = true;
@@ -43,8 +44,8 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto();
             var data = _mapper.Map<Article>(dto);
-            await TestDB.AddAsync(data);
-            var flag = await TestDB.SaveChangesAsync();
+            await _testDB.AddAsync(data);
+            var flag = await _testDB.SaveChangesAsync();
             if (flag > 0)
             {
                 res.ActionResult = true;
@@ -59,15 +60,15 @@ namespace Test.Service.Impl
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = TestDB.Article.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                var data = _testDB.Article.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
                 if (null == data)
                 {
                     return res;
                 }
                 dto.IsDeleted = data.IsDeleted;
                 data = _mapper.Map(dto, data);
-                TestDB.Update(data);
-                var flag= TestDB.SaveChanges();
+                _testDB.Update(data);
+                var flag= _testDB.SaveChanges();
                 if (0 < flag)
                 {
                     res.ActionResult = true;
@@ -84,7 +85,7 @@ namespace Test.Service.Impl
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)
         {
             var res = new ResultDto<ArticleDto>();
-            var query = TestDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
+            var query = _testDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
             query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
@@ -105,7 +106,7 @@ namespace Test.Service.Impl
         public async Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel)
         {
             var res = new ResultDto<ArticleDto>();
-            var query = TestDB.Article.AsNoTracking();
+            var query = _testDB.Article.AsNoTracking();
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,
@@ -125,7 +126,7 @@ namespace Test.Service.Impl
         public ResultDto<ArticleDetailDto> GetSingleData(int Id)
         {
             var res = new ResultDto<ArticleDetailDto>();
-            var data = TestDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefault();
+            var data = _testDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefault();
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
@@ -139,7 +140,7 @@ namespace Test.Service.Impl
         public async Task<ResultDto<ArticleDetailDto>> GetSingleDataAsync(int Id)
         {
             var res = new ResultDto<ArticleDetailDto>();
-            var data = await TestDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false)/*.Include(x => x.Comments)*/.FirstOrDefaultAsync();
+            var data = await _testDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefaultAsync();
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);

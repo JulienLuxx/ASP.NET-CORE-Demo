@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Test.Domain.Entity
 {
-    [Table("Article")]
+    //[Table("Article")]
     public class Article:IEntity
     {    
         public Article()
@@ -17,27 +17,27 @@ namespace Test.Domain.Entity
             Comments = new HashSet<Comment>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime CreateTime { get; set; }
 
-        [Required]
+        //[Required]
         public bool IsDeleted { get; set; }
 
-        [StringLength(200)]
+        //[StringLength(200)]
         public string Title { get; set; }
 
-        [StringLength(10000)]
+        //[StringLength(10000)]
         public string Content { get; set; }
 
-        [Required]
+        //[Required]
         public int Type { get; set; }
 
         public int State { get; set; }
 
-        [Timestamp]
+        //[Timestamp]
         public byte[] Timestamp { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
