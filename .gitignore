@@ -1,0 +1,8 @@
+
+/.vs/TestProject
+/Test.Domain/bin/Debug/netstandard2.0
+/Test.Domain/obj/Debug/netcoreapp2.0
+/Test.Domain/obj/Debug/netcoreapp2.1
+/Test.Domain/obj/Debug/netstandard2.0
+/Test.BLL/bin/Debug/netstandard2.0
+/Test.BLL/obj/Debug

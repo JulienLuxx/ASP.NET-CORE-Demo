@@ -6,5 +6,6 @@ namespace Test.Domain.Entity
 {
     public interface IEntity
     {
+        Byte[] Timestamp { get; set; }
     }
 }

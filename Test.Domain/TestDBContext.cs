@@ -7,6 +7,7 @@ using System.Linq;
 //using Test.Domain.Entity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Test.Domain.Entity;
+using System.Data;
 
 namespace Test.Domain
 {
@@ -54,6 +55,7 @@ namespace Test.Domain
             #endregion
 
             #region Fluent API
+            #region Sample
             //modelBuilder.Entity<Article>(e =>
             //{
             //    e.ToTable("Article");
@@ -66,6 +68,7 @@ namespace Test.Domain
             //modelBuilder.Entity<Comment>().ToTable("Comment").HasKey(x => x.Id);
             ////ReverseWay
             //modelBuilder.Entity<Comment>().HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
+            #endregion
 
             modelBuilder.Entity<Article>(e =>
             {
@@ -84,5 +87,6 @@ namespace Test.Domain
             });
             #endregion
         }
+
     }
 }
