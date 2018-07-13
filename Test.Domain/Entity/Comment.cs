@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Test.Domain.Entity
 {
-    [Table("Comment")]
+    //[Table("Comment")]
     public class Comment :  IEntity
     {
         public Comment()
@@ -15,18 +15,18 @@ namespace Test.Domain.Entity
             IsDelete = false;
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime CreateTime { get; set; }
 
         public bool IsDelete { get; set; }
 
-        [StringLength(200)]
+        //[StringLength(200)]
         public string Creator { get; set; }
 
-        [StringLength(2000)]
+        //[StringLength(2000)]
         public string Content { get; set; }
 
         public int ParentId { get; set; }
@@ -35,10 +35,10 @@ namespace Test.Domain.Entity
 
         public int? ArticleId { get; set; }
 
-        [Timestamp]
+        //[Timestamp]
         public byte[] Timestamp { get; set; }
 
-        [ForeignKey("ArticleId")]
+        //[ForeignKey("ArticleId")]
         public virtual Article Article { get; set; }
     }
 }
