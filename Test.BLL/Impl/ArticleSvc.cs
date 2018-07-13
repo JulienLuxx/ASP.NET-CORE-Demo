@@ -68,7 +68,6 @@ namespace Test.Service.Impl
                 dto.IsDeleted = data.IsDeleted;
                 data = _mapper.Map(dto, data);
                 _testDB.Update(data);
-                _testDB.Entry
                 var flag= _testDB.SaveChanges();
                 if (0 < flag)
                 {
