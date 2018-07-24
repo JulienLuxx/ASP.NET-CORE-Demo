@@ -31,12 +31,12 @@ namespace Test.Web
         public void ConfigureServices(IServiceCollection services)
         {
             //UseDbContext
-            //services.AddDbContext<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action=>action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddDbContext<TestDBContext>();
+            services.AddDbContext<TestDBContext>();
 
             //UseDbContextPool
-            services.AddDbContextPool<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContextPool<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //DI Injection
             services.AddScoped<IArticleSvc, ArticleSvc>();

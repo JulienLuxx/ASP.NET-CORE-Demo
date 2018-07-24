@@ -13,10 +13,10 @@ namespace Test.Domain
 {
     public class TestDBContext : DbContext
     {
-        public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
-        { }
+        //public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
+        //{ }
 
-        //public TestDBContext() { }
+        public TestDBContext() { }
 
         public DbSet<Article> Article { get; set; }
 
@@ -25,7 +25,7 @@ namespace Test.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
-            //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -83,7 +83,7 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.Timestamp).IsRowVersion();
-                e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
+                e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.AtId);
             });
             #endregion
         }

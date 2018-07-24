@@ -6,3 +6,5 @@
 /Test.Domain/obj/Debug/netstandard2.0
 /Test.BLL/bin/Debug/netstandard2.0
 /Test.BLL/obj/Debug
+/Test.Domain/bin/Debug/netcoreapp2.1
+/Test.BLL/bin/Debug/netcoreapp2.1
