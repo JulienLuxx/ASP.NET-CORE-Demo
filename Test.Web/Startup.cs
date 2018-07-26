@@ -151,6 +151,7 @@ namespace Test.Web
 
             app.UseStaticFiles();
 
+            //Init AutoMapper,Add Profile
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
 
             app.UseSwagger();
