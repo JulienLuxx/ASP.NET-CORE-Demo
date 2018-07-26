@@ -19,7 +19,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using Test.Domain;
 using Test.Domain.Infrastructure;
 using Test.Service.Impl;
+using Test.Service.Infrastructure;
 using Test.Service.Interface;
+using Test.Service.IOC;
 
 namespace Test.Web
 {
@@ -73,16 +75,21 @@ namespace Test.Web
             //services.AddScoped<IArticleSvc, ArticleSvc>();
             //services.AddScoped<ICommentSvc, CommentSvc>();
             var builder = new ContainerBuilder();
-            builder.Populate(services);
 
             //var baseType = typeof(IDependency);
             //var assembly = Assembly.GetEntryAssembly();
             //builder.RegisterAssemblyTypes(assembly)
             //                .Where(t => baseType.IsAssignableFrom(t) && t != baseType)
             //                .AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
-            builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
 
+            //SingleService Injection
+            //builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
+            //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
+
+            //Module Injection
+            builder.RegisterModule<ServiceModule>();
+
+            builder.Populate(services);
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);
         }
@@ -143,6 +150,8 @@ namespace Test.Web
             }
 
             app.UseStaticFiles();
+
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
