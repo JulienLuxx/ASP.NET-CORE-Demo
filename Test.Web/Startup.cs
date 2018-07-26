@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using Test.Domain;
+using Test.Domain.Infrastructure;
 using Test.Service.Impl;
 using Test.Service.Interface;
 
@@ -20,31 +25,26 @@ namespace Test.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
+        //public Startup(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appsettings.json").Build();
+        }
+        public Autofac.IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //UseDbContext
-            services.AddDbContext<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<TestDBContext>();
-
-            //UseDbContextPool
-            //services.AddDbContextPool<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //DI Injection
-            services.AddScoped<IArticleSvc, ArticleSvc>();
-            services.AddScoped<ICommentSvc, CommentSvc>();
 
             //注册AutoMapper
             services.AddAutoMapper();
-            
+
             //Add Swagger
             services.AddSwaggerGen(c =>
             {
@@ -68,7 +68,66 @@ namespace Test.Web
             });
 
             services.AddMvc();
+
+            //DI Injection
+            //services.AddScoped<IArticleSvc, ArticleSvc>();
+            //services.AddScoped<ICommentSvc, CommentSvc>();
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+
+            //var baseType = typeof(IDependency);
+            //var assembly = Assembly.GetEntryAssembly();
+            //builder.RegisterAssemblyTypes(assembly)
+            //                .Where(t => baseType.IsAssignableFrom(t) && t != baseType)
+            //                .AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
+            builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
+
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
+
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    //UseDbContext
+        //    services.AddDbContext<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        //    services.AddDbContext<TestDBContext>();
+
+        //    //UseDbContextPool
+        //    //services.AddDbContextPool<TestDBContext>(option => option.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        //    //DI Injection
+        //    services.AddScoped<IArticleSvc, ArticleSvc>();
+        //    services.AddScoped<ICommentSvc, CommentSvc>();
+
+        //    //注册AutoMapper
+        //    services.AddAutoMapper();
+            
+        //    //Add Swagger
+        //    services.AddSwaggerGen(c =>
+        //    {
+        //        c.SwaggerDoc("v1", new Info
+        //        {
+        //            Version = "v1",
+        //            Title = "Test"
+        //        });
+        //        var xmlFilePaths = new List<string>() {
+        //            "Test.Web.xml",
+        //            "Test.Service.xml"
+        //        };
+        //        foreach (var filePath in xmlFilePaths)
+        //        {
+        //            var xmlFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, filePath);
+        //            if (File.Exists(xmlFilePath))
+        //            {
+        //                c.IncludeXmlComments(xmlFilePath);
+        //            }
+        //        }
+        //    });
+
+        //    services.AddMvc();
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -29,13 +29,11 @@ namespace Test.Domain.Entity
         //[StringLength(2000)]
         public string Content { get; set; }
 
-        public Guid? ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         public int State { get; set; }
 
         public int? ArticleId { get; set; }
-
-        public int AtId { get; set; }
 
         //[Timestamp]
         public byte[] Timestamp { get; set; }

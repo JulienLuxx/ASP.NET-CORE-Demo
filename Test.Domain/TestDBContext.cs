@@ -83,7 +83,7 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.Timestamp).IsRowVersion();
-                e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.AtId);
+                e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
             #endregion
         }
