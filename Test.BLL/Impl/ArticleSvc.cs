@@ -15,6 +15,11 @@ namespace Test.Service.Impl
 {
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="testDB"></param>
         public ArticleSvc(IMapper mapper,TestDBContext testDB) :base(mapper,testDB)
         {
         }
@@ -176,6 +181,22 @@ namespace Test.Service.Impl
             foreach (var child in childs)
             {
                 var node = new CommentTreeDto();
+                tree.Childrens.Add(node);
+                GetTree(child, node, list);
+            }
+        }
+
+        public void GetTree<T,Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : class,new()where Ttree: BaseTreeDto<Ttree>, new()
+        {
+            if (null == dto)
+            {
+                return;
+            }
+            tree = Mapper.Map(dto, tree);
+            var childs = list.Where(x => true).ToList();
+            foreach (var child in childs)
+            {
+                Ttree node = new Ttree();
                 tree.Childrens.Add(node);
                 GetTree(child, node, list);
             }

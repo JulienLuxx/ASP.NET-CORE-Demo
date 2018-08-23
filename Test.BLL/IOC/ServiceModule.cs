@@ -12,6 +12,10 @@ namespace Test.Service.IOC
     /// </summary>
     public class ServiceModule: Module
     {
+        /// <summary>
+        /// Load
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();

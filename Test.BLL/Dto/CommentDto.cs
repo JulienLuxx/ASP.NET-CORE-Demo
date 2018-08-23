@@ -23,12 +23,28 @@ namespace Test.Service.Dto
         //public ArticleDto Article { get; set; }
     }
 
-    public class CommentTreeDto : BaseDto
+    //public class CommentTreeDto : BaseDto
+    //{
+    //    public CommentTreeDto()
+    //    {
+    //        Childrens = new List<CommentTreeDto>();
+    //    }
+    //    public string Creator { get; set; }
+
+    //    public string Content { get; set; }
+
+    //    public int ParentId { get; set; }
+
+    //    public int State { get; set; }
+
+    //    public int? ArticleId { get; set; }
+
+    //    [IgnoreMap]
+    //    public List<CommentTreeDto> Childrens { get; set; }
+    //}
+
+    public class CommentTreeDto : BaseTreeDto<CommentTreeDto>
     {
-        public CommentTreeDto()
-        {
-            Childrens = new List<CommentTreeDto>();
-        }
         public string Creator { get; set; }
 
         public string Content { get; set; }
@@ -38,8 +54,5 @@ namespace Test.Service.Dto
         public int State { get; set; }
 
         public int? ArticleId { get; set; }
-
-        [IgnoreMap]
-        public List<CommentTreeDto> Childrens { get; set; }
     }
 }

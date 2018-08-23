@@ -15,6 +15,11 @@ namespace Test.Service.Impl
 {
     public class CommentSvc : BaseSvc,ICommentSvc
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="testDB"></param>
         public CommentSvc(IMapper mapper, TestDBContext testDB) : base(mapper,testDB)
         {
         }
