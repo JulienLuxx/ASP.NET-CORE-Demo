@@ -9,12 +9,23 @@ namespace Test.Service.Impl
 {
     public abstract class BaseSvc
     {
+        /// <summary>
+        /// AutoMapperInterface
+        /// </summary>
         protected IMapper _mapper;
 
         //protected TestDBContext TestDB = new TestDBContext();
 
+        /// <summary>
+        /// MainDbContext
+        /// </summary>
         protected TestDBContext _testDB { get; set; }
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="testDB"></param>
         protected BaseSvc(IMapper mapper,TestDBContext testDB)
         {
             _mapper = mapper;

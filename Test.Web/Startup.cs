@@ -94,6 +94,7 @@ namespace Test.Web
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
+        # region CoreOwnInjection
         //public void ConfigureServices(IServiceCollection services)
         //{
         //    //UseDbContext
@@ -110,7 +111,7 @@ namespace Test.Web
 
         //    //注册AutoMapper
         //    services.AddAutoMapper();
-            
+
         //    //Add Swagger
         //    services.AddSwaggerGen(c =>
         //    {
@@ -137,6 +138,8 @@ namespace Test.Web
         //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        #endregion
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
