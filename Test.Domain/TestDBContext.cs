@@ -25,7 +25,10 @@ namespace Test.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
-            optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            //MSSql
+            //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            //MySql
+            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=test;password=123456;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,14 +77,14 @@ namespace Test.Domain
             {
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();
+                e.Property(x => x.Timestamp).IsRowVersion();                
             });
             modelBuilder.Entity<Comment>(e =>
             {
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });

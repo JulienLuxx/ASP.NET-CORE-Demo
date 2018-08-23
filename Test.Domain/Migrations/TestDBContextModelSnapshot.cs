@@ -15,18 +15,16 @@ namespace Test.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content")
-                        .HasMaxLength(10000);
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("CreateTime");
 
@@ -34,12 +32,11 @@ namespace Test.Domain.Migrations
 
                     b.Property<int>("State");
 
-                    b.Property<byte[]>("Timestamp")
+                    b.Property<DateTime?>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("Title")
-                        .HasMaxLength(200);
+                    b.Property<string>("Title");
 
                     b.Property<int>("Type");
 
@@ -52,25 +49,23 @@ namespace Test.Domain.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ArticleId");
 
-                    b.Property<string>("Content")
-                        .HasMaxLength(2000);
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("Creator")
-                        .HasMaxLength(200);
+                    b.Property<string>("Creator");
 
                     b.Property<bool>("IsDelete");
 
-                    b.Property<int>("ParentId");
+                    b.Property<int?>("ParentId");
 
                     b.Property<int>("State");
 
-                    b.Property<byte[]>("Timestamp")
+                    b.Property<DateTime?>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
