@@ -77,14 +77,14 @@ namespace Test.Domain
             {
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//TODO:MySqlNotSetIncrement(NotVerify)
                 e.Property(x => x.Timestamp).IsRowVersion();                
             });
             modelBuilder.Entity<Comment>(e =>
             {
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//TODO:MySqlNotSetIncrement(NotVerify)
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
