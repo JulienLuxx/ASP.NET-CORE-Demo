@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Test.Service.Dto
 {
-    public class CommentDto : BaseDto
+    public interface ITreeDto
+    {
+        int ParentId { get; set; }
+    }
+    public class CommentDto : BaseDto,ITreeDto
     {
         public CommentDto()
         {
@@ -45,6 +49,7 @@ namespace Test.Service.Dto
 
     public class CommentTreeDto : BaseTreeDto<CommentTreeDto>
     {
+        public int Id { get; set; }
         public string Creator { get; set; }
 
         public string Content { get; set; }

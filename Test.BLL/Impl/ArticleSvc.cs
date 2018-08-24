@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Domain;
@@ -149,7 +150,8 @@ namespace Test.Service.Impl
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
-                dto.CommentTrees = GetAllCommentByTree(dto.Comments);
+                //dto.CommentTrees = GetAllCommentByTree(dto.Comments);
+                dto.CommentTrees = GetCommentTrees(dto.Comments);
                 res.ActionResult = true;
                 res.Msg = "Success";
                 res.Data = dto;
@@ -165,6 +167,19 @@ namespace Test.Service.Impl
             {
                 var tree = new CommentTreeDto();
                 GetTree(item, tree, dtoList);
+                treeList.Add(tree);
+            }
+            return treeList;
+        }
+
+        public List<CommentTreeDto> GetCommentTrees(List<CommentDto> dtos)
+        {
+            var treeList = new List<CommentTreeDto>();
+            var rootList = dtos.Where(x => x.ParentId == 0);
+            foreach (var item in rootList)
+            {
+                var tree = new CommentTreeDto();
+                GetTree(item, tree, dtos);
                 treeList.Add(tree);
             }
             return treeList;
@@ -186,20 +201,27 @@ namespace Test.Service.Impl
             }
         }
 
-        public void GetTree<T,Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : class,new()where Ttree: BaseTreeDto<Ttree>, new()
+        public void GetTree<T,Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto,ITreeDto, new()where Ttree: BaseTreeDto<Ttree>, new()
         {
-            if (null == dto)
+            try
             {
-                return;
+                if (null == dto)
+                {
+                    return;
+                }
+                tree = Mapper.Map(dto, tree);
+                Func<T, bool> func = f => f.ParentId == dto.Id;
+                var childs = list.Where(func).ToList();
+                foreach (var child in childs)
+                {
+                    Ttree node = new Ttree();
+                    tree.Childrens.Add(node);
+                    GetTree(child, node, list);
+                }
             }
-            tree = Mapper.Map(dto, tree);
-            var childs = list.Where(x => true).ToList();
-            foreach (var child in childs)
-            {
-                Ttree node = new Ttree();
-                tree.Childrens.Add(node);
-                GetTree(child, node, list);
-            }
+            catch (Exception ex)
+            { }
+
         }
     }
 }
