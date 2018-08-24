@@ -103,7 +103,7 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto<CommentDto>();
             var query=_testDB.Comment.AsNoTracking();
-            query = query.Where(x => qModel.State.HasValue && x.State == qModel.State);
+            query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
             var queryData = query.Select(x => new CommentDto()
             {
                 Id = x.Id,
