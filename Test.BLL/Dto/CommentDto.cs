@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Test.Core.Dto;
 
 namespace Test.Service.Dto
 {
-    public interface ITreeDto
-    {
-        int ParentId { get; set; }
-    }
     public class CommentDto : BaseDto,ITreeDto
     {
         public CommentDto()

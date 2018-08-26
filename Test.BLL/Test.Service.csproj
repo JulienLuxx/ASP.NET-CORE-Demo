@@ -11,12 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\BaseDto.cs" />
+    <Compile Remove="Dto\BaseTreeDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Test.Core\Test.Core.csproj" />
     <ProjectReference Include="..\Test.Domain\Test.Domain.csproj" />
   </ItemGroup>
 
