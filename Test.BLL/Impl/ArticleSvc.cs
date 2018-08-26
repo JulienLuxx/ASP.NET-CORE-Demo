@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Core.Dto;
+using Test.Core.Tree;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
@@ -22,9 +23,14 @@ namespace Test.Service.Impl
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
-        public ArticleSvc(IMapper mapper,TestDBContext testDB) :base(mapper,testDB)
+        /// <param name="util"></param>
+        public ArticleSvc(IMapper mapper,TestDBContext testDB,ITreeUtil util) :base(mapper,testDB)
         {
+            _util = util;
         }
+
+        private ITreeUtil _util { get; set; }
+
         public ResultDto AddSingle(ArticleDto dto)
         {
             var res = new ResultDto();
@@ -180,7 +186,7 @@ namespace Test.Service.Impl
             foreach (var item in rootList)
             {
                 var tree = new CommentTreeDto();
-                GetTree(item, tree, dtos);
+                _util. GetTree(item, tree, dtos);
                 treeList.Add(tree);
             }
             return treeList;
