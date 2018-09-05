@@ -26,6 +26,13 @@ namespace Test.Web.API
             return Json(res);
         }
 
+        [HttpPost("Edit")]
+        public JsonResult Edit(CommentDto dto)
+        {
+            var res = _commentSvc.Edit(dto);
+            return Json(dto);
+        }
+
         [HttpGet("Page")]
         public async Task<JsonResult> GetPageAsync(CommentQueryModel qModel)
         {

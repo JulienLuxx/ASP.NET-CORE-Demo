@@ -114,5 +114,10 @@ namespace Test.Service.Impl
             res.List = await queryData.ToListAsync();
             return res;
         }
+
+        public async Task<dynamic> GetListByUser()
+        {
+            return null;
+        }
     }
 }
