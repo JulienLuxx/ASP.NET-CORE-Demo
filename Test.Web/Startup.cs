@@ -14,8 +14,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
+using Test.Core.IOC;
 using Test.Domain;
 using Test.Domain.Infrastructure;
 using Test.Service.Impl;
@@ -87,6 +91,7 @@ namespace Test.Web
             //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
 
             //Module Injection
+            builder.RegisterModule<UtilModule>();
             builder.RegisterModule<ServiceModule>();
 
             builder.Populate(services);
@@ -137,8 +142,10 @@ namespace Test.Web
         //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //loggerFactory.AddNLog();
+            //env.ConfigureNLog("nlog.config");
             if (env.IsDevelopment())
             {
                 //app.UseBrowserLink();

@@ -6,6 +6,9 @@ using Test.Core.Tree;
 
 namespace Test.Core.IOC
 {
+    /// <summary>
+    /// Core.UtilInjection
+    /// </summary>
     public class UtilModule : Module
     {
         protected override void Load(ContainerBuilder builder)

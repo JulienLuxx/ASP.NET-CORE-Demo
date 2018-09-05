@@ -5,13 +5,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Project\GitProject\ASP.NET-CORE-Demo\Test.Core\Test.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.1\Test.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Logs\**" />
+    <Compile Remove="新文件夹\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <EmbeddedResource Remove="新文件夹\**" />
     <None Remove="Logs\**" />
+    <None Remove="新文件夹\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Test.Core.xml" />
   </ItemGroup>
 
   <ItemGroup>

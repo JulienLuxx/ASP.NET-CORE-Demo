@@ -11,3 +11,5 @@
 /Test.Core/bin/Debug/netcoreapp2.1
 /Test.Core/obj/Debug/netcoreapp2.1
 /Test.Core/obj
+/Test.Core/Logs
+/Test.Web/bin/Debug/netcoreapp2.1

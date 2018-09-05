@@ -7,6 +7,9 @@ using Test.Service.Interface;
 
 namespace Test.Service.IOC
 {
+    /// <summary>
+    /// ServiceInjection
+    /// </summary>
     public class ServiceModule: Module
     {
         protected override void Load(ContainerBuilder builder)
