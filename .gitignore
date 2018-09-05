@@ -8,3 +8,6 @@
 /Test.BLL/obj/Debug
 /Test.Domain/bin/Debug/netcoreapp2.1
 /Test.BLL/bin/Debug/netcoreapp2.1
+/Test.Core/bin/Debug/netcoreapp2.1
+/Test.Core/obj/Debug/netcoreapp2.1
+/Test.Core/obj

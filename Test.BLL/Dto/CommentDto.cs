@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Test.Core.Dto;
 
 namespace Test.Service.Dto
 {
-    public class CommentDto : BaseDto
+    public class CommentDto : BaseDto, ITreeDto
     {
         public CommentDto()
         {
@@ -23,12 +24,10 @@ namespace Test.Service.Dto
         //public ArticleDto Article { get; set; }
     }
 
-    public class CommentTreeDto : BaseDto
+    public class CommentTreeDto : BaseTreeDto<CommentTreeDto>
     {
-        public CommentTreeDto()
-        {
-            Childrens = new List<CommentTreeDto>();
-        }
+        public int Id { get; set; }
+
         public string Creator { get; set; }
 
         public string Content { get; set; }
@@ -38,8 +37,5 @@ namespace Test.Service.Dto
         public int State { get; set; }
 
         public int? ArticleId { get; set; }
-
-        [IgnoreMap]
-        public List<CommentTreeDto> Childrens { get; set; }
     }
 }
