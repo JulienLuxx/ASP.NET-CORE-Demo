@@ -16,6 +16,12 @@ namespace Test.Service.Impl
 {
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="testDB"></param>
+        /// <param name="util"></param>
         public ArticleSvc(IMapper mapper,TestDBContext testDB, ITreeUtil util) :base(mapper,testDB)
         {
             _util = util;

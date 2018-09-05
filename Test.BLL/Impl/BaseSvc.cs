@@ -15,6 +15,11 @@ namespace Test.Service.Impl
 
         protected TestDBContext _testDB { get; set; }
 
+        /// <summary>
+        /// BaseSvc.Ctor
+        /// </summary>
+        /// <param name="mapper">AutoMapperInjectionParam</param>
+        /// <param name="testDB">DbContextInjectionParam</param>
         protected BaseSvc(IMapper mapper,TestDBContext testDB)
         {
             _mapper = mapper;
