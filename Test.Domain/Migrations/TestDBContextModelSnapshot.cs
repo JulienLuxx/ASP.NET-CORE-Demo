@@ -40,7 +40,11 @@ namespace Test.Domain.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Article");
                 });
@@ -74,6 +78,36 @@ namespace Test.Domain.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.Property<int>("Status");
+
+                    b.Property<DateTime?>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.Article", b =>
+                {
+                    b.HasOne("Test.Domain.Entity.User", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.Comment", b =>

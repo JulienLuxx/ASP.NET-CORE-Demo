@@ -15,5 +15,9 @@ namespace Test.Domain.Entity
         public string Password { get; set; }
 
         public int Status { get; set; }
+
+        public byte[] Timestamp { get; set; }
+
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace Test.Domain
 
         public DbSet<Comment> Comment { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
@@ -77,16 +79,24 @@ namespace Test.Domain
             {
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//TODO:MySqlNotSetIncrement(NotVerify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Timestamp).IsRowVersion();                
             });
             modelBuilder.Entity<Comment>(e =>
             {
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//TODO:MySqlNotSetIncrement(NotVerify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
+            });
+            modelBuilder.Entity<User>(e =>
+            {
+                e.ToTable("User");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Timestamp).IsRowVersion();
+                e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
             #endregion
         }

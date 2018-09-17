@@ -37,8 +37,12 @@ namespace Test.Domain.Entity
 
         public int State { get; set; }
 
+        public int? UserId { get; set; }
+
         //[Timestamp]
         public byte[] Timestamp { get; set; }
+
+        public virtual User User { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
