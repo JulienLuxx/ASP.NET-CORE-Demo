@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Test.Core.Dto;
 
-namespace Test.Domain.Entity
+namespace Test.Service.Dto
 {
-    public class User
+    public class UserDto : BaseDto
     {
-        public int Id { get; set; }
-
         public DateTime CreateTime { get; set; }
 
         public string Name { get; set; }
@@ -19,9 +18,16 @@ namespace Test.Domain.Entity
         public string Mobile { get; set; }
 
         public string MailBox { get; set; }
+    }
 
-        public byte[] Timestamp { get; set; }
+    public class RegisterDto
+    {
+        public string Name { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
+        public string Password { get; set; }
+
+        public string Mobile { get; set; }
+
+        public string MailBox { get; set; }
     }
 }

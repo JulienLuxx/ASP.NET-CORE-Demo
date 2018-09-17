@@ -15,7 +15,7 @@ namespace Test.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
@@ -87,6 +87,10 @@ namespace Test.Domain.Migrations
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("MailBox");
+
+                    b.Property<string>("Mobile");
 
                     b.Property<string>("Name");
 
