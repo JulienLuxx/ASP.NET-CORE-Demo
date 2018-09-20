@@ -18,6 +18,13 @@ namespace Test.Web.API
             _userSvc = userSvc;
         }
 
+        [HttpPost("ChangePassword")]
+        public async Task<JsonResult> ChangePassword(ChangePasswordDto dto)
+        {
+            var resTask = _userSvc.ChangePassword(dto);
+            return Json(await resTask);
+        }
+
         [HttpPost("Register")]
         public async Task<JsonResult> Register(RegisterDto dto)
         {

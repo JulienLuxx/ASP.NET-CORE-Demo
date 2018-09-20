@@ -20,6 +20,8 @@ namespace Test.Domain.Entity
 
         public string MailBox { get; set; }
 
+        public string SaltValue { get; set; }
+
         public byte[] Timestamp { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }

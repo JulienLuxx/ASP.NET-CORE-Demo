@@ -96,6 +96,8 @@ namespace Test.Domain.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<string>("SaltValue");
+
                     b.Property<int>("Status");
 
                     b.Property<DateTime?>("Timestamp")

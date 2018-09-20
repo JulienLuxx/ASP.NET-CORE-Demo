@@ -9,36 +9,89 @@ using Test.Service.Dto;
 using Test.Service.Interface;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Test.Core.Encrypt;
 
 namespace Test.Service.Impl
 {
     public class UserSvc : BaseSvc, IUserSvc
     {
-        public UserSvc(IMapper mapper, TestDBContext testDB) : base(mapper, testDB)
+        private IEncryptUtil _encryptUtil { get; set; }
+        public UserSvc(IMapper mapper, TestDBContext testDB, IEncryptUtil encryptUtil) : base(mapper, testDB)
         {
+            _encryptUtil = encryptUtil;
         }
 
         public ResultDto Add(UserDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             try
             {
                 dto.CreateTime = DateTime.Now;
+                var randomStr = new Random().Next(100000).ToString();
+                dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
                 var data = _mapper.Map<User>(dto);
-
+                data.SaltValue = randomStr;
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
                 {
-                    res.ActionResult = true;
-                    res.Msg = "Success";
+                    result.ActionResult = true;
+                    result.Msg = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                result.Msg = ex.Message;
             }
-            return res;
+            return result;
+        }
+
+        public async Task<ResultDto> ChangePassword(ChangePasswordDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                if (!dto.NewPassword.Equals(dto.ConfirmPassword))
+                {
+                    result.Msg = "UnConfirm";
+                    return result;
+                }
+                var data = await _testDB.User.FindAsync(dto.Id);
+                if (null != data) 
+                {
+                    dto.OrigPassword = _encryptUtil.GetMd5By32(dto.OrigPassword + data.SaltValue);
+                    if (string.IsNullOrEmpty(data.Password))
+                    {
+                        data.Password = _encryptUtil.GetMd5By32(dto.NewPassword + data.SaltValue);
+                    }
+                    else
+                    {
+                        if (!dto.OrigPassword.Equals(data.Password))
+                        {
+                            result.Msg = "OrigPassword error";
+                            return result;
+                        }
+                        else
+                        {
+                            data.Password = _encryptUtil.GetMd5By32(dto.NewPassword + data.SaltValue);
+                        }
+                    }
+
+
+                    var flag = _testDB.SaveChanges();
+                    if (flag > 0)
+                    {
+                        result.ActionResult = true;
+                        result.Msg = "Success";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Msg = ex.Message;
+            }
+            return result;
         }
 
         public async Task<ResultDto> Register(RegisterDto dto) 
@@ -65,5 +118,7 @@ namespace Test.Service.Impl
             }
             return result;
         }
+
+
     }
 }

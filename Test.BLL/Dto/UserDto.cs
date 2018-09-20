@@ -30,4 +30,28 @@ namespace Test.Service.Dto
 
         public string MailBox { get; set; }
     }
+
+    public class LoginDto
+    {
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
+
+        public string JumpUrl { get; set; }
+
+        public string ClientId { get; set; }
+    }
+
+    public class ChangePasswordDto
+    {
+        public int Id { get; set; }
+
+        public string OrigPassword { get; set; }
+
+        public string NewPassword { get; set; }
+
+        public string ConfirmPassword { get; set; }
+    }
 }

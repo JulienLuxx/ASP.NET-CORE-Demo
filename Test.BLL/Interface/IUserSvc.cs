@@ -10,6 +10,8 @@ namespace Test.Service.Interface
     {
         ResultDto Add(UserDto dto);
 
+        Task<ResultDto> ChangePassword(ChangePasswordDto dto);
+
         Task<ResultDto> Register(RegisterDto dto);
     }
 }
