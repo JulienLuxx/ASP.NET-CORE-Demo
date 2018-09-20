@@ -12,7 +12,7 @@
 /Test.Core/obj/Debug/netcoreapp2.1
 /Test.Core/obj
 /Test.Core/Logs
-/Test.Web/bin/Debug/netcoreapp2.1
+/Web/Test.Web/bin/Debug/netcoreapp2.1
 /Test.Domain/Migrations/20180820101035_mysqlInitCreate.Designer.cs
 /Test.Domain/Migrations/20180820101035_mysqlInitCreate.cs
 /Test.Domain/Migrations/20180820102624_mysqlmigration02.Designer.cs
