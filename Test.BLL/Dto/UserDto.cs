@@ -44,6 +44,19 @@ namespace Test.Service.Dto
         public string ClientId { get; set; }
     }
 
+    public class LoginUserDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Password { get; set; }
+
+        public int Status { get; set; }
+
+        public string SaltValue { get; set; }
+    }
+
     public class ChangePasswordDto
     {
         public int Id { get; set; }

@@ -46,7 +46,7 @@ namespace Test.Service.Impl
             return result;
         }
 
-        public async Task<ResultDto> ChangePassword(ChangePasswordDto dto)
+        public async Task<ResultDto> ChangePasswordAsync(ChangePasswordDto dto)
         {
             var result = new ResultDto();
             try
@@ -94,7 +94,7 @@ namespace Test.Service.Impl
             return result;
         }
 
-        public async Task<ResultDto> Register(RegisterDto dto) 
+        public async Task<ResultDto> RegisterAsync(RegisterDto dto) 
         {
             var result = new ResultDto();
             try
@@ -119,6 +119,41 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto<LoginUserDto>> LoginAsync(LoginDto dto)
+        {
+            var result = new ResultDto<LoginUserDto>();
+            try
+            {
+                var data = await _testDB.User.AsNoTracking().Where(x => x.Name.Equals(dto.UserName) || x.Mobile.Equals(dto.UserName)).Select(s => new LoginUserDto()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Password = s.Password,
+                    Status = s.Status,
+                    SaltValue = s.SaltValue
+                }).FirstOrDefaultAsync();
 
+                if (null == data)
+                {
+                    result.Msg = "User does not exist";
+                    return result;
+                }
+                else if (!data.Password.Equals(_encryptUtil.GetMd5By32(dto.Password + data.SaltValue)))
+                {
+                    result.Msg = "UserNameOrPassword error";
+                    return result;
+                }
+
+                result.ActionResult = true;
+                result.Msg = "success";
+                result.Data = data;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Msg = ex.Message;
+            }
+            return result;
+        }
     }
 }
