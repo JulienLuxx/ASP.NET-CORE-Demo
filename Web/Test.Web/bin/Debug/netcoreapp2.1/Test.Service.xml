@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Test.Service</name>
+    </assembly>
+    <members>
+        <member name="M:Test.Service.Impl.ArticleSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext,Test.Core.Tree.ITreeUtil)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="mapper"></param>
+            <param name="testDB"></param>
+            <param name="util"></param>
+        </member>
+        <member name="M:Test.Service.Impl.BaseSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext)">
+            <summary>
+            BaseSvc.Ctor
+            </summary>
+            <param name="mapper">AutoMapperInjectionParam</param>
+            <param name="testDB">DbContextInjectionParam</param>
+        </member>
+        <member name="T:Test.Service.IOC.ServiceModule">
+            <summary>
+            ServiceInjection
+            </summary>
+        </member>
+    </members>
+</doc>

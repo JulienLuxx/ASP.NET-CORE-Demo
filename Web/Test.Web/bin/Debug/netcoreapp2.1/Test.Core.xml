@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Test.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Test.Core.IOC.UtilModule">
+            <summary>
+            Core.UtilInjection
+            </summary>
+        </member>
+        <member name="T:Test.Core.Tree.ITreeUtil">
+            <summary>
+            TreeUtil
+            </summary>
+        </member>
+        <member name="M:Test.Core.Tree.ITreeUtil.GetTree``2(``0,Test.Core.Dto.BaseTreeDto{``1},System.Collections.Generic.List{``0})">
+            <summary>
+            Util.GetTreeFromBaseDtoList
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="Ttree"></typeparam>
+            <param name="dto"></param>
+            <param name="tree"></param>
+            <param name="list"></param>
+        </member>
+        <member name="T:Test.Core.Tree.TreeUtil">
+            <summary>
+            TreeUtil
+            </summary>
+        </member>
+        <member name="M:Test.Core.Tree.TreeUtil.GetTree``2(``0,Test.Core.Dto.BaseTreeDto{``1},System.Collections.Generic.List{``0})">
+            <summary>
+            GetTreeForBaseDto
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="Ttree"></typeparam>
+            <param name="dto"></param>
+            <param name="tree"></param>
+            <param name="list"></param>
+        </member>
+    </members>
+</doc>
