@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Test.Service</name>
+    </assembly>
+    <members>
+        <member name="M:Test.Service.Impl.ArticleSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext,Test.Core.Tree.ITreeUtil)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="mapper"></param>
+            <param name="testDB"></param>
+            <param name="util"></param>
+        </member>
+        <member name="F:Test.Service.Impl.BaseSvc._mapper">
+            <summary>
+            AutoMapperInterface
+            </summary>
+        </member>
+        <member name="P:Test.Service.Impl.BaseSvc._testDB">
+            <summary>
+            MainDbContext
+            </summary>
+        </member>
+        <member name="M:Test.Service.Impl.BaseSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="mapper"></param>
+            <param name="testDB"></param>
+        </member>
+        <member name="M:Test.Service.Impl.CommentSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext)">
+            <summary>
+            ctor
+            </summary>
+            <param name="mapper"></param>
+            <param name="testDB"></param>
+        </member>
+        <member name="M:Test.Service.Impl.UserSvc.#ctor(AutoMapper.IMapper,Test.Domain.TestDBContext)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="mapper"></param>
+            <param name="testDB"></param>
+        </member>
+        <member name="T:Test.Service.IOC.ServiceModule">
+            <summary>
+            ServiceModule
+            </summary>
+        </member>
+        <member name="M:Test.Service.IOC.ServiceModule.Load(Autofac.ContainerBuilder)">
+            <summary>
+            Load
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>
