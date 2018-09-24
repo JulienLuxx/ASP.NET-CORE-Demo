@@ -12,7 +12,7 @@ namespace Test.Service.Impl
         /// <summary>
         /// AutoMapperInterface
         /// </summary>
-        protected IMapper _mapper;
+        protected readonly IMapper _mapper;
 
         //protected TestDBContext TestDB = new TestDBContext();
 
@@ -22,7 +22,7 @@ namespace Test.Service.Impl
         protected TestDBContext _testDB { get; set; }
 
         /// <summary>
-        /// ctor
+        /// Ctor
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>

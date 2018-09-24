@@ -15,7 +15,7 @@ namespace Test.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -25,8 +25,7 @@ namespace Test.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content")
-                        .HasMaxLength(10000);
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("CreateTime");
 
@@ -38,12 +37,15 @@ namespace Test.Domain.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("Title")
-                        .HasMaxLength(200);
+                    b.Property<string>("Title");
 
                     b.Property<int>("Type");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Article");
                 });
@@ -56,17 +58,15 @@ namespace Test.Domain.Migrations
 
                     b.Property<int?>("ArticleId");
 
-                    b.Property<string>("Content")
-                        .HasMaxLength(2000);
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("Creator")
-                        .HasMaxLength(200);
+                    b.Property<string>("Creator");
 
                     b.Property<bool>("IsDelete");
 
-                    b.Property<int>("ParentId");
+                    b.Property<int?>("ParentId");
 
                     b.Property<int>("State");
 
@@ -79,6 +79,37 @@ namespace Test.Domain.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.Property<int>("Status");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.Article", b =>
+                {
+                    b.HasOne("Test.Domain.Entity.User", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.Comment", b =>

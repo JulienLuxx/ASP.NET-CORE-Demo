@@ -19,7 +19,7 @@ namespace Test.Service.Impl
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
         /// <summary>
-        /// ctor
+        /// Ctor
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
@@ -186,7 +186,7 @@ namespace Test.Service.Impl
             foreach (var item in rootList)
             {
                 var tree = new CommentTreeDto();
-                _util. GetTree(item, tree, dtos);
+                _util. GetDtoTree(item, tree, dtos);
                 treeList.Add(tree);
             }
             return treeList;
@@ -208,26 +208,5 @@ namespace Test.Service.Impl
             }
         }
 
-        //public void GetTree<T,Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto,ITreeDto, new()where Ttree: BaseTreeDto<Ttree>, new()
-        //{
-        //    try
-        //    {
-        //        if (null == dto)
-        //        {
-        //            return;
-        //        }
-        //        tree = Mapper.Map(dto, tree);
-        //        Func<T, bool> func = f => f.ParentId == dto.Id;
-        //        var childs = list.Where(func).ToList();
-        //        foreach (var child in childs)
-        //        {
-        //            Ttree node = new Ttree();
-        //            tree.Childrens.Add(node);
-        //            GetTree(child, node, list);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    { }
-        //}
     }
 }

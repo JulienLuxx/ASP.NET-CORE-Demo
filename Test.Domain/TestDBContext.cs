@@ -22,6 +22,8 @@ namespace Test.Domain
 
         public DbSet<Comment> Comment { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
@@ -76,7 +78,9 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.Timestamp).IsRowVersion();
+                e.HasOne(x => x.User).WithMany(y => y.Articles).HasForeignKey(x => x.UserId);
             });
+
             modelBuilder.Entity<Comment>(e =>
             {
                 e.ToTable("Comment");
@@ -84,6 +88,14 @@ namespace Test.Domain
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
+            });
+
+            modelBuilder.Entity<User>(e =>
+            {
+                e.ToTable("User");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.Property(x => x.Timestamp).IsRowVersion();
             });
             #endregion
         }

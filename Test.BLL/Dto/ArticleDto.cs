@@ -25,6 +25,8 @@ namespace Test.Service.Dto
             Comments = new List<CommentDto>();
             CommentTrees = new List<CommentTreeDto>();
         }
+
+        [IgnoreMap]
         public List<CommentDto> Comments { get; set; }
 
         [IgnoreMap]
