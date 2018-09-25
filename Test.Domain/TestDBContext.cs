@@ -96,6 +96,7 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.Timestamp).IsRowVersion();
+                e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
             #endregion
         }

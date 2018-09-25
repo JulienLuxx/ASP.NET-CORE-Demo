@@ -11,3 +11,6 @@
 /Test.Core/obj
 /Test.Core/bin/Debug/netcoreapp2.1
 /Test.Web/bin/Debug/netcoreapp2.1
+/Web/Test.IdentityServer/bin/Debug/netcoreapp2.1
+/Web/Test.IdentityServer/obj/Debug/netcoreapp2.1
+/Web/Test.IdentityServer/obj

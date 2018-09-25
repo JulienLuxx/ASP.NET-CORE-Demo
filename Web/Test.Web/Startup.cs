@@ -52,6 +52,27 @@ namespace Test.Web
             //注册AutoMapper
             services.AddAutoMapper();
 
+            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
+
+            services.AddAuthentication(Configuration["Identity:Scheme"]).AddIdentityServerAuthentication(option =>
+            {
+                option.RequireHttpsMetadata = false;
+                option.Authority = Configuration["Identity:Url"];
+                option.ApiName = Configuration["Service:Name"];
+            });
+
+            services.AddCors(option =>
+            {
+                option.AddPolicy("AllowAllOrigins",
+                    policyBuilder =>
+                    {
+                        policyBuilder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
             //Add Swagger
             services.AddSwaggerGen(c =>
             {
@@ -175,6 +196,9 @@ namespace Test.Web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test");
             });
+
+            app.UseAuthentication();
+            app.UseCors("AllowAllOrigins");
 
             app.UseMvc(routes =>
             {

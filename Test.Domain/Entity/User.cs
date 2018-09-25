@@ -18,9 +18,13 @@ namespace Test.Domain.Entity
 
         public string Password { get; set; }
 
+        public int Status { get; set; }
+
         public string Mobile { get; set; }
 
-        public int Status { get; set; }
+        public string MailBox { get; set; }
+
+        public string SaltValue { get; set; }
 
         public byte[] Timestamp { get; set; }
 

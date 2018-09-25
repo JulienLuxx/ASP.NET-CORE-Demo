@@ -18,10 +18,24 @@ namespace Test.Web.API
             _userSvc = userSvc;
         }
 
+        [HttpPost("ChangePassword")]
+        public async Task<JsonResult> ChangePassword(ChangePasswordDto dto)
+        {
+            var resultTask = _userSvc.ChangePasswordAsync(dto);
+            return Json(await resultTask);
+        }
+
         [HttpPost("Register")]
         public async Task<JsonResult> Register(RegisterDto dto)
         {
-            var resultTask = _userSvc.Register(dto);
+            var resultTask = _userSvc.RegisterAsync(dto);
+            return Json(await resultTask);
+        }
+
+        [HttpPost("Login")]
+        public async Task<JsonResult> Login(LoginDto dto)
+        {
+            var resultTask = _userSvc.LoginAsync(dto);
             return Json(await resultTask);
         }
     }
