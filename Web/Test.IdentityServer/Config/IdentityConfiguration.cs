@@ -45,7 +45,14 @@ namespace Test.IdentityServer.Config
                     AllowedScopes=new []{ IdentityServerConstants.StandardScopes.OfflineAccess,"" },
                     AllowOfflineAccess=true,
                     AccessTokenLifetime=360000,
-
+                    RefreshTokenExpiration=TokenExpiration.Sliding,
+                    RefreshTokenUsage=TokenUsage.ReUse,
+                    UpdateAccessTokenClaimsOnRefresh=false,
+                    AllowedCorsOrigins=new string[]
+                    {
+                        "http://localhost:54237/",
+                        "http://localhost:54238/"
+                    }
                 },
                 new Client
                 {

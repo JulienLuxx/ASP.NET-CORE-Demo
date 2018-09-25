@@ -37,3 +37,5 @@
 /Test.Domain/Migrations/20180917041011_Rebuild2.cs
 /.vs/config/applicationhost.config
 /Web/Test.IdentityServer/obj/Debug/netcoreapp2.1/*.cache
+/Web/Test.IdentityServer/obj/Debug/netcoreapp2.1
+/Web/Test.IdentityServer/bin/Debug/netcoreapp2.1
