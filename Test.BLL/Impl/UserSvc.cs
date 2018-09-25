@@ -16,6 +16,13 @@ namespace Test.Service.Impl
     public class UserSvc : BaseSvc, IUserSvc
     {
         private IEncryptUtil _encryptUtil { get; set; }
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="testDB"></param>
+        /// <param name="encryptUtil"></param>
         public UserSvc(IMapper mapper, TestDBContext testDB, IEncryptUtil encryptUtil) : base(mapper, testDB)
         {
             _encryptUtil = encryptUtil;

@@ -6,6 +6,10 @@ namespace Test.Domain.Entity
 {
     public class User
     {
+        public User()
+        {
+            Articles = new HashSet<Article>();
+        }
         public int Id { get; set; }
 
         public DateTime CreateTime { get; set; }
