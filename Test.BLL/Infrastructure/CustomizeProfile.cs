@@ -24,6 +24,7 @@ namespace Test.Service.Infrastructure
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<UserDto, RegisterDto>();
+            CreateMap<RegisterDto, UserDto>();
         }
     }
 }
