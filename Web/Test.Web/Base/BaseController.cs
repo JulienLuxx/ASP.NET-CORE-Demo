@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Test.Web.API
+namespace Test.Web.Base
 {
     /// <summary>
     /// 基础控制器
