@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using log4net;
+using log4net.Config;
+using log4net.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +22,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
+using Test.Core.Filter;
 using Test.Core.IOC;
 using Test.Domain;
 using Test.Domain.Infrastructure;
@@ -31,6 +35,7 @@ namespace Test.Web
 {
     public class Startup
     {
+        public static ILoggerRepository loggerRepository { get; set; }
         public IConfiguration Configuration { get; }
         //public Startup(IConfiguration configuration)
         //{
@@ -39,6 +44,9 @@ namespace Test.Web
         public Startup(IHostingEnvironment env)
         {
             Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appsettings.json").Build();
+
+            loggerRepository = LogManager.CreateRepository("NETCoreRepository");
+            XmlConfigurator.Configure(loggerRepository, new FileInfo(Environment.CurrentDirectory + @"\Config\log4net.config"));
         }
         public Autofac.IContainer ApplicationContainer { get; private set; }
 
@@ -73,9 +81,9 @@ namespace Test.Web
             });
 
             //Add Swagger
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(option =>
             {
-                c.SwaggerDoc("v1", new Info
+                option.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "Test"
@@ -89,12 +97,23 @@ namespace Test.Web
                     var xmlFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, filePath);
                     if (File.Exists(xmlFilePath))
                     {
-                        c.IncludeXmlComments(xmlFilePath);
+                        option.IncludeXmlComments(xmlFilePath);
                     }
                 }
+                //TryAddAuthorization
+                //option.AddSecurityDefinition(Configuration["Identity:Scheme"], new ApiKeyScheme()
+                //{
+                //    Description = "JWT Bearer 授权 \"Authorization:     Bearer+空格+token\"",
+                //    Name = "Authorization",
+                //    In = "header",
+                //    Type = "apiKey"
+                //});
             });
 
-            services.AddMvc();
+            services.AddMvc(option =>
+            {
+                option.Filters.Add(typeof(GlobalExceptions));
+            });
 
             //DI Injection
             //services.AddScoped<IArticleSvc, ArticleSvc>();
