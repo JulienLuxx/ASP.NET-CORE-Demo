@@ -98,6 +98,7 @@ namespace Test.Service.Impl
             var res = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
             query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id=x.Id,
@@ -119,6 +120,7 @@ namespace Test.Service.Impl
             var res = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x => x.IsDeleted == false);
             query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,
