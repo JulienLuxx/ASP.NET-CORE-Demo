@@ -20,7 +20,7 @@ namespace Test.Web.Base
             get
             {
                 var result = -1;
-                var userId = User.Claims.FirstOrDefault(x => x.Type.Equals("User"));
+                var userId = User.Claims.FirstOrDefault(x => x.Type.Equals("UserId"));
                 if (null != userId)
                 {
                     int.TryParse(userId.Value, out result);

@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
+using Test.Web.Base;
 
 namespace Test.Web.API
 {
     [Authorize]
     [Produces("application/json")]
     [Route("API/Test")]
-    public class TestController : Controller
+    public class TestController : BaseController
     {
         private readonly ICommentSvc _commentSvc;
         public TestController(ICommentSvc commentSvc)
@@ -23,7 +24,9 @@ namespace Test.Web.API
         [HttpGet("Page")]
         public async Task<JsonResult> GetPageAsync(CommentQueryModel qModel)
         {
-            var claims = User.Claims;
+            var id=UserId;
+            var name = UserName;
+
             var res = await _commentSvc.GetPageDataAsync(qModel);
             return Json(res);
         }
