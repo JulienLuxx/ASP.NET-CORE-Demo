@@ -16,6 +16,8 @@ namespace Test.Service.Dto
         public int Type { get; set; }
 
         public int State { get; set; }
+
+        public int UserId { get; set; }
     }
 
     public class ArticleDetailDto : ArticleDto
