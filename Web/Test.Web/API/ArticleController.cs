@@ -19,8 +19,15 @@ namespace Test.Web.API
             _articleSvc = articleSvc;
         }
 
+        [HttpPost("Adds")]
+        public JsonResult Add(string dataJson)
+        {
+            var result = _articleSvc.AddSingle(dataJson);
+            return Json(result);
+        }
+
         [HttpPost("Add")]
-        public JsonResult Add(ArticleDto dto)
+        public JsonResult Add([FromBody]ArticleDto dto)
         {
             var res = _articleSvc.AddSingle(dto);
             return Json(res);
@@ -33,8 +40,15 @@ namespace Test.Web.API
             return Json(res);
         }
 
+        [HttpPost("Edits")]
+        public JsonResult Edit(string dataJson)
+        {
+            var result = _articleSvc.Edit(dataJson);
+            return Json(result);
+        }
+
         [HttpPost("Edit")]
-        public JsonResult Edit(ArticleDto dto)
+        public JsonResult Edit([FromBody]ArticleDto dto)
         {
             var res = _articleSvc.Edit(dto);
             return Json(res);

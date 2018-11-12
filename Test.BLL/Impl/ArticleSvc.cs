@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Test.Service.Impl
 {
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
+        private ITreeUtil _util { get; set; }
         /// <summary>
         /// Ctor
         /// </summary>
@@ -29,7 +31,16 @@ namespace Test.Service.Impl
             _util = util;
         }
 
-        private ITreeUtil _util { get; set; }
+        public ResultDto AddSingle(string dataJson)
+        {
+            var result = new ResultDto();
+            if (!string.IsNullOrEmpty(dataJson) && !string.IsNullOrWhiteSpace(dataJson))
+            {
+                var dto = JsonConvert.DeserializeObject<ArticleDto>(dataJson);
+                result = AddSingle(dto);
+            }
+            return result;
+        }
 
         public ResultDto AddSingle(ArticleDto dto)
         {
@@ -79,6 +90,9 @@ namespace Test.Service.Impl
                     return res;
                 }
                 dto.IsDeleted = data.IsDeleted;
+                dto.UserId = data.UserId;
+                dto.Type = data.Type;
+                dto.State = data.State;
                 data = _mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag= _testDB.SaveChanges();
@@ -93,6 +107,17 @@ namespace Test.Service.Impl
                 res.Msg = ex.Message;
             }
             return res;
+        }
+
+        public ResultDto Edit(string dataJson)
+        {
+            var result = new ResultDto();
+            if (!string.IsNullOrEmpty(dataJson) && !string.IsNullOrWhiteSpace(dataJson))
+            {
+                var dto = JsonConvert.DeserializeObject<ArticleDto>(dataJson);
+                result = Edit(dto);
+            }
+            return result;
         }
 
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)

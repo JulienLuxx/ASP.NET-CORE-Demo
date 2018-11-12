@@ -10,9 +10,13 @@ namespace Test.Service.Interface
 {
     public interface IArticleSvc: IDependency
     {
+        ResultDto AddSingle(string dataJson);
+
         ResultDto AddSingle(ArticleDto dto);
 
         Task<ResultDto> AddSingleAsync(ArticleDto dto);
+
+        ResultDto Edit(string dataJson);
 
         ResultDto Edit(ArticleDto dto);
 

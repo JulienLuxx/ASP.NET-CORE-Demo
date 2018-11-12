@@ -20,7 +20,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("Add")]
-        public JsonResult Add(CommentDto dto)
+        public JsonResult Add([FromBody]CommentDto dto)
         {
             var res = _commentSvc.AddSingle(dto);
             return Json(res);

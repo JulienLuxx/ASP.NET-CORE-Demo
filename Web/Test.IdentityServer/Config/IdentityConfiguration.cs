@@ -52,7 +52,8 @@ namespace Test.IdentityServer.Config
                     AllowedCorsOrigins=new string[]
                     {
                         "http://localhost:54237",
-                        "http://localhost:54238"
+                        "http://localhost:54238",
+                        "http://localhost:4200"
                     }
                 },
                 //new Client

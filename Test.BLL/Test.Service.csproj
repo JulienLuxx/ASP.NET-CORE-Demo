@@ -19,11 +19,14 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Test.Core\Test.Core.csproj" />
     <ProjectReference Include="..\Test.Domain\Test.Domain.csproj" />
   </ItemGroup>
+
+
 
 </Project>
