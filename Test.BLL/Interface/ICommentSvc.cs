@@ -16,6 +16,10 @@ namespace Test.Service.Interface
 
         ResultDto Edit(CommentDto dto);
 
+        List<CommentTreeDto> GetCommentTrees(List<CommentDto> dtoList, int parentId = 0);
+
+        Task<ResultDto<CommentTreeDto>> GetSingleDataAsync(int id);
+
         Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,9 @@ namespace Test.Web.API
             _userSvc = userSvc;
         }
 
+        //[Authorize]
         [HttpPost("ChangePassword")]
-        public async Task<JsonResult> ChangePassword(ChangePasswordDto dto)
+        public async Task<JsonResult> ChangePassword([FromBody]ChangePasswordDto dto)
         {
             var resultTask = _userSvc.ChangePasswordAsync(dto);
             return Json(await resultTask);

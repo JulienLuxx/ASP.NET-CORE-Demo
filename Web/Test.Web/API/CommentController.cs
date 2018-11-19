@@ -22,15 +22,22 @@ namespace Test.Web.API
         [HttpPost("Add")]
         public JsonResult Add([FromBody]CommentDto dto)
         {
-            var res = _commentSvc.AddSingle(dto);
-            return Json(res);
+            var result = _commentSvc.AddSingle(dto);
+            return Json(result);
         }
 
         [HttpGet("Page")]
         public async Task<JsonResult> GetPageAsync(CommentQueryModel qModel)
         {
-            var res = await _commentSvc.GetPageDataAsync(qModel);
-            return Json(res);
+            var result = await _commentSvc.GetPageDataAsync(qModel);
+            return Json(result);
+        }
+
+        [HttpGet("Detail")]
+        public async Task<JsonResult> GetDetail(int id)
+        {
+            var result = await _commentSvc.GetSingleDataAsync(id);
+            return Json(result);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Test.Service.Infrastructure
             CreateMap<Comment, CommentDto>();
             CreateMap<Domain.LazyLoadEntity.Comment, CommentDto>();
             CreateMap<CommentDto, Comment>();
+            CreateMap<Comment, CommentTreeDto>();
             CreateMap<CommentDto, CommentTreeDto>()/*.ForMember(x => x.Childrens, a => a.Ignore())*/;
 
             CreateMap<User, UserDto>();

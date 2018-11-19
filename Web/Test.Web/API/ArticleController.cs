@@ -29,15 +29,15 @@ namespace Test.Web.API
         [HttpPost("Add")]
         public JsonResult Add([FromBody]ArticleDto dto)
         {
-            var res = _articleSvc.AddSingle(dto);
-            return Json(res);
+            var result = _articleSvc.AddSingle(dto);
+            return Json(result);
         }
 
-        [HttpGet("Detail")]
-        public async Task<JsonResult> GetDetail(int id)
+        [HttpPost("Delete")]
+        public JsonResult Delete(string idString)
         {
-            var res = await _articleSvc.GetSingleDataAsync(id);
-            return Json(res);
+            var result = _articleSvc.Delete(idString);
+            return Json(result);
         }
 
         [HttpPost("Edits")]
@@ -50,7 +50,14 @@ namespace Test.Web.API
         [HttpPost("Edit")]
         public JsonResult Edit([FromBody]ArticleDto dto)
         {
-            var res = _articleSvc.Edit(dto);
+            var result = _articleSvc.Edit(dto);
+            return Json(result);
+        }
+
+        [HttpGet("Detail")]
+        public async Task<JsonResult> GetDetail(int id)
+        {
+            var res = await _articleSvc.GetSingleDataAsync(id);
             return Json(res);
         }
 

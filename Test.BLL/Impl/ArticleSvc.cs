@@ -20,15 +20,24 @@ namespace Test.Service.Impl
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
         private ITreeUtil _util { get; set; }
+
+        private ICommentSvc _commentSvc { get; set; }
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="util"></param>
-        public ArticleSvc(IMapper mapper,TestDBContext testDB,ITreeUtil util) :base(mapper,testDB)
+        /// <param name="commentSvc"></param>
+        public ArticleSvc(
+            IMapper mapper,
+            TestDBContext testDB,
+            ITreeUtil util,
+            ICommentSvc commentSvc
+            ) :base(mapper,testDB)
         {
             _util = util;
+            _commentSvc = commentSvc;
         }
 
         public ResultDto AddSingle(string dataJson)
@@ -54,28 +63,64 @@ namespace Test.Service.Impl
                 if (flag > 0)
                 {
                     res.ActionResult = true;
-                    res.Msg = "Success";
+                    res.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
             return res;
         }
 
         public async Task<ResultDto> AddSingleAsync(ArticleDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             var data = _mapper.Map<Article>(dto);
             await _testDB.AddAsync(data);
             var flag = await _testDB.SaveChangesAsync();
             if (flag > 0)
             {
-                res.ActionResult = true;
-                res.Msg = "Success";
+                result.ActionResult = true;
+                result.Message = "Success";
             }
-            return res;
+            return result;
+        }
+
+        public ResultDto Delete(string idString)
+        {
+            var result = new ResultDto();
+            try
+            {
+                var idArray = idString.Split(",");
+                var dataList = _testDB.Article.Where(x => x.IsDeleted == false && idArray.Contains(x.Id.ToString()));
+                foreach (var data in dataList)
+                {
+                    data.IsDeleted = true;
+                }
+                var flag = _testDB.SaveChanges();
+                if (0 < flag)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public ResultDto Edit(string dataJson)
+        {
+            var result = new ResultDto();
+            if (!string.IsNullOrEmpty(dataJson) && !string.IsNullOrWhiteSpace(dataJson))
+            {
+                var dto = JsonConvert.DeserializeObject<ArticleDto>(dataJson);
+                result = Edit(dto);
+            }
+            return result;
         }
 
         public ResultDto Edit(ArticleDto dto)
@@ -99,25 +144,14 @@ namespace Test.Service.Impl
                 if (0 < flag)
                 {
                     res.ActionResult = true;
-                    res.Msg = "success";
+                    res.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
             return res;
-        }
-
-        public ResultDto Edit(string dataJson)
-        {
-            var result = new ResultDto();
-            if (!string.IsNullOrEmpty(dataJson) && !string.IsNullOrWhiteSpace(dataJson))
-            {
-                var dto = JsonConvert.DeserializeObject<ArticleDto>(dataJson);
-                result = Edit(dto);
-            }
-            return result;
         }
 
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)
@@ -136,7 +170,7 @@ namespace Test.Service.Impl
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             res.ActionResult = true;
-            res.Msg = "Success";
+            res.Message = "Success";
             res.List = queryData.ToList();
             return res;
         }
@@ -156,7 +190,7 @@ namespace Test.Service.Impl
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             res.ActionResult = true;
-            res.Msg = "Success";
+            res.Message = "Success";
             res.List = await queryData.ToListAsync();
             return res;
         }
@@ -169,7 +203,7 @@ namespace Test.Service.Impl
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
                 res.ActionResult = true;
-                res.Msg = "Success";
+                res.Message = "Success";
                 res.Data = dto;                
             }
             return res;
@@ -177,18 +211,18 @@ namespace Test.Service.Impl
 
         public async Task<ResultDto<ArticleDetailDto>> GetSingleDataAsync(int Id)
         {
-            var res = new ResultDto<ArticleDetailDto>();
+            var result = new ResultDto<ArticleDetailDto>();
             var data = await _testDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefaultAsync();
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
                 //dto.CommentTrees = GetAllCommentByTree(dto.Comments);
-                dto.CommentTrees = GetCommentTrees(dto.Comments);
-                res.ActionResult = true;
-                res.Msg = "Success";
-                res.Data = dto;
+                dto.CommentTrees = _commentSvc.GetCommentTrees(dto.Comments);
+                result.ActionResult = true;
+                result.Message = "Success";
+                result.Data = dto;
             }
-            return res;
+            return result;
         }
 
         public List<CommentTreeDto> GetAllCommentByTree(List<CommentDto> dtoList)
@@ -203,20 +237,7 @@ namespace Test.Service.Impl
             }
             return treeList;
         }
-
-        public List<CommentTreeDto> GetCommentTrees(List<CommentDto> dtos)
-        {
-            var treeList = new List<CommentTreeDto>();
-            var rootList = dtos.Where(x => x.ParentId == 0);
-            foreach (var item in rootList)
-            {
-                var tree = new CommentTreeDto();
-                _util. GetDtoTree(item, tree, dtos);
-                treeList.Add(tree);
-            }
-            return treeList;
-        }
-
+               
         private void GetTree(CommentDto dto, CommentTreeDto tree, List<CommentDto> list)
         {
             if (null == dto)

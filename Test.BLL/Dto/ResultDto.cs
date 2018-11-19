@@ -13,7 +13,7 @@ namespace Test.Service.Dto
         }
         public bool ActionResult { get; set; }
 
-        public string Msg { get; set; }
+        public string Message { get; set; }
 
         public T Data { get; set; }
 
@@ -28,6 +28,6 @@ namespace Test.Service.Dto
         }
         public bool ActionResult { get; set; }
 
-        public string Msg { get; set; }
+        public string Message { get; set; }
     }
 }

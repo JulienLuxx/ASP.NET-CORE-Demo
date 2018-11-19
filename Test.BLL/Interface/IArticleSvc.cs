@@ -16,6 +16,8 @@ namespace Test.Service.Interface
 
         Task<ResultDto> AddSingleAsync(ArticleDto dto);
 
+        ResultDto Delete(string idString);
+
         ResultDto Edit(string dataJson);
 
         ResultDto Edit(ArticleDto dto);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Test.Core.Tree;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
@@ -15,13 +16,16 @@ namespace Test.Service.Impl
 {
     public class CommentSvc : BaseSvc,ICommentSvc
     {
+        private ITreeUtil _util { get; set; }
         /// <summary>
-        /// ctor
+        /// Ctor
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
-        public CommentSvc(IMapper mapper, TestDBContext testDB) : base(mapper,testDB)
+        /// <param name="util"></param>
+        public CommentSvc(IMapper mapper, TestDBContext testDB, ITreeUtil util) : base(mapper,testDB)
         {
+            _util = util;
         }
 
         public ResultDto AddSingle(CommentDto dto)
@@ -36,40 +40,41 @@ namespace Test.Service.Impl
                 if (flag > 0)
                 {
                     res.ActionResult = true;
-                    res.Msg = "Success";
+                    res.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
 
             return res;
         }
 
-        public ResultDto Delete(string ids)
+        public ResultDto Delete(string idString)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             try
             {
-                var idArray = ids.Split(',');
+                var idArray = idString.Split(',');
                 var dataList = _testDB.Comment.Where(x => idArray.Contains(x.Id.ToString())).ToList();
                 foreach (var item in dataList)
                 {
                     item.IsDelete = true;
                 }
-                _testDB.SaveChanges();
-                res.ActionResult = true;
-                res.Msg = "Sucess";
+                var flag = _testDB.SaveChanges();
+                if (0 < flag)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Sucess";
+                }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                result.Message = ex.Message;
             }
-            return res;
+            return result;
         }
-
-
 
         public ResultDto Edit(CommentDto dto)
         {
@@ -89,19 +94,32 @@ namespace Test.Service.Impl
                 if (0 < flag)
                 {
                     res.ActionResult = true;
-                    res.Msg = "success";
+                    res.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
             return res;
         }
 
+        public List<CommentTreeDto> GetCommentTrees(List<CommentDto> dtoList, int parentId = 0)
+        {
+            var treeList = new List<CommentTreeDto>();
+            var rootList = dtoList.Where(x => x.ParentId == parentId);
+            foreach (var item in rootList)
+            {
+                var tree = new CommentTreeDto();
+                _util.GetDtoTree(item, tree, dtoList);
+                treeList.Add(tree);
+            }
+            return treeList;
+        }
+
         public async Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel)
         {
-            var res = new ResultDto<CommentDto>();
+            var result = new ResultDto<CommentDto>();
             var query=_testDB.Comment.AsNoTracking();
             query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
             var queryData = query.Select(x => new CommentDto()
@@ -114,10 +132,32 @@ namespace Test.Service.Impl
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
-            res.ActionResult = true;
-            res.Msg = "Success";
-            res.List = await queryData.ToListAsync();
-            return res;
+            result.ActionResult = true;
+            result.Message = "Success";
+            result.List = await queryData.ToListAsync();
+            return result;
+        }
+
+        public async Task<ResultDto<CommentTreeDto>> GetSingleDataAsync(int id)
+        {
+            var result = new ResultDto<CommentTreeDto>();
+            var treeDtoList = new List<CommentTreeDto>();
+            var dataList = await _testDB.Comment.AsNoTracking().Where(x => x.IsDelete == false).ToListAsync();
+            if (dataList.Where(x=>x.Id==id).Any()) 
+            {
+                var dtoList = _mapper.Map<List<CommentDto>>(dataList);
+                treeDtoList = GetCommentTrees(dtoList, id);
+                var data = dataList.Where(x => x.Id == id).FirstOrDefault();
+                if (null != data)
+                {
+                    var treeDto = _mapper.Map<CommentTreeDto>(data);
+                    treeDtoList.Insert(0, treeDto);
+                }
+                result.ActionResult = true;
+                result.Message = "Success";
+                result.List = treeDtoList;
+            }
+            return result;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Test.IdentityServer.ValidatorAndProfile
             }
             else
             {
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, result.Msg);
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, result.Message);
             }
         }
     }
