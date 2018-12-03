@@ -11,16 +11,16 @@ namespace Test.Service.Dto
     {
         public ArticleDto()
         {
-            State = ArticleStatusEnum.Default.GetHashCode();
+            Status = ArticleStatusEnum.Default.GetHashCode();
         }
 
         public string Title { get; set; }
 
         public string Content { get; set; }
 
-        public int Type { get; set; }
+        public int TypeId { get; set; }
 
-        public int State { get; set; }
+        public int Status { get; set; }
 
         public int UserId { get; set; }
     }

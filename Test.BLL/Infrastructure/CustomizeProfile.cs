@@ -16,6 +16,9 @@ namespace Test.Service.Infrastructure
             CreateMap<Article, ArticleDetailDto>();
             CreateMap<Domain.LazyLoadEntity.Article, ArticleDetailDto>();
 
+            CreateMap<ArticleType, ArticleTypeDto>();
+            CreateMap<ArticleTypeDto, ArticleType>();
+
             CreateMap<Comment, CommentDto>();
             CreateMap<Domain.LazyLoadEntity.Comment, CommentDto>();
             CreateMap<CommentDto, Comment>();
@@ -26,6 +29,8 @@ namespace Test.Service.Infrastructure
             CreateMap<UserDto, User>();
             CreateMap<UserDto, RegisterDto>();
             CreateMap<RegisterDto, UserDto>();
+
+
         }
     }
 }

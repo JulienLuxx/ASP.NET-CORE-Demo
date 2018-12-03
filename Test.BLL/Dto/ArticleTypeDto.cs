@@ -8,5 +8,7 @@ namespace Test.Service.Dto
     public class ArticleTypeDto:BaseDto
     {
         public string Name { get; set; }
+
+        public string EditerName { get; set; }
     }
 }

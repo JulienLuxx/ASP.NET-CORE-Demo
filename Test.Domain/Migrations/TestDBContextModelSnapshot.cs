@@ -31,7 +31,7 @@ namespace Test.Domain.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("State");
+                    b.Property<int>("Status");
 
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
@@ -39,15 +39,40 @@ namespace Test.Domain.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("TypeId");
 
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TypeId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.ArticleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("EditerName");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleType");
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.Comment", b =>
@@ -68,7 +93,7 @@ namespace Test.Domain.Migrations
 
                     b.Property<int?>("ParentId");
 
-                    b.Property<int>("State");
+                    b.Property<int>("Status");
 
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
@@ -112,6 +137,11 @@ namespace Test.Domain.Migrations
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
                 {
+                    b.HasOne("Test.Domain.Entity.ArticleType", "ArticleType")
+                        .WithMany("Articles")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Test.Domain.Entity.User", "User")
                         .WithMany("Articles")
                         .HasForeignKey("UserId")

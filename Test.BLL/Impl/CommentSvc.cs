@@ -125,13 +125,13 @@ namespace Test.Service.Impl
         {
             var result = new ResultDto<CommentDto>();
             var query=_testDB.Comment.AsNoTracking();
-            query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.State.HasValue ? query.Where(x => x.Status == qModel.State) : query;
             var queryData = query.Select(x => new CommentDto()
             {
                 Id = x.Id,
                 ArticleId=x.ArticleId,
                 Content = x.Content,
-                State = x.State,
+                Status = x.Status,
                 CreateTime = x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);

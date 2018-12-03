@@ -17,7 +17,7 @@ namespace Test.Service.Dto
 
         public int ParentId { get; set; }
 
-        public int State { get; set; }
+        public int Status { get; set; }
 
         public int? ArticleId { get; set; }
 

@@ -53,8 +53,12 @@ namespace Test.Service.Impl
 
         public ResultDto AddSingle(ArticleDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
+            if (0 == dto.TypeId)
+            {
+                dto.TypeId = 1;
+            }
             try
             {
                 var data = _mapper.Map<Article>(dto);
@@ -62,15 +66,15 @@ namespace Test.Service.Impl
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
                 {
-                    res.ActionResult = true;
-                    res.Message = "Success";
+                    result.ActionResult = true;
+                    result.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                result.Message = ex.Message;
             }
-            return res;
+            return result;
         }
 
         public async Task<ResultDto> AddSingleAsync(ArticleDto dto)
@@ -136,8 +140,8 @@ namespace Test.Service.Impl
                 }
                 dto.IsDeleted = data.IsDeleted;
                 dto.UserId = data.UserId;
-                dto.Type = data.Type;
-                dto.State = data.State;
+                dto.TypeId = data.TypeId;
+                dto.Status = data.Status;
                 data = _mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag= _testDB.SaveChanges();
@@ -158,13 +162,13 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
-            query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.State.HasValue ? query.Where(x => x.Status == qModel.State) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id=x.Id,
                 Title=x.Title,
                 Content=x.Content,
-                Type=x.Type,
+                TypeId=x.TypeId,
                 CreateTime=x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
@@ -177,22 +181,22 @@ namespace Test.Service.Impl
 
         public async Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel)
         {
-            var res = new ResultDto<ArticleDto>();
+            var result = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking();
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,
                 Title = x.Title,
                 Content = x.Content,
-                Type = x.Type,
+                TypeId = x.TypeId,
                 CreateTime = x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
-            res.ActionResult = true;
-            res.Message = "Success";
-            res.List = await queryData.ToListAsync();
-            return res;
+            result.ActionResult = true;
+            result.Message = "Success";
+            result.List = await queryData.ToListAsync();
+            return result;
         }
 
         public ResultDto<ArticleDetailDto> GetSingleData(int Id)

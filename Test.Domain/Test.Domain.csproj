@@ -16,6 +16,20 @@
 
   <ItemGroup>
     <Compile Remove="ContextPool.cs" />
+    <Compile Remove="Migrations\20180914104840_recreate.cs" />
+    <Compile Remove="Migrations\20180914104840_recreate.Designer.cs" />
+    <Compile Remove="Migrations\20180925095530_AlterUserTable.cs" />
+    <Compile Remove="Migrations\20180925095530_AlterUserTable.Designer.cs" />
+    <Compile Remove="Migrations\20181203075926_AddArticleTypeEntity.cs" />
+    <Compile Remove="Migrations\20181203075926_AddArticleTypeEntity.Designer.cs" />
+    <Compile Remove="Migrations\20181203080830_AddArticleType2.cs" />
+    <Compile Remove="Migrations\20181203080830_AddArticleType2.Designer.cs" />
+    <Compile Remove="Migrations\20181203081217_AddArticleType3.cs" />
+    <Compile Remove="Migrations\20181203081217_AddArticleType3.Designer.cs" />
+    <Compile Remove="Migrations\20181203090700_AddArticleEntity.cs" />
+    <Compile Remove="Migrations\20181203090700_AddArticleEntity.Designer.cs" />
+    <Compile Remove="Migrations\20181203091625_InitDb.cs" />
+    <Compile Remove="Migrations\20181203091625_InitDb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
