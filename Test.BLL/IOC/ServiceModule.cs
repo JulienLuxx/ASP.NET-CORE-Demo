@@ -19,6 +19,7 @@ namespace Test.Service.IOC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
+            builder.RegisterType<ArticleTypeSvc>().As<IArticleTypeSvc>().InstancePerLifetimeScope();
             builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
             builder.RegisterType<UserSvc>().As<IUserSvc>().InstancePerLifetimeScope();
         }
