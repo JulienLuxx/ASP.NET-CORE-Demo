@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Test.Service.Dto
+namespace Test.Core.Dto
 {
     public partial class ResultDto<T> where T : class
     {

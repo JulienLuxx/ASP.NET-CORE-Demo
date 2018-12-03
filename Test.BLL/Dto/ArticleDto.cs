@@ -3,11 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Test.Core.Dto;
+using Test.Domain.Enum;
 
 namespace Test.Service.Dto
 {
     public class ArticleDto:BaseDto
     {
+        public ArticleDto()
+        {
+            State = ArticleStatusEnum.Default.GetHashCode();
+        }
 
         public string Title { get; set; }
 

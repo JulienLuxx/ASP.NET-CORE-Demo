@@ -5,16 +5,9 @@ using System.Text;
 
 namespace Test.Domain.Enum
 {
-    public enum UserStatusEnum
+    public enum CommentStatusEnum
     {
         [Description("Default")]
-        Default,
-
-        [Description("Unable")]
-        Unable,
-
-        [Description("Activate")]
-        Activate,
-
+        Default
     }
 }

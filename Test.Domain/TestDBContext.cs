@@ -20,6 +20,8 @@ namespace Test.Domain
 
         public DbSet<Article> Article { get; set; }
 
+        //public DbSet<ArticleType> ArticleType { get; set; }
+
         public DbSet<Comment> Comment { get; set; }
 
         public DbSet<User> User { get; set; }
@@ -80,6 +82,14 @@ namespace Test.Domain
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.User).WithMany(y => y.Articles).HasForeignKey(x => x.UserId);
             });
+
+            //modelBuilder.Entity<ArticleType>(e =>
+            //{
+            //    e.ToTable("ArticleType");
+            //    e.HasKey(x => x.Id);
+            //    e.Property(x => x.Id).ValueGeneratedOnAdd();
+            //    e.Property(x => x.Timestamp).IsRowVersion();
+            //});
 
             modelBuilder.Entity<Comment>(e =>
             {

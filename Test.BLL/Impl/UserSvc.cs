@@ -22,7 +22,11 @@ namespace Test.Service.Impl
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="encryptUtil"></param>
-        public UserSvc(IMapper mapper, TestDBContext testDB, IEncryptUtil encryptUtil) : base(mapper, testDB)
+        public UserSvc(
+            IMapper mapper, 
+            TestDBContext testDB, 
+            IEncryptUtil encryptUtil
+            ) : base(mapper, testDB)
         {
             _encryptUtil = encryptUtil;
         }

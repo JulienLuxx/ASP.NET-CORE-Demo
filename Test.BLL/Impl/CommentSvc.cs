@@ -23,7 +23,11 @@ namespace Test.Service.Impl
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="util"></param>
-        public CommentSvc(IMapper mapper, TestDBContext testDB, ITreeUtil util) : base(mapper,testDB)
+        public CommentSvc(
+            IMapper mapper,
+            TestDBContext testDB,
+            ITreeUtil util
+            ) : base(mapper,testDB)
         {
             _util = util;
         }

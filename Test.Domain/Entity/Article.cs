@@ -12,7 +12,7 @@ namespace Test.Domain.Entity
         public Article()
         {
             Type = 0;
-            State = 0;
+            //State = 0;
             IsDeleted = false;
             Comments = new HashSet<Comment>();
         }

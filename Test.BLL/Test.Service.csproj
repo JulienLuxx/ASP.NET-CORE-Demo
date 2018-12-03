@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Remove="Dto\BaseDto.cs" />
     <Compile Remove="Dto\BaseTreeDto.cs" />
+    <Compile Remove="Dto\ResultDto.cs" />
   </ItemGroup>
 
   <ItemGroup>
