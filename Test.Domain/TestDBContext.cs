@@ -20,6 +20,8 @@ namespace Test.Domain
 
         public DbSet<Article> Article { get; set; }
 
+        public DbSet<ArticleType> ArticleType { get; set; }
+
         public DbSet<Comment> Comment { get; set; }
 
         public DbSet<User> User { get; set; }
@@ -30,7 +32,7 @@ namespace Test.Domain
             //MSSql
             //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
             //MySql
-            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=test;password=123456;");
+            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=123456;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,6 +84,16 @@ namespace Test.Domain
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Timestamp).IsRowVersion();                
             });
+
+            modelBuilder.Entity<ArticleType>(e =>
+            {
+                e.ToTable("ArticleType");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlComputedColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Timestamp).IsRowVersion();
+                e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
+            });
+
             modelBuilder.Entity<Comment>(e =>
             {
                 e.ToTable("Comment");
@@ -90,6 +102,7 @@ namespace Test.Domain
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
+
             modelBuilder.Entity<User>(e =>
             {
                 e.ToTable("User");

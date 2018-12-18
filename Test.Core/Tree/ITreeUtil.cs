@@ -18,6 +18,6 @@ namespace Test.Core.Tree
         /// <param name="dto"></param>
         /// <param name="tree"></param>
         /// <param name="list"></param>
-        void GetTree<T, Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new();
+        void GetDtoTree<T, Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new();
     }
 }

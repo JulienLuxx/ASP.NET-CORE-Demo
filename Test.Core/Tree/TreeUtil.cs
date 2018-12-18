@@ -20,7 +20,7 @@ namespace Test.Core.Tree
         /// <param name="dto"></param>
         /// <param name="tree"></param>
         /// <param name="list"></param>
-        public void GetTree<T, Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new()
+        public void GetDtoTree<T, Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Test.Core.Tree
                 {
                     Ttree node = new Ttree();
                     tree.Childrens.Add(node);
-                    GetTree(child, node, list);
+                    GetDtoTree(child, node, list);
                 }
             }
             catch (Exception ex)

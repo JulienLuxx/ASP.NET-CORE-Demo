@@ -11,8 +11,8 @@ namespace Test.Domain.Entity
     {    
         public Article()
         {
-            Type = 0;
-            State = 0;
+            TypeId = 0;
+            //State = 0;
             IsDeleted = false;
             Comments = new HashSet<Comment>();
         }
@@ -33,16 +33,18 @@ namespace Test.Domain.Entity
         public string Content { get; set; }
 
         //[Required]
-        public int Type { get; set; }
+        public int TypeId { get; set; }
 
-        public int State { get; set; }
+        public int Status { get; set; }
 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         //[Timestamp]
         public byte[] Timestamp { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual ArticleType ArticleType { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }

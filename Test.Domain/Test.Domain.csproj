@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <Folder Include="IOC\" />
+    <Folder Include="Enum\" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ namespace Test.Domain.Entity
     {
         public Comment()
         {
-            State = 0;
+            Status = 0;
             IsDelete = false;
         }
 
@@ -31,7 +31,7 @@ namespace Test.Domain.Entity
 
         public int? ParentId { get; set; }
 
-        public int State { get; set; }
+        public int Status { get; set; }
 
         public int? ArticleId { get; set; }
 

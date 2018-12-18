@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Test.Core.Dto;
 using Test.Core.Tree;
 using Test.Domain;
 using Test.Domain.Entity;
@@ -16,18 +17,26 @@ namespace Test.Service.Impl
 {
     public class ArticleSvc: BaseSvc,IArticleSvc
     {
+        private ITreeUtil _util { get; set; }
+
+        private ICommentSvc _commentSvc { get; set; }
+
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="util"></param>
-        public ArticleSvc(IMapper mapper,TestDBContext testDB, ITreeUtil util) :base(mapper,testDB)
+        public ArticleSvc(
+            IMapper mapper,
+            TestDBContext testDB, 
+            ITreeUtil util,
+            ICommentSvc commentSvc
+            ) :base(mapper,testDB)
         {
             _util = util;
+            _commentSvc = commentSvc;
         }
-
-        private ITreeUtil _util { get; set; }
 
         public ResultDto AddSingle(ArticleDto dto)
         {
@@ -41,12 +50,12 @@ namespace Test.Service.Impl
                 if (flag > 0)
                 {
                     res.ActionResult = true;
-                    res.Msg = "Success";
+                    res.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
             return res;
         }
@@ -60,7 +69,7 @@ namespace Test.Service.Impl
             if (flag > 0)
             {
                 res.ActionResult = true;
-                res.Msg = "Success";
+                res.Message = "Success";
             }
             return res;
         }
@@ -83,12 +92,12 @@ namespace Test.Service.Impl
                 if (0 < flag)
                 {
                     res.ActionResult = true;
-                    res.Msg = "success";
+                    res.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Msg = ex.Message;
+                res.Message = ex.Message;
             }
             return res;
         }
@@ -97,20 +106,20 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
-            query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
             query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id=x.Id,
                 Title=x.Title,
                 Content=x.Content,
-                Type=x.Type,
+                TypeId=x.TypeId,
                 CreateTime=x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             res.ActionResult = true;
-            res.Msg = "Success";
+            res.Message = "Success";
             res.List = queryData.ToList();
             return res;
         }
@@ -119,20 +128,21 @@ namespace Test.Service.Impl
         {
             var res = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x => x.IsDeleted == false);
-            query = qModel.State.HasValue ? query.Where(x => x.State == qModel.State) : query;
+            query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
             query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
+            query = string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,
                 Title = x.Title,
                 Content = x.Content,
-                Type = x.Type,
+                TypeId = x.TypeId,
                 CreateTime = x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             res.ActionResult = true;
-            res.Msg = "Success";
+            res.Message = "Success";
             res.List = await queryData.ToListAsync();
             return res;
         }
@@ -145,7 +155,7 @@ namespace Test.Service.Impl
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
                 res.ActionResult = true;
-                res.Msg = "Success";
+                res.Message = "Success";
                 res.Data = dto;                
             }
             return res;
@@ -160,7 +170,7 @@ namespace Test.Service.Impl
                 var dto = _mapper.Map<ArticleDetailDto>(data);
                 dto.CommentTrees = GetAllCommentByTree(dto.Comments);
                 res.ActionResult = true;
-                res.Msg = "Success";
+                res.Message = "Success";
                 res.Data = dto;
             }
             return res;
