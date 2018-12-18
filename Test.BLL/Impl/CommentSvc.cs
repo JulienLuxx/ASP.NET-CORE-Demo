@@ -34,7 +34,7 @@ namespace Test.Service.Impl
 
         public ResultDto AddSingle(CommentDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
             {
@@ -43,16 +43,16 @@ namespace Test.Service.Impl
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
                 {
-                    res.ActionResult = true;
-                    res.Message = "Success";
+                    result.ActionResult = true;
+                    result.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                result.Message = ex.Message;
             }
 
-            return res;
+            return result;
         }
 
         public ResultDto Delete(string idString)
@@ -82,14 +82,14 @@ namespace Test.Service.Impl
 
         public ResultDto Edit(CommentDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
             {
                 var data = _testDB.Comment.Where(x => x.IsDelete == false && x.Id == dto.Id).FirstOrDefault();
                 if (null == data)
                 {
-                    return res;
+                    return result;
                 }
                 dto.IsDeleted = data.IsDelete;
                 data = _mapper.Map(dto, data);
@@ -97,15 +97,15 @@ namespace Test.Service.Impl
                 var flag= _testDB.SaveChanges();
                 if (0 < flag)
                 {
-                    res.ActionResult = true;
-                    res.Message = "success";
+                    result.ActionResult = true;
+                    result.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                result.Message = ex.Message;
             }
-            return res;
+            return result;
         }
 
         public List<CommentTreeDto> GetCommentTrees(List<CommentDto> dtoList, int parentId = 0)
@@ -124,7 +124,7 @@ namespace Test.Service.Impl
         public async Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel)
         {
             var result = new ResultDto<CommentDto>();
-            var query=_testDB.Comment.AsNoTracking();
+            var query = _testDB.Comment.AsNoTracking().Where(x => !x.IsDelete);
             query = qModel.State.HasValue ? query.Where(x => x.Status == qModel.State) : query;
             var queryData = query.Select(x => new CommentDto()
             {

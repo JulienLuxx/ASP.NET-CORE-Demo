@@ -9,6 +9,14 @@ namespace Test.Core.Tree
 {
     public class TreeUtil: ITreeUtil
     {
+        /// <summary>
+        /// GetTreeForBaseDto
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Ttree"></typeparam>
+        /// <param name="dto"></param>
+        /// <param name="tree"></param>
+        /// <param name="list"></param>
         public void GetDtoTree<T, Ttree>(T dto, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new()
         {
             try
@@ -28,7 +36,9 @@ namespace Test.Core.Tree
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                throw ex;
+            }
         }
 
         public void GetDataTree<T, Ttree>(T data, BaseTreeDto<Ttree> tree, List<T> list) where T : BaseDto, ITreeDto, new() where Ttree : BaseTreeDto<Ttree>, new()
@@ -50,7 +60,9 @@ namespace Test.Core.Tree
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                throw ex;
+            }
         }
     }
 }

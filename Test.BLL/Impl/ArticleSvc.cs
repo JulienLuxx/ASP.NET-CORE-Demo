@@ -161,8 +161,9 @@ namespace Test.Service.Impl
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)
         {
             var res = new ResultDto<ArticleDto>();
-            var query = _testDB.Article.AsNoTracking().Where(x=>x.IsDeleted==false);
-            query = qModel.State.HasValue ? query.Where(x => x.Status == qModel.State) : query;
+            var query = _testDB.Article.AsNoTracking().Include(x=>x.ArticleType).Where(x=>x.IsDeleted==false);
+            query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
+            query = string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id=x.Id,
@@ -182,7 +183,10 @@ namespace Test.Service.Impl
         public async Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel)
         {
             var result = new ResultDto<ArticleDto>();
-            var query = _testDB.Article.AsNoTracking();
+            var query = _testDB.Article.AsNoTracking().Include(x => x.ArticleType).Where(x => x.IsDeleted == false);
+            query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
+            query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
+            query = string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,

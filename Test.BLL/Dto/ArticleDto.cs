@@ -20,6 +20,8 @@ namespace Test.Service.Dto
 
         public int TypeId { get; set; }
 
+        public string TypeName { get; set; }
+
         public int Status { get; set; }
 
         public int UserId { get; set; }
