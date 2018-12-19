@@ -32,7 +32,7 @@ namespace Test.Domain
             //MSSql
             //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
             //MySql
-            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=123456;");
+            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=1234;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
