@@ -89,7 +89,7 @@ namespace Test.Domain
             {
                 e.ToTable("ArticleType");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlComputedColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });

@@ -39,3 +39,4 @@
 /Web/Test.IdentityServer/obj/Debug/netcoreapp2.1/*.cache
 /Web/Test.IdentityServer/obj/Debug/netcoreapp2.1
 /Web/Test.IdentityServer/bin/Debug/netcoreapp2.1
+/Test.Domain/Migrations

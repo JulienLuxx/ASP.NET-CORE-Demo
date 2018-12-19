@@ -184,7 +184,7 @@ namespace Test.Service.Impl
             {
                 var tree = new CommentTreeDto();
                 //GetTree(item, tree, dtoList);
-                _util.GetTree(item, tree, dtoList);
+                _util.GetDtoTree(item, tree, dtoList);
                 treeList.Add(tree);
             }
             return treeList;

@@ -10,6 +10,7 @@ using Test.Service.Interface;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Test.Core.Encrypt;
+using Test.Core.Dto;
 
 namespace Test.Service.Impl
 {
@@ -43,12 +44,12 @@ namespace Test.Service.Impl
                 if (flag > 0)
                 {
                     result.ActionResult = true;
-                    result.Msg = "Success";
+                    result.Message = "Success";
                 }
             }
             catch (Exception ex)
             {
-                result.Msg = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
@@ -60,7 +61,7 @@ namespace Test.Service.Impl
             {
                 if (!dto.NewPassword.Equals(dto.ConfirmPassword))
                 {
-                    result.Msg = "UnConfirm";
+                    result.Message = "UnConfirm";
                     return result;
                 }
                 var data = await _testDB.User.FindAsync(dto.Id);
@@ -75,7 +76,7 @@ namespace Test.Service.Impl
                     {
                         if (!dto.OrigPassword.Equals(data.Password))
                         {
-                            result.Msg = "OrigPassword error";
+                            result.Message = "OrigPassword error";
                             return result;
                         }
                         else
@@ -89,14 +90,14 @@ namespace Test.Service.Impl
                     if (flag > 0)
                     {
                         result.ActionResult = true;
-                        result.Msg = "Success";
+                        result.Message = "Success";
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                result.Msg = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
@@ -121,7 +122,7 @@ namespace Test.Service.Impl
             }
             catch (Exception ex)
             {
-                result.Msg = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
@@ -142,23 +143,23 @@ namespace Test.Service.Impl
 
                 if (null == data)
                 {
-                    result.Msg = "User does not exist";
+                    result.Message = "User does not exist";
                     return result;
                 }
                 else if (!data.Password.Equals(_encryptUtil.GetMd5By32(dto.Password + data.SaltValue)))
                 {
-                    result.Msg = "UserNameOrPassword error";
+                    result.Message = "UserNameOrPassword error";
                     return result;
                 }
 
                 result.ActionResult = true;
-                result.Msg = "success";
+                result.Message = "success";
                 result.Data = data;
                 return result;
             }
             catch (Exception ex)
             {
-                result.Msg = ex.Message;
+                result.Message = ex.Message;
             }
             return result;
         }
