@@ -40,3 +40,4 @@
 /Web/Test.IdentityServer/obj/Debug/netcoreapp2.1
 /Web/Test.IdentityServer/bin/Debug/netcoreapp2.1
 /Test.Domain/Migrations
+/Web/Test.Web/Log

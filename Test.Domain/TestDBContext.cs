@@ -32,7 +32,9 @@ namespace Test.Domain
             //MSSql
             //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
             //MySql
-            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=1234;");
+            //optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=1234;");
+            //PostgreSql
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=TestDB;Username=postgres;Password=123456");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,7 +83,8 @@ namespace Test.Domain
             {
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
                 e.Property(x => x.Timestamp).IsRowVersion();                
             });
 
@@ -89,7 +92,8 @@ namespace Test.Domain
             {
                 e.ToTable("ArticleType");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });
@@ -98,7 +102,8 @@ namespace Test.Domain
             {
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
@@ -107,7 +112,8 @@ namespace Test.Domain
             {
                 e.ToTable("User");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
                 e.Property(x => x.Timestamp).IsRowVersion();
                 e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
