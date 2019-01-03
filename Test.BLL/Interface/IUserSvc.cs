@@ -8,6 +8,11 @@ namespace Test.Service.Interface
 {
     public interface IUserSvc
     {
+        /// <summary>
+        /// AddSingle
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         ResultDto Add(UserDto dto);
 
         Task<ResultDto> ChangePasswordAsync(ChangePasswordDto dto);
