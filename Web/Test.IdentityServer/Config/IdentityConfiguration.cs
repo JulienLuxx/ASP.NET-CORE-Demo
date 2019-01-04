@@ -56,6 +56,26 @@ namespace Test.IdentityServer.Config
                         "http://localhost:4200"
                     }
                 },
+                //TODO:TryUseHybridClient
+                new Client
+                {
+                    ClientId="HybridClient",
+                    AllowAccessTokensViaBrowser=true,
+                    ClientSecrets = new [] { new Secret("clientsecret".Sha256()) },
+                    AllowedGrantTypes=GrantTypes.HybridAndClientCredentials,
+                    AllowedScopes=new []{ IdentityServerConstants.StandardScopes.OfflineAccess,"Test_Api" },
+                    AllowOfflineAccess=true,
+                    AccessTokenLifetime=360000,
+                    RefreshTokenExpiration=TokenExpiration.Sliding,
+                    RefreshTokenUsage=TokenUsage.ReUse,
+                    UpdateAccessTokenClaimsOnRefresh=false,
+                    AllowedCorsOrigins=new string[]
+                    {
+                        "http://localhost:54237",
+                        "http://localhost:54238",
+                        "http://localhost:4200"
+                    }
+                },
                 //new Client
                 //{
                 //    ClientId = "client.api.service",
