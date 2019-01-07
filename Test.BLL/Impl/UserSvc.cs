@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Test.Core.Dto;
 using Test.Core.Encrypt;
 using Test.Domain;
 using Test.Domain.Entity;
@@ -36,7 +37,7 @@ namespace Test.Service.Impl
             var result = new ResultDto();
             try
             {
-                dto.CreateTime = DateTime.Now;
+                dto.SetDefaultValue();
                 var randomStr = new Random().Next(100000).ToString();
                 dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
                 var data = _mapper.Map<User>(dto);
@@ -150,10 +151,12 @@ namespace Test.Service.Impl
                 var mailBoxTask = _testDB.User.AsNoTracking().Where(x => x.MailBox.Equals(dto.MailBox)).AnyAsync();
                 if (await mobileTask)
                 {
+                    result.Message = "MobileNumber already exist!";
                     return result;
                 }
                 if (await mailBoxTask)
                 {
+                    result.Message = "MailBox already exist!";
                     return result;
                 }
                 var userDto = _mapper.Map<UserDto>(dto);

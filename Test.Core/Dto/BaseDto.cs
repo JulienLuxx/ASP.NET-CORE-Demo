@@ -8,10 +8,16 @@ namespace Test.Core.Dto
     {
         public BaseDto()
         {
-            IsDeleted = false;
+            //IsDeleted = false;
         }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreateTime { get; set; }
+
+        public virtual void SetDefaultValue()
+        {
+            IsDeleted = false;
+            CreateTime = DateTime.Now;
+        }
     }
 }

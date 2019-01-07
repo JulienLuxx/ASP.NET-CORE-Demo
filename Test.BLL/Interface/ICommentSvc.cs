@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Test.Core.Dto;
 using Test.Domain.Infrastructure;
 using Test.Service.Dto;
 using Test.Service.QueryModel;

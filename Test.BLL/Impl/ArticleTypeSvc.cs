@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Test.Core.Dto;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
