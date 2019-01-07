@@ -54,7 +54,7 @@ namespace Test.Service.Impl
         public ResultDto AddSingle(ArticleDto dto)
         {
             var result = new ResultDto();
-            dto.CreateTime = DateTime.Now;
+            dto.SetDefaultValue();
             if (0 == dto.TypeId)
             {
                 dto.TypeId = 1;
