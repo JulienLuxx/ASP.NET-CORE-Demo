@@ -217,10 +217,10 @@ namespace Test.Service.Impl
             return res;
         }
 
-        public async Task<ResultDto<ArticleDetailDto>> GetSingleDataAsync(int Id)
+        public async Task<ResultDto<ArticleDetailDto>> GetSingleDataAsync(int id)
         {
             var result = new ResultDto<ArticleDetailDto>();
-            var data = await _testDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefaultAsync();
+            var data = await _testDB.Article.AsNoTracking().Where(x => x.Id == id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefaultAsync();
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
