@@ -160,7 +160,7 @@ namespace Test.Service.Impl
 
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)
         {
-            var res = new ResultDto<ArticleDto>();
+            var result = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Include(x=>x.ArticleType).Where(x=>x.IsDeleted==false);
             query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
             query = string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
@@ -174,10 +174,10 @@ namespace Test.Service.Impl
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
-            res.ActionResult = true;
-            res.Message = "Success";
-            res.List = queryData.ToList();
-            return res;
+            result.ActionResult = true;
+            result.Message = "Success";
+            result.List = queryData.ToList();
+            return result;
         }
 
         public async Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel)
