@@ -203,10 +203,10 @@ namespace Test.Service.Impl
             return result;
         }
 
-        public ResultDto<ArticleDetailDto> GetSingleData(int Id)
+        public ResultDto<ArticleDetailDto> GetSingleData(int id)
         {
             var res = new ResultDto<ArticleDetailDto>();
-            var data = _testDB.Article.AsNoTracking().Where(x => x.Id == Id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefault();
+            var data = _testDB.Article.AsNoTracking().Where(x => x.Id == id&&x.IsDeleted==false).Include(x => x.Comments).FirstOrDefault();
             if (null != data)
             {
                 var dto = _mapper.Map<ArticleDetailDto>(data);
