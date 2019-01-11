@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using Test.Domain.Extend;
 using Test.Domain.Service.Impl;
 using Test.Domain.Service.Interface;
 

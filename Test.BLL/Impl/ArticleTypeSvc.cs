@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Test.Core.Dto;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -69,14 +70,14 @@ namespace Test.Service.Impl
 
         public ResultDto Edit(ArticleTypeDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
             {
                 var data = _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
                 if (null == data)
                 {
-                    return res;
+                    return result;
                 }
                 dto.IsDeleted = data.IsDeleted;
                 data = _mapper.Map(dto, data);
@@ -84,15 +85,38 @@ namespace Test.Service.Impl
                 var flag = _testDB.SaveChanges();
                 if (0 < flag)
                 {
-                    res.ActionResult = true;
-                    res.Message = "success";
+                    result.ActionResult = true;
+                    result.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                result.Message = ex.Message;
             }
-            return res;
+            return result;
+        }
+
+        public async Task<ResultDto> EditAsync(ArticleTypeDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                dto.CreateTime = DateTime.Now;
+                var data = _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                if (null == data)
+                {
+                    return result;
+                }
+                dto.IsDeleted = data.IsDeleted;
+                data = _mapper.Map(dto, data);
+                _testDB.Update(data);
+                await DbContextExtend.MSDNCommitAsync<TestDBContext,ArticleType>(_testDB)
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
         }
 
         public async Task<ResultDto<ArticleTypeDto>> GetPageDataAsync(ArticleTypeQueryModel qModel)
