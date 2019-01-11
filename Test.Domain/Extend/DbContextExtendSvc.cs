@@ -19,19 +19,19 @@ namespace Test.Domain.Extend
         //    var oldEntity=dbContext.Find(newEntity.)
         //}
 
-        public void Update(DbContext dbContext, TEntity newEntity, TEntity oldEntity)
-        {
-            if (null == newEntity)
-            {
-                throw new ArgumentNullException(nameof(newEntity));
-            }
-            if (null == oldEntity)
-            {
-                throw new ArgumentNullException(nameof(oldEntity));
-            }
-            ValidateVersion(newEntity, oldEntity);
-            dbContext.Entry(oldEntity).CurrentValues.SetValues(newEntity);
-        }
+        //public void Update(DbContext dbContext, TEntity newEntity, TEntity oldEntity)
+        //{
+        //    if (null == newEntity)
+        //    {
+        //        throw new ArgumentNullException(nameof(newEntity));
+        //    }
+        //    if (null == oldEntity)
+        //    {
+        //        throw new ArgumentNullException(nameof(oldEntity));
+        //    }
+        //    ValidateVersion(newEntity, oldEntity);
+        //    dbContext.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+        //}
 
         /// <summary>
         /// 验证时间戳
@@ -39,19 +39,19 @@ namespace Test.Domain.Extend
         /// <typeparam name="T"></typeparam>
         /// <param name="newEntity"></param>
         /// <param name="oldEntity"></param>
-        public void ValidateVersion<T>(T newEntity, T oldEntity) where T : IEntity
-        {
-            if (null == newEntity.Timestamp)
-            {
-                throw new DBConcurrencyException();
-            }
-            for (int i = 0; i < oldEntity.Timestamp.Length; i++)
-            {
-                if (newEntity.Timestamp[i] != oldEntity.Timestamp[i])
-                {
-                    throw new DBConcurrencyException();
-                }
-            }
-        }
+        //public void ValidateVersion<T>(T newEntity, T oldEntity) where T : IEntity
+        //{
+        //    if (null == newEntity.Timestamp)
+        //    {
+        //        throw new DBConcurrencyException();
+        //    }
+        //    for (int i = 0; i < oldEntity.Timestamp.Length; i++)
+        //    {
+        //        if (newEntity.Timestamp[i] != oldEntity.Timestamp[i])
+        //        {
+        //            throw new DBConcurrencyException();
+        //        }
+        //    }
+        //}
     }
 }

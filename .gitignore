@@ -21,3 +21,13 @@
 /Test.Core/bin/Debug/netcoreapp2.2
 /Test.Domain/bin/Debug/netcoreapp2.2
 /Test.Domain/obj/Debug/netcoreapp2.2
+/Test.Domain/Migrations
+/Test.Domain/Migrations/20180914104840_recreate.Designer.cs
+/Test.Domain/Migrations/20180914104840_recreate.cs
+/Test.Domain/Migrations/20180925095530_AlterUserTable.Designer.cs
+/Test.Domain/Migrations/20180925095530_AlterUserTable.cs
+/Test.Domain/Migrations/20181203092213_InitDb.Designer.cs
+/Test.Domain/Migrations/20181203092213_InitDb.cs
+/Test.Domain/Migrations/20181203110341_tmp.Designer.cs
+/Test.Domain/Migrations/20181203110341_tmp.cs
+/Test.Domain/Migrations/TestDBContextModelSnapshot.cs

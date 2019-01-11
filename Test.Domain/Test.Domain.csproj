@@ -6,31 +6,26 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.2\Test.Domain.xml</DocumentationFile>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Map\**" />
+    <Compile Remove="Migrations\**" />
     <EmbeddedResource Remove="Map\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <None Remove="Map\**" />
+    <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="ContextPool.cs" />
-    <Compile Remove="Migrations\20180914104840_recreate.cs" />
-    <Compile Remove="Migrations\20180914104840_recreate.Designer.cs" />
-    <Compile Remove="Migrations\20180925095530_AlterUserTable.cs" />
-    <Compile Remove="Migrations\20180925095530_AlterUserTable.Designer.cs" />
-    <Compile Remove="Migrations\20181203075926_AddArticleTypeEntity.cs" />
-    <Compile Remove="Migrations\20181203075926_AddArticleTypeEntity.Designer.cs" />
-    <Compile Remove="Migrations\20181203080830_AddArticleType2.cs" />
-    <Compile Remove="Migrations\20181203080830_AddArticleType2.Designer.cs" />
-    <Compile Remove="Migrations\20181203081217_AddArticleType3.cs" />
-    <Compile Remove="Migrations\20181203081217_AddArticleType3.Designer.cs" />
-    <Compile Remove="Migrations\20181203090700_AddArticleEntity.cs" />
-    <Compile Remove="Migrations\20181203090700_AddArticleEntity.Designer.cs" />
-    <Compile Remove="Migrations\20181203091625_InitDb.cs" />
-    <Compile Remove="Migrations\20181203091625_InitDb.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20190111082909_tmp.cs" />
+    <Compile Include="Migrations\20190111082909_tmp.Designer.cs" />
+    <Compile Include="Migrations\TestDBContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,12 +41,6 @@
     </PackageReference>
     <!--<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />-->
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
-      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.abstractions\2.0.2\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

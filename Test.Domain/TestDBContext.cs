@@ -79,7 +79,8 @@ namespace Test.Domain
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                //e.Ignore(x => x.Timestamp);
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasOne(x => x.User).WithMany(y => y.Articles).HasForeignKey(x => x.UserId);
             });
 
@@ -88,7 +89,8 @@ namespace Test.Domain
                 e.ToTable("ArticleType");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                //e.Ignore(x => x.Timestamp);
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });
 
@@ -97,7 +99,8 @@ namespace Test.Domain
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                //e.Ignore(x => x.Timestamp);
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
 
@@ -106,7 +109,8 @@ namespace Test.Domain
                 e.ToTable("User");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                //e.Ignore(x => x.Timestamp);
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
             #endregion
