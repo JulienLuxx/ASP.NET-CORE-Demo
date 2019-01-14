@@ -16,6 +16,8 @@ namespace Test.Service.Interface
 
         ResultDto Edit(ArticleTypeDto dto);
 
+        Task<ResultDto> EditAsync(ArticleTypeDto dto);
+
         Task<ResultDto<ArticleTypeDto>> GetPageDataAsync(ArticleTypeQueryModel qModel);
     }
 }

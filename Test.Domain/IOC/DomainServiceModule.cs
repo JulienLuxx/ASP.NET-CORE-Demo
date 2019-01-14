@@ -19,6 +19,7 @@ namespace Test.Domain.IOC
         /// <param name="builder"></param>
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<DbContextExtendSvc>().As<IDbContextExtendSvc>().InstancePerLifetimeScope();
             builder.RegisterType<CommentDomainSvc>().As<ICommentDomainSvc>().InstancePerLifetimeScope();
         }
     }

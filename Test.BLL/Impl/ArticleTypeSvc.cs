@@ -110,7 +110,9 @@ namespace Test.Service.Impl
                 dto.IsDeleted = data.IsDeleted;
                 data = _mapper.Map(dto, data);
                 _testDB.Update(data);
-                await DbContextExtend.MSDNCommitAsync<TestDBContext,ArticleType>(_testDB)
+                await DbContextExtend.MSDNCommitAsync<TestDBContext, ArticleType>(_testDB);
+                result.ActionResult = true;
+                result.Message = "success";
             }
             catch (Exception ex)
             {
@@ -127,6 +129,7 @@ namespace Test.Service.Impl
             {
                 Id = x.Id,
                 Name = x.Name,
+                EditerName=x.EditerName,
                 CreateTime = x.CreateTime,                
             });
             queryData = queryData.OrderBy(o => o.CreateTime);

@@ -57,6 +57,7 @@ namespace Test.Domain.Extend
                     if (flag > 0)
                     {
                         saved = true;
+                        //return flag;
                     }
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -81,8 +82,8 @@ namespace Test.Domain.Extend
                         }
                     }
                 }
-                await dbContext.SaveChangesAsync();
             }
+            //await dbContext.SaveChangesAsync();
         }
 
         public static async Task GitHubCommitAsync<TDbContext, TEntity>(TDbContext dbContext/*, TEntity newEntity, TEntity oldEntity*/) where TDbContext : DbContext where TEntity : IEntity

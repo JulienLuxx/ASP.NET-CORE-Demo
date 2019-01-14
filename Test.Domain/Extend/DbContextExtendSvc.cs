@@ -54,4 +54,42 @@ namespace Test.Domain.Extend
             }
         }
     }
+
+    public class DbContextExtendSvc:IDbContextExtendSvc
+    {
+        public void Update<TEntity>(DbContext dbContext, IEntity newEntity, IEntity oldEntity) where TEntity : IEntity 
+        {
+            if (null == newEntity)
+            {
+                throw new ArgumentNullException(nameof(newEntity));
+            }
+            if (null == oldEntity)
+            {
+                throw new ArgumentNullException(nameof(oldEntity));
+            }
+            ValidateVersion(newEntity, oldEntity);
+            dbContext.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+        }
+
+        /// <summary>
+        /// 验证时间戳
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="newEntity"></param>
+        /// <param name="oldEntity"></param>
+        public void ValidateVersion<TEntity>(TEntity newEntity, TEntity oldEntity) where TEntity : IEntity
+        {
+            if (null == newEntity.Timestamp)
+            {
+                throw new DBConcurrencyException();
+            }
+            for (int i = 0; i < oldEntity.Timestamp.Length; i++)
+            {
+                if (newEntity.Timestamp[i] != oldEntity.Timestamp[i])
+                {
+                    throw new DBConcurrencyException();
+                }
+            }
+        }
+    }
 }

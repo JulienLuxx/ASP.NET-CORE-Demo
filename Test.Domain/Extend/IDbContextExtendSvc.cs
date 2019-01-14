@@ -10,4 +10,9 @@ namespace Test.Domain.Extend
     {
         void Update(DbContext dbContext, TEntity newEntity, TEntity oldEntity);
     }
+
+    public interface IDbContextExtendSvc
+    {
+
+    }
 }
