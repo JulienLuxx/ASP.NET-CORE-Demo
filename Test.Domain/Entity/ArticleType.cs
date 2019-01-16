@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Test.Domain.Entity
 {
-    public class ArticleType// : IEntity
+    public class ArticleType : IEntity 
     {
         public ArticleType()
         {

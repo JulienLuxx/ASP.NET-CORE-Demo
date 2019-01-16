@@ -22,8 +22,14 @@ namespace Test.Service.Impl
         /// <param name="testDB">DbContextInjectionParam</param>
         protected BaseSvc(IMapper mapper,TestDBContext testDB)
         {
-            _mapper = mapper;
-            _testDB = testDB;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _testDB = testDB ?? throw new ArgumentNullException(nameof(testDB));
+        }
+
+        protected BaseSvc(TestDBContext testDB)
+        {
+            //_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _testDB = testDB ?? throw new ArgumentNullException(nameof(testDB));
         }
     }
 }

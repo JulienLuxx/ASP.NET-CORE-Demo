@@ -16,7 +16,9 @@ namespace Test.Service.Impl
 {
     public class ArticleTypeSvc : BaseSvc, IArticleTypeSvc
     {
-        public ArticleTypeSvc(IMapper mapper, TestDBContext testDB) : base(mapper, testDB)
+        public ArticleTypeSvc(
+            TestDBContext testDB
+            ) : base( testDB)
         {
         }
 
@@ -26,7 +28,7 @@ namespace Test.Service.Impl
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = _mapper.Map<ArticleType>(dto);
+                var data = Mapper.Map<ArticleType>(dto);
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
@@ -40,6 +42,16 @@ namespace Test.Service.Impl
                 result.Message = ex.Message;
             }
             return result;
+        }
+
+        public ArticleType Add(ArticleTypeDto dto)
+        {
+            var data = new ArticleType();
+            dto.CreateTime = DateTime.Now;
+            data = Mapper.Map<ArticleType>(dto);
+            _testDB.Add(data);
+            var flag = _testDB.SaveChanges();
+            return data;
         }
 
         public ResultDto Delete(string idString)
@@ -79,7 +91,7 @@ namespace Test.Service.Impl
                     return res;
                 }
                 dto.IsDeleted = data.IsDeleted;
-                data = _mapper.Map(dto, data);
+                data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag = _testDB.SaveChanges();
                 if (0 < flag)
@@ -93,6 +105,24 @@ namespace Test.Service.Impl
                 res.Message = ex.Message;
             }
             return res;
+        }
+
+        public ResultDto<ArticleTypeDto> GetPageData(ArticleTypeQueryModel qModel)
+        {
+            var result = new ResultDto<ArticleTypeDto>();
+            var query = _testDB.ArticleType.AsNoTracking().Where(x => !x.IsDeleted);
+            var queryData = query.Select(x => new ArticleTypeDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreateTime = x.CreateTime,
+            });
+            queryData = queryData.OrderBy(o => o.CreateTime);
+            queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
+            result.ActionResult = true;
+            result.Message = "Success";
+            result.List = queryData.ToList();
+            return result;
         }
 
         public async Task<ResultDto<ArticleTypeDto>> GetPageDataAsync(ArticleTypeQueryModel qModel)
