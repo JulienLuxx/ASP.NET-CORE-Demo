@@ -5,6 +5,7 @@ using NSubstitute;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
@@ -32,7 +33,7 @@ namespace Test.XUnitTest
         [Fact]
         public void Test2()
         {
-            var data=new ArticleType
+            var data = new ArticleType
             {
                 Name = "Test",
                 EditerName = "admin",
@@ -83,6 +84,25 @@ namespace Test.XUnitTest
         }
 
         public void GetPageTest()
-        { }
+        {
+            var dataList = new List<ArticleType>()
+            {
+                new ArticleType()
+                {
+                    Id=1,
+                    Name="1",
+                    EditerName="admin",
+                    CreateTime=DateTime.Now
+                },
+                new ArticleType()
+                {
+                    Id=2,
+                    Name="2",
+                    EditerName="admin",
+                    CreateTime=DateTime.Now
+                }
+            };
+            var mockSet = Substitute.For<DbSet<Article>, IQueryable<ArticleType>>();
+        }
     }
 }

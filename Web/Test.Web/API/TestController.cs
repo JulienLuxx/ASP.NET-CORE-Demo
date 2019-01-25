@@ -30,5 +30,12 @@ namespace Test.Web.API
             var res = await _commentSvc.GetPageDataAsync(qModel);
             return Json(res);
         }
+
+        [AllowAnonymous]
+        [HttpPost("PostTest")]
+        public async Task<JsonResult> PostTest(string Msg)
+        {
+            return Json(Msg);
+        }
     }
 }
