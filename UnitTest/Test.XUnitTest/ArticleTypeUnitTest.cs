@@ -5,6 +5,7 @@ using NSubstitute;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Test.Domain;
 using Test.Domain.Entity;
@@ -61,6 +62,32 @@ namespace Test.XUnitTest
             var result = mockSvc.GetPageDataAsync(qModel).GetAwaiter().GetResult();
             Assert.NotNull(result.List);
         }
+
+        [Fact]
+        public void AddDataTest()
+        {
+            var mockdb = new Mock<TestDBContext>();
+            var data = new ArticleType() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
+            var svc = new ArticleTypeSvc(mockdb.Object);
+        }
+
+        [Fact]
+        public void GetDataTest()
+        {
+            var query = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            }.AsQueryable();
+
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.Set<ArticleType>().AsQueryable()).Returns(query);
+
+            var svc = new ArticleTypeSvc(mockContext.Object);
+            var result = svc.GetPageData(new ArticleTypeQueryModel());
+            Assert.Equal(2, result.List.Count());
+        }
+
 
         [Fact]
         public void AddTest()
