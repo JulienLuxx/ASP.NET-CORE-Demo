@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Moq;
 using NSubstitute;
 using Shouldly;
@@ -80,8 +81,11 @@ namespace Test.XUnitTest
                 new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
             }.AsQueryable();
 
+            //var mockSet = new Mock<DbSet<ArticleType>>();
+            //mockSet.As<IQueryable<ArticleType>>
+
             var mockContext = new Mock<TestDBContext>();
-            mockContext.Setup(x => x.Set<ArticleType>().AsQueryable()).Returns(query);
+            mockContext.Setup(x => x.ArticleType.AsNoTracking()).Returns(query);
 
             var svc = new ArticleTypeSvc(mockContext.Object);
             var result = svc.GetPageData(new ArticleTypeQueryModel());
