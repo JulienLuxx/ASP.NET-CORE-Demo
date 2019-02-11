@@ -115,6 +115,7 @@ namespace Test.Service.Impl
             {
                 Id = x.Id,
                 Name = x.Name,
+                EditerName=x.EditerName,
                 CreateTime = x.CreateTime,
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
@@ -133,6 +134,7 @@ namespace Test.Service.Impl
             {
                 Id = x.Id,
                 Name = x.Name,
+                EditerName = x.EditerName,
                 CreateTime = x.CreateTime,                
             });
             queryData = queryData.OrderBy(o => o.CreateTime);

@@ -15,6 +15,7 @@ using Test.Service.Impl;
 using Test.Service.Infrastructure;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
+using Test.XUnitTest.Infrastructure;
 using Xunit;
 
 namespace Test.XUnitTest
@@ -90,6 +91,22 @@ namespace Test.XUnitTest
             var svc = new ArticleTypeSvc(mockContext.Object);
             var result = svc.GetPageData(new ArticleTypeQueryModel());
             Assert.Equal(2, result.List.Count());
+        }
+
+        [Fact]
+        public void GetTmpData()
+        {
+            var dbMock = new Mock<TestDBContext>();
+            var svcMock = new ArticleTypeSvc(dbMock.Object);
+            var list = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+            var articleTypeSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            dbMock.Setup(x => x.ArticleType).Returns(articleTypeSet.Object);
+            var data = svcMock.GetPageData(new ArticleTypeQueryModel());
+            Assert.Equal(2, data.List.Count());
         }
 
 
