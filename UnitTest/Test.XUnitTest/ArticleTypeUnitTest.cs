@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using MoqEFCoreExtension;
 using System;
@@ -6,13 +7,31 @@ using System.Collections.Generic;
 using System.Linq;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Service.Dto;
 using Test.Service.Impl;
+using Test.Service.Infrastructure;
 using Xunit;
 
 namespace Test.XUnitTest
 {
     public class ArticleTypeUnitTest
     {
+        [Fact]
+        public void AddSingle()
+        {
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var mockSet = new Mock<DbSet<ArticleType>>();
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+
+            var svc = new ArticleTypeSvc(mockContext.Object);
+            var data = new ArticleTypeDto() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
+            svc.AddSingle(data);
+
+            mockContext.Verify(x => x.Add(It.IsAny<ArticleType>()), Times.Once());
+            mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
         [Fact]
         public void GetPageData()
         {
