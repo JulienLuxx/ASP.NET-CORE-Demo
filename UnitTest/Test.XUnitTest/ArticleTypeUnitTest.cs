@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
@@ -68,9 +69,10 @@ namespace Test.XUnitTest
         [Fact]
         public void AddDataTest()
         {
-            var mockdb = new Mock<TestDBContext>();
+            var mockSet = new Mock<DbSet<Article>>();
+            var mockContext = new Mock<TestDBContext>();
             var data = new ArticleType() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
-            var svc = new ArticleTypeSvc(mockdb.Object);
+            var svc = new ArticleTypeSvc(mockContext.Object);
         }
 
         [Fact]
@@ -93,8 +95,11 @@ namespace Test.XUnitTest
             Assert.Equal(2, result.List.Count());
         }
 
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
         [Fact]
-        public void GetTmpData()
+        public void GetPageDataTest()
         {
             var dbMock = new Mock<TestDBContext>();
             var svcMock = new ArticleTypeSvc(dbMock.Object);
@@ -109,6 +114,86 @@ namespace Test.XUnitTest
             Assert.Equal(2, data.List.Count());
         }
 
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
+        [Fact]
+        public async Task GetPageDataAsyncTest()
+        {
+            var mockContext = new Mock<TestDBContext>();
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var list = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=2,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+            var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+            var result = await mockSvc.GetPageDataAsync(new ArticleTypeQueryModel());
+            Assert.Equal(2, result.List.Count());
+        }
+
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
+        [Fact]
+        public async Task GetSingleDataAsyncTest()
+        {
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var mockContext = new Mock<TestDBContext>();
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var list = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=2,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+            var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+            var result = await mockSvc.GetSingleDataAsync(1);
+            Assert.Equal(1, result.Data.Id);
+        }
+
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
+        [Fact]
+        public void AddSingleTest()
+        {
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var mockSet = new Mock<DbSet<ArticleType>>();
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var dto = new ArticleTypeDto() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
+            mockSvc.AddSingle(dto);
+
+            mockContext.Verify(x => x.Add(It.IsAny<ArticleType>()), Times.Once());
+            mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
+        [Fact]
+        public void EditTest()
+        {
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var list = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=2,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+            var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var dto = new ArticleTypeDto() { Id = 1, Name = "666", EditerName = "test", CreateTime = DateTime.Now };
+            mockSvc.Edit(dto);
+
+            mockContext.Verify(x => x.Update(It.IsAny<ArticleType>()), Times.Once());
+            mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        }
 
         [Fact]
         public void AddTest()

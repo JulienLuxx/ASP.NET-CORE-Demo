@@ -135,13 +135,41 @@ namespace Test.Service.Impl
                 Id = x.Id,
                 Name = x.Name,
                 EditerName = x.EditerName,
-                CreateTime = x.CreateTime,                
+                CreateTime = x.CreateTime,
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             result.ActionResult = true;
             result.Message = "Success";
             result.List = await queryData.ToListAsync();
+            return result;
+        }
+
+        public ResultDto<ArticleTypeDto> GetSingleData(int id)
+        {
+            var result = new ResultDto<ArticleTypeDto>();
+            var data = _testDB.ArticleType.AsNoTracking().Where(x => !x.IsDeleted && x.Id == id).FirstOrDefault();
+            if (null != data)
+            {
+                var dto = Mapper.Map<ArticleTypeDto>(data);
+                result.Data = dto;
+                result.ActionResult = true;
+                result.Message = "success";
+            }
+            return result;
+        }
+
+        public async Task<ResultDto<ArticleTypeDto>> GetSingleDataAsync(int id)
+        {
+            var result = new ResultDto<ArticleTypeDto>();
+            var data =await  _testDB.ArticleType.AsNoTracking().Where(x => !x.IsDeleted && x.Id == id).FirstOrDefaultAsync();
+            if (null != data)
+            {
+                var dto = Mapper.Map<ArticleTypeDto>(data);
+                result.Data = dto;
+                result.ActionResult = true;
+                result.Message = "success";
+            }
             return result;
         }
     }
