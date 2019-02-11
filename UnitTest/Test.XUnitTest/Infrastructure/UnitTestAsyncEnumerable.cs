@@ -19,9 +19,9 @@ namespace Test.XUnitTest.Infrastructure
             return new UnitTestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
         }
 
-        //IQueryProvider IQueryable.Provider
-        //{
-        //    get {  return new Un  }
-        //}
+        IQueryProvider IQueryable.Provider
+        {
+            get { return new UnitTestAsyncQueryProvider<T>(this);  }
+        }
     }
 }

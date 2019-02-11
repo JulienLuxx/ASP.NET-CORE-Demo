@@ -34,17 +34,17 @@ namespace Test.XUnitTest.Infrastructure
 
         public TResult Execute<TResult>(Expression expression)
         {
-            throw new NotImplementedException();
+            return _inner.Execute<TResult>(expression);
         }
 
         public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
         {
-            throw new NotImplementedException();
+            return new UnitTestAsyncEnumerable<TResult>(expression);
         }
 
         public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Execute<TResult>(expression));
         }
     }
 }
