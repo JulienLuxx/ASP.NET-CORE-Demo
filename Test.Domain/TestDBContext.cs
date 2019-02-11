@@ -20,7 +20,7 @@ namespace Test.Domain
 
         public DbSet<Article> Article { get; set; }
 
-        public DbSet<ArticleType> ArticleType { get; set; }
+        public virtual DbSet<ArticleType> ArticleType { get; set; }
 
         public DbSet<Comment> Comment { get; set; }
 

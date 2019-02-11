@@ -41,3 +41,6 @@
 /Web/Test.IdentityServer/bin/Debug/netcoreapp2.1
 /Test.Domain/Migrations
 /Web/Test.Web/Log
+/UnitTest/Test.XUnitTest/bin/Debug/netcoreapp2.2
+/UnitTest/Test.XUnitTest/obj/Debug/netcoreapp2.2
+/UnitTest/Test.XUnitTest/obj

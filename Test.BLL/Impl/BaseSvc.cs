@@ -15,6 +15,11 @@ namespace Test.Service.Impl
 
         protected TestDBContext _testDB { get; set; }
 
+        protected BaseSvc(TestDBContext testDB)
+        {
+            _testDB = testDB;
+        }
+
         /// <summary>
         /// BaseSvc.Ctor
         /// </summary>
