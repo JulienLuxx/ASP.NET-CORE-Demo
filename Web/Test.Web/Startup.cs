@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using log4net;
 using log4net.Config;
@@ -23,9 +24,9 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
 using Test.Core.Filter;
+using Test.Core.Infrastructure;
 using Test.Core.IOC;
 using Test.Domain;
-using Test.Domain.Infrastructure;
 using Test.Service.Impl;
 using Test.Service.Infrastructure;
 using Test.Service.Interface;
@@ -118,14 +119,19 @@ namespace Test.Web
             //DI Injection
             //services.AddScoped<IArticleSvc, ArticleSvc>();
             //services.AddScoped<ICommentSvc, CommentSvc>();
-            var builder = new ContainerBuilder();
+
 
             //var baseType = typeof(IDependency);
             //var assembly = Assembly.GetEntryAssembly();
             //builder.RegisterAssemblyTypes(assembly)
             //                .Where(t => baseType.IsAssignableFrom(t) && t != baseType)
             //                .AsImplementedInterfaces().InstancePerLifetimeScope();
+            return RegisterAutofac(services);
+        }
 
+        private IServiceProvider RegisterAutofac(IServiceCollection services)
+        {
+            var builder = new ContainerBuilder();
             //SingleService Injection
             //builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
             //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
@@ -133,12 +139,23 @@ namespace Test.Web
             //Module Injection
             builder.RegisterModule<UtilModule>();
             builder.RegisterModule<ServiceModule>();
-
             builder.Populate(services);
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
+        private IServiceProvider RegisterAutofacTest(IServiceCollection services)
+        {
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            var assembly = this.GetType().GetTypeInfo().Assembly;
+            //builder.RegisterType<AopInterceptor>();
+            builder.RegisterAssemblyTypes(assembly).Where(type => typeof(IDependency).IsAssignableFrom(type) && !type.GetType().IsAbstract).AsImplementedInterfaces().InstancePerLifetimeScope()/*.EnableInterfaceInterceptors().InterceptedBy(typeof(AopInterceptor))*/;
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
+        }
+
+        #region OldMethod
         //public void ConfigureServices(IServiceCollection services)
         //{
         //    //UseDbContext
@@ -155,7 +172,7 @@ namespace Test.Web
 
         //    //注册AutoMapper
         //    services.AddAutoMapper();
-            
+
         //    //Add Swagger
         //    services.AddSwaggerGen(c =>
         //    {
@@ -180,6 +197,7 @@ namespace Test.Web
 
         //    services.AddMvc();
         //}
+        #endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

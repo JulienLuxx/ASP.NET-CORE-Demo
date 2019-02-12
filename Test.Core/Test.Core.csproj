@@ -11,13 +11,10 @@
   <ItemGroup>
     <Compile Remove="Logs\**" />
     <Compile Remove="MoqEFCore\**" />
-    <Compile Remove="新文件夹\**" />
     <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="MoqEFCore\**" />
-    <EmbeddedResource Remove="新文件夹\**" />
     <None Remove="Logs\**" />
     <None Remove="MoqEFCore\**" />
-    <None Remove="新文件夹\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Moq" Version="4.10.1" />
   </ItemGroup>

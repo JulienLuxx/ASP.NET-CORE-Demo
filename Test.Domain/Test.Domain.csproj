@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Remove="ContextPool.cs" />
+    <Compile Remove="Infrastructure\IDependency.cs" />
     <Compile Remove="Migrations\20180606093606_FirstMigration.cs" />
     <Compile Remove="Migrations\20180606093606_FirstMigration.Designer.cs" />
     <Compile Remove="Migrations\20180606145455_Migration2.cs" />
@@ -65,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
     <Folder Include="IOC\" />
     <Folder Include="Enum\" />
   </ItemGroup>

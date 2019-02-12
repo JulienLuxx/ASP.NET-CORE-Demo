@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Test.Core.Dto;
+using Test.Core.IOC;
 
 namespace Test.Core.Tree
 {
     /// <summary>
     /// TreeUtil
     /// </summary>
-    public interface ITreeUtil
+    public interface ITreeUtil : IDependency 
     {
         /// <summary>
         /// Util.GetTreeFromBaseDtoList

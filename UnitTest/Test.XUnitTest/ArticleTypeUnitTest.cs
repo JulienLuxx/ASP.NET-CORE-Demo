@@ -196,6 +196,10 @@ namespace Test.XUnitTest
         }
 
         [Fact]
+        public void DeleteTest()
+        { }
+
+        [Fact]
         public void AddTest()
         {
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());

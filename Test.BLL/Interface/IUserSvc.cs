@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Core.Dto;
+using Test.Core.IOC;
 using Test.Service.Dto;
 
 namespace Test.Service.Interface
 {
-    public interface IUserSvc
+    public interface IUserSvc : IDependency 
     {
         ResultDto Add(UserDto dto);
 

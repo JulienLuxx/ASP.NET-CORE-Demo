@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Core.Dto;
-using Test.Domain.Infrastructure;
+using Test.Core.IOC;
 using Test.Service.Dto;
 using Test.Service.QueryModel;
 
 namespace Test.Service.Interface
 {
-    public interface ICommentSvc: IDependency
+    public interface ICommentSvc : IDependency 
     {
         ResultDto AddSingle(CommentDto dto);
 

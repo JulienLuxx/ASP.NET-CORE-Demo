@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Test.Core.IOC;
 
 namespace Test.Core.Encrypt
 {
-    public interface IEncryptUtil
+    public interface IEncryptUtil : IDependency 
     {
         string GetMd5By16(string value);
 

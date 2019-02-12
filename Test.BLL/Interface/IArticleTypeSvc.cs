@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Core.Dto;
+using Test.Core.IOC;
 using Test.Service.Dto;
 using Test.Service.QueryModel;
 
 namespace Test.Service.Interface
 {
-    public interface IArticleTypeSvc
+    public interface IArticleTypeSvc : IDependency 
     {
         ResultDto AddSingle(ArticleTypeDto dto);
 
