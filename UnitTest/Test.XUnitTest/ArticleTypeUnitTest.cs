@@ -195,9 +195,29 @@ namespace Test.XUnitTest
             mockContext.Verify(x => x.SaveChanges(), Times.Once());
         }
 
+        /// <summary>
+        /// VerifyMethod
+        /// </summary>
         [Fact]
         public void DeleteTest()
-        { }
+        {
+            var list = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=2,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+            var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            mockSvc.Delete("1,2");
+
+            mockContext.Verify(x => x.SaveChanges(), Times.Once);
+            var result1 = mockSet.Object.Where(x => x.Id == 1).Select(s => s.IsDeleted).FirstOrDefault();
+            var result2 = mockSet.Object.Where(x => x.Id == 2).Select(s => s.IsDeleted).FirstOrDefault();
+            Assert.True(result1);
+            Assert.True(result2);
+        }
 
         [Fact]
         public void AddTest()
