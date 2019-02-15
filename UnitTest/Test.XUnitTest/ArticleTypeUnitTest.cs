@@ -16,8 +16,18 @@ namespace Test.XUnitTest
 {
     public class ArticleTypeUnitTest
     {
+        private List<ArticleType> _sampleList;
+        public ArticleTypeUnitTest()
+        {
+            _sampleList= new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            };
+        }
+
         [Fact]
-        public void AddSingle()
+        public void AddSingleTest()
         {
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
             var mockSet = new Mock<DbSet<ArticleType>>();
@@ -33,16 +43,11 @@ namespace Test.XUnitTest
         }
 
         [Fact]
-        public void GetPageData()
+        public void GetPageDataTest()
         {
             var mockContext = new Mock<TestDBContext>();
             var mockSvc = new ArticleTypeSvc(mockContext.Object);
-            var list = new List<ArticleType>()
-            {
-                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
-                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
-            };
-            var dataSet = new Mock<DbSet<ArticleType>>().SetupList(list);
+            var dataSet = new Mock<DbSet<ArticleType>>().SetupList(_sampleList);
             mockContext.Setup(x => x.ArticleType).Returns(dataSet.Object);
             var data = mockSvc.GetPageData(new Service.QueryModel.ArticleTypeQueryModel());
             Assert.Equal(2, data.List.Count());
