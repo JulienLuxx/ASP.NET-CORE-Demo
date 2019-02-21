@@ -5,6 +5,7 @@ using MoqEFCoreExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Service.Dto;
@@ -50,7 +51,30 @@ namespace Test.XUnitTest
             var dataSet = new Mock<DbSet<ArticleType>>().SetupList(_sampleList);
             mockContext.Setup(x => x.ArticleType).Returns(dataSet.Object);
             var data = mockSvc.GetPageData(new Service.QueryModel.ArticleTypeQueryModel());
-            Assert.Equal(2, data.List.Count());
+            Assert.Equal(_sampleList.Count(), data.List.Count());
+        }
+
+        [Fact]
+        public async Task GetPageDataAsyncTest()
+        {
+            var mockContext = new Mock<TestDBContext>();
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var dataSet = new Mock<DbSet<ArticleType>>().SetupList(_sampleList);
+            mockContext.Setup(x => x.ArticleType).Returns(dataSet.Object);
+            var data = await mockSvc.GetPageDataAsync(new Service.QueryModel.ArticleTypeQueryModel());
+            Assert.Equal(_sampleList.Count(), data.List.Count());
+        }
+
+        [Fact]
+        public async Task GetSingleDataAsyncTest()
+        {
+            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var mockContext = new Mock<TestDBContext>();
+            var dataSet = new Mock<DbSet<ArticleType>>().SetupList(_sampleList);
+            mockContext.Setup(x => x.ArticleType).Returns(dataSet.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var result = await mockSvc.GetSingleDataAsync(1);
+            Assert.Equal(1, result.Data.Id);
         }
     }
 }

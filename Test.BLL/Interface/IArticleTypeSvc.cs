@@ -19,5 +19,7 @@ namespace Test.Service.Interface
         ResultDto<ArticleTypeDto> GetPageData(ArticleTypeQueryModel qModel);
 
         Task<ResultDto<ArticleTypeDto>> GetPageDataAsync(ArticleTypeQueryModel qModel);
+
+        Task<ResultDto<ArticleTypeDto>> GetSingleDataAsync(int id);
     }
 }
