@@ -10,8 +10,8 @@ namespace Test.Domain.Enum
         [Description("Default")]
         Default,
 
-        [Description("Unable")]
-        Unable,
+        [Description("Disable")]
+        Disable,
 
         [Description("Activate")]
         Activate,

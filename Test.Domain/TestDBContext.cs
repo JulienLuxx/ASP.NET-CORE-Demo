@@ -18,13 +18,13 @@ namespace Test.Domain
 
         public TestDBContext() { }
 
-        public DbSet<Article> Article { get; set; }
+        public virtual DbSet<Article> Article { get; set; }
 
         public virtual DbSet<ArticleType> ArticleType { get; set; }
 
-        public DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
 
-        public DbSet<User> User { get; set; }
+        public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

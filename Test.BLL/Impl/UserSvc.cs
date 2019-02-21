@@ -24,7 +24,13 @@ namespace Test.Service.Impl
         /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="encryptUtil"></param>
-        public UserSvc(IMapper mapper, TestDBContext testDB, IEncryptUtil encryptUtil) : base(mapper, testDB)
+        //public UserSvc(IMapper mapper, TestDBContext testDB, IEncryptUtil encryptUtil) : base(mapper, testDB)
+        //{
+        //    _encryptUtil = encryptUtil;
+        //}
+
+
+        public UserSvc(TestDBContext testDB, IEncryptUtil encryptUtil) : base(testDB) 
         {
             _encryptUtil = encryptUtil;
         }
@@ -37,7 +43,7 @@ namespace Test.Service.Impl
                 dto.CreateTime = DateTime.Now;
                 var randomStr = new Random().Next(100000).ToString();
                 dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
-                var data = _mapper.Map<User>(dto);
+                var data = Mapper.Map<User>(dto);
                 data.SaltValue = randomStr;
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
@@ -64,7 +70,7 @@ namespace Test.Service.Impl
                     result.Message = "UnConfirm";
                     return result;
                 }
-                var data = await _testDB.User.FindAsync(dto.Id);
+                var data = await _testDB.User.Where(x => x.Id == dto.Id).FirstOrDefaultAsync();
                 if (null != data) 
                 {
                     dto.OrigPassword = _encryptUtil.GetMd5By32(dto.OrigPassword + data.SaltValue);
@@ -117,7 +123,7 @@ namespace Test.Service.Impl
                 {
                     return result;
                 }
-                var userDto = _mapper.Map<UserDto>(dto);
+                var userDto = Mapper.Map<UserDto>(dto);
                 result = Add(userDto);
             }
             catch (Exception ex)

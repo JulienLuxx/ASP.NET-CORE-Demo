@@ -34,10 +34,10 @@ namespace Test.XUnitTest
             var mockSet = new Mock<DbSet<ArticleType>>();
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object);
 
-            var svc = new ArticleTypeSvc(mockContext.Object);
             var data = new ArticleTypeDto() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
-            svc.AddSingle(data);
+            mockSvc.AddSingle(data);
 
             mockContext.Verify(x => x.Add(It.IsAny<ArticleType>()), Times.Once());
             mockContext.Verify(x => x.SaveChanges(), Times.Once());
