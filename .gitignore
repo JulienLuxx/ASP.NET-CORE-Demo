@@ -31,3 +31,5 @@
 /Test.Domain/Migrations/20181203110341_tmp.Designer.cs
 /Test.Domain/Migrations/20181203110341_tmp.cs
 /Test.Domain/Migrations/TestDBContextModelSnapshot.cs
+/UnitTest/TestProject.XUnitTest/obj
+/UnitTest/TestProject.XUnitTest/bin/Debug/netcoreapp2.2

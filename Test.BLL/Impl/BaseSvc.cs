@@ -31,5 +31,10 @@ namespace Test.Service.Impl
             _mapper = mapper;
             _testDB = testDB;
         }
+
+        protected BaseSvc(TestDBContext testDB)
+        {
+            _testDB = testDB;
+        }
     }
 }

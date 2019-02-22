@@ -21,6 +21,9 @@ namespace Test.Service.Impl
         {
         }
 
+        public ArticleTypeSvc(TestDBContext testDB) : base(testDB)
+        { }
+
         public ResultDto AddSingle(ArticleTypeDto dto)
         {
             var result = new ResultDto();
@@ -80,7 +83,7 @@ namespace Test.Service.Impl
                     return result;
                 }
                 dto.IsDeleted = data.IsDeleted;
-                data = _mapper.Map(dto, data);
+                data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag = _testDB.SaveChanges();
                 if (0 < flag)
@@ -108,7 +111,7 @@ namespace Test.Service.Impl
                     return result;
                 }
                 dto.IsDeleted = data.IsDeleted;
-                data = _mapper.Map(dto, data);
+                data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 await DbContextExtend.MSDNCommitAsync<TestDBContext, ArticleType>(_testDB);
                 result.ActionResult = true;
