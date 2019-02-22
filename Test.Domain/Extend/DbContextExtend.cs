@@ -68,13 +68,19 @@ namespace Test.Domain.Extend
                         {
                             var proposedValues = entry.CurrentValues;
                             var databaseValues = await entry.GetDatabaseValuesAsync();
-                            foreach (var property in proposedValues.Properties)
+                            if(proposedValues["Timestamp"] != databaseValues["Timestamp"])
                             {
-                                var proposedValue = proposedValues[property];
-                                var databaseValue = databaseValues[property];
-                                databaseValue = proposedValue;
+                                foreach (var property in proposedValues.Properties)
+                                {
+                                    if (!property.Name.Equals("Timestamp"))
+                                    {
+                                        var proposedValue = proposedValues[property];
+                                        var databaseValue = databaseValues[property];
+                                        databaseValue = proposedValue;
+                                    }
+                                }
+                                entry.OriginalValues.SetValues(databaseValues);
                             }
-                            entry.OriginalValues.SetValues(databaseValues);
                         }
                         else
                         {
