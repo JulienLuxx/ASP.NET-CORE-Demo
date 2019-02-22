@@ -23,78 +23,7 @@ namespace Test.XUnitTest
 {
     public class ArticleTypeUnitTest
     {
-        [Fact]
-        public void Test1()
-        {
-            var articleType = new ArticleType
-            {
-                Name = "Test",
-                EditerName = "admin",
-            };
-            Assert.Contains("Test", articleType.Name);
-        }
-
-        [Fact]
-        public void Test2()
-        {
-            var data = new ArticleType
-            {
-                Name = "Test",
-                EditerName = "admin",
-            };
-            Assert.Equal("admin", data.EditerName);
-        }
-
-        [Fact]
-        public void Test3()
-        {
-            var data = new ArticleType
-            {
-                Name = "Test",
-                EditerName = "admin",
-            };
-            Assert.IsType<ArticleType>(data);
-        }
-
-        [Fact]
-        public void GetListTest()
-        {
-            var db = new TestDBContext();
-            var mockSvc = new ArticleTypeSvc(db);
-            var qModel = new ArticleTypeQueryModel();
-            var result = mockSvc.GetPageDataAsync(qModel).GetAwaiter().GetResult();
-            Assert.NotNull(result.List);
-        }
-
-        [Fact]
-        public void AddDataTest()
-        {
-            var mockSet = new Mock<DbSet<Article>>();
-            var mockContext = new Mock<TestDBContext>();
-            var data = new ArticleType() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
-            var svc = new ArticleTypeSvc(mockContext.Object);
-        }
-
-        [Fact]
-        public void GetDataTest()
-        {
-            var query = new List<ArticleType>()
-            {
-                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
-                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
-            }.AsQueryable();
-
-            //var mockSet = new Mock<DbSet<ArticleType>>();
-            //mockSet.As<IQueryable<ArticleType>>
-
-            var mockContext = new Mock<TestDBContext>();
-            mockContext.Setup(x => x.ArticleType.AsNoTracking()).Returns(query);
-
-            var svc = new ArticleTypeSvc(mockContext.Object);
-            var result = svc.GetPageData(new ArticleTypeQueryModel());
-            Assert.Equal(2, result.List.Count());
-        }
-
+        #region VerifyMethod
         /// <summary>
         /// VerifyMethod
         /// </summary>
@@ -218,6 +147,80 @@ namespace Test.XUnitTest
             Assert.True(result1);
             Assert.True(result2);
         }
+        #endregion
+
+        #region UnVerify&FailedMethod
+        [Fact]
+        public void Test1()
+        {
+            var articleType = new ArticleType
+            {
+                Name = "Test",
+                EditerName = "admin",
+            };
+            Assert.Contains("Test", articleType.Name);
+        }
+
+        [Fact]
+        public void Test2()
+        {
+            var data = new ArticleType
+            {
+                Name = "Test",
+                EditerName = "admin",
+            };
+            Assert.Equal("admin", data.EditerName);
+        }
+
+        [Fact]
+        public void Test3()
+        {
+            var data = new ArticleType
+            {
+                Name = "Test",
+                EditerName = "admin",
+            };
+            Assert.IsType<ArticleType>(data);
+        }
+
+        [Fact]
+        public void GetListTest()
+        {
+            var db = new TestDBContext();
+            var mockSvc = new ArticleTypeSvc(db);
+            var qModel = new ArticleTypeQueryModel();
+            var result = mockSvc.GetPageDataAsync(qModel).GetAwaiter().GetResult();
+            Assert.NotNull(result.List);
+        }
+
+        [Fact]
+        public void AddDataTest()
+        {
+            var mockSet = new Mock<DbSet<Article>>();
+            var mockContext = new Mock<TestDBContext>();
+            var data = new ArticleType() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
+            var svc = new ArticleTypeSvc(mockContext.Object);
+        }
+
+        [Fact]
+        public void GetDataTest()
+        {
+            var query = new List<ArticleType>()
+            {
+                new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
+                new ArticleType(){ Id=1,Name="2",EditerName="223",CreateTime=DateTime.Now},
+            }.AsQueryable();
+
+            //var mockSet = new Mock<DbSet<ArticleType>>();
+            //mockSet.As<IQueryable<ArticleType>>
+
+            var mockContext = new Mock<TestDBContext>();
+            mockContext.Setup(x => x.ArticleType.AsNoTracking()).Returns(query);
+
+            var svc = new ArticleTypeSvc(mockContext.Object);
+            var result = svc.GetPageData(new ArticleTypeQueryModel());
+            Assert.Equal(2, result.List.Count());
+        }
 
         [Fact]
         public void AddTest()
@@ -239,27 +242,6 @@ namespace Test.XUnitTest
             addArticleType.Name.ShouldBe("UnitTest");
             addArticleType.EditerName.ShouldBe("admin");
         }
-
-        public void GetPageTest()
-        {
-            var dataList = new List<ArticleType>()
-            {
-                new ArticleType()
-                {
-                    Id=1,
-                    Name="1",
-                    EditerName="admin",
-                    CreateTime=DateTime.Now
-                },
-                new ArticleType()
-                {
-                    Id=2,
-                    Name="2",
-                    EditerName="admin",
-                    CreateTime=DateTime.Now
-                }
-            };
-            var mockSet = Substitute.For<DbSet<Article>, IQueryable<ArticleType>>();
-        }
+        #endregion               
     }
 }
