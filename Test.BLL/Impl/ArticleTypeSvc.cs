@@ -142,5 +142,26 @@ namespace Test.Service.Impl
             result.List = await queryData.ToListAsync();
             return result;
         }
+
+        public async Task<ResultDto<ArticleTypeDto>> GetSingleDataAsync(int id)
+        {
+            var result = new ResultDto<ArticleTypeDto>();
+            try
+            {
+                var data = await _testDB.ArticleType.AsNoTracking().Where(x => !x.IsDeleted && x.Id == id).FirstOrDefaultAsync();
+                if (null != data)
+                {
+                    var dto = Mapper.Map<ArticleTypeDto>(data);
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                    result.Data = dto;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
