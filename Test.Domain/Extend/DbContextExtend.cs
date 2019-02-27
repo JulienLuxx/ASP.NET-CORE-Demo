@@ -68,6 +68,8 @@ namespace Test.Domain.Extend
                         {
                             var proposedValues = entry.CurrentValues;
                             var databaseValues = await entry.GetDatabaseValuesAsync();
+                            var n = proposedValues["Timestamp"];
+                            var o = databaseValues["Timestamp"];
                             if(proposedValues["Timestamp"] != databaseValues["Timestamp"])
                             {
                                 foreach (var property in proposedValues.Properties)

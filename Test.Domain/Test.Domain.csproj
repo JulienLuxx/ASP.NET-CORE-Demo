@@ -25,6 +25,8 @@
   <ItemGroup>
     <Compile Include="Migrations\20190111082909_tmp.cs" />
     <Compile Include="Migrations\20190111082909_tmp.Designer.cs" />
+    <Compile Include="Migrations\20190227072231_tmp2.cs" />
+    <Compile Include="Migrations\20190227072231_tmp2.Designer.cs" />
     <Compile Include="Migrations\TestDBContextModelSnapshot.cs" />
   </ItemGroup>
 

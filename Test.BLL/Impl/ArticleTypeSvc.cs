@@ -113,6 +113,7 @@ namespace Test.Service.Impl
                 dto.IsDeleted = data.IsDeleted;
                 data = Mapper.Map(dto, data);
                 _testDB.Update(data);
+                //await _testDB.SaveChangesAsync();
                 await DbContextExtend.MSDNCommitAsync<TestDBContext, ArticleType>(_testDB);
                 result.ActionResult = true;
                 result.Message = "success";
