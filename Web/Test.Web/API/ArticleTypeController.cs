@@ -26,6 +26,13 @@ namespace Test.Web.API
             return Json(result);
         }
 
+        [HttpPost("AddSingle")]
+        public async Task<JsonResult> AddSingle(ArticleTypeDto dto)
+        {
+            var resultTask = _articleTypeSvc.AddSingleAsync(dto);
+            return Json(await resultTask);
+        }
+
         [HttpPost("Delete")]
         public JsonResult Delete(string idString)
         {
@@ -38,6 +45,13 @@ namespace Test.Web.API
         {
             var result = _articleTypeSvc.Edit(dto);
             return Json(result);
+        }
+
+        [HttpPost("EditAsync")]
+        public async Task<JsonResult> EditAsync(ArticleTypeDto dto)
+        {
+            var resultTask =  _articleTypeSvc.EditAsync(dto);
+            return Json(await resultTask);
         }
 
         [HttpGet("Page")]

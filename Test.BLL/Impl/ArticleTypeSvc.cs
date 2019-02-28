@@ -46,6 +46,28 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto> AddSingleAsync(ArticleTypeDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                dto.CreateTime = DateTime.Now;
+                var data = Mapper.Map<ArticleType>(dto);
+                await _testDB.ArticleType.AddAsync(data);
+                var flag = await _testDB.SaveChangesAsync();
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public ResultDto Delete(string idString)
         {
             var result = new ResultDto();
@@ -114,9 +136,16 @@ namespace Test.Service.Impl
                 data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 //await _testDB.SaveChangesAsync();
-                await DbContextExtend.MSDNCommitAsync<TestDBContext, ArticleType>(_testDB);
-                result.ActionResult = true;
-                result.Message = "success";
+                var flag= await DbContextExtend.CommitTestAsync<TestDBContext, ArticleType>(_testDB,true);
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "success";
+                }
+                else if (flag == -1)
+                {
+                    result.Message = "Data has been change , Please try again!";
+                }
             }
             catch (Exception ex)
             {
