@@ -43,8 +43,15 @@ namespace Test.Web.API
         [HttpGet("Page")]
         public async Task<JsonResult> GetPageAsync(ArticleTypeQueryModel qModel)
         {
-            var res = await _articleTypeSvc.GetPageDataAsync(qModel);
-            return Json(res);
+            var result = await _articleTypeSvc.GetPageDataAsync(qModel);
+            return Json(result);
+        }
+
+        [HttpGet("Detail")]
+        public async Task<JsonResult> GetSingleDataAsync(int id)
+        {
+            var result = await _articleTypeSvc.GetSingleDataAsync(id);
+            return Json(result);
         }
     }
 }
