@@ -17,12 +17,12 @@ namespace Test.Service.Impl
 {
     public class ArticleTypeSvc : BaseSvc, IArticleTypeSvc
     {
-        public ArticleTypeSvc(IMapper mapper, TestDBContext testDB) : base(mapper, testDB)
-        {
-        }
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
 
-        public ArticleTypeSvc(TestDBContext testDB) : base(testDB)
-        { }
+        public ArticleTypeSvc(TestDBContext testDB,IDbContextExtendSvc dbContextExtendSvc) : base(testDB)
+        {
+            _dbContextExtendSvc = dbContextExtendSvc;
+        }
 
         public ResultDto AddSingle(ArticleTypeDto dto)
         {
@@ -136,7 +136,8 @@ namespace Test.Service.Impl
                 data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 //await _testDB.SaveChangesAsync();
-                var flag= await DbContextExtend.CommitTestAsync<TestDBContext, ArticleType>(_testDB,true);
+                //var flag= await DbContextExtend.CommitTestAsync<TestDBContext, ArticleType>(_testDB,true);
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);
                 if (flag > 0)
                 {
                     result.ActionResult = true;

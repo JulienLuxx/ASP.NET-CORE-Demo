@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Impl;
 using Test.Service.Infrastructure;
@@ -35,7 +36,7 @@ namespace TestProject.XUnitTest
             var mockSet = new Mock<DbSet<ArticleType>>().SetupList(_sampleList);
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object,new DbContextExtendSvc());
 
             var dto1 = new ArticleTypeDto() { Id = 1, Name = "TestA", EditerName = "TestUserA", CreateTime = DateTime.Now, IsDeleted = false };
             var dto2 = new ArticleTypeDto() { Id = 2, Name = "TestB", EditerName = "TestUserB", CreateTime = DateTime.Now, IsDeleted = false };
