@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Test.Domain.Entity
 {
-    public class ArticleType// : IEntity
+    public class ArticleType : IEntity
     {
         public ArticleType()
         {
@@ -15,6 +15,8 @@ namespace Test.Domain.Entity
         public string Name { get; set; }
 
         public string EditerName { get; set; }
+
+        public int Status { get; set; }
 
         public bool IsDeleted { get; set; }
 

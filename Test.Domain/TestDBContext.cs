@@ -82,7 +82,7 @@ namespace Test.Domain
                 e.ToTable("Article");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
-                e.Property(x => x.Timestamp).IsRowVersion();                
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();                
             });
 
             modelBuilder.Entity<ArticleType>(e =>
@@ -90,7 +90,7 @@ namespace Test.Domain
                 e.ToTable("ArticleType");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });
 
@@ -108,7 +108,7 @@ namespace Test.Domain
                 e.ToTable("User");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
             #endregion

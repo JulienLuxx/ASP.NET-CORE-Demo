@@ -10,5 +10,7 @@ namespace Test.Service.Dto
         public string Name { get; set; }
 
         public string EditerName { get; set; }
+
+        public int Status { get; set; }
     }
 }

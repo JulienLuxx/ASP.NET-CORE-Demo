@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Test.Core.Dto;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -16,8 +17,10 @@ namespace Test.Service.Impl
 {
     public class ArticleTypeSvc : BaseSvc, IArticleTypeSvc
     {
-        public ArticleTypeSvc(TestDBContext testDB) : base( testDB)
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
+        public ArticleTypeSvc(TestDBContext testDB, IDbContextExtendSvc dbContextExtendSvc) : base( testDB)
         {
+            _dbContextExtendSvc = dbContextExtendSvc;
         }
 
         
@@ -95,6 +98,40 @@ namespace Test.Service.Impl
                 res.Message = ex.Message;
             }
             return res;
+        }
+
+        public async Task<ResultDto> EditAsync(ArticleTypeDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                dto.CreateTime = DateTime.Now;
+                var data = _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                if (null == data)
+                {
+                    return result;
+                }
+                dto.IsDeleted = data.IsDeleted;
+                data = Mapper.Map(dto, data);
+                _testDB.Update(data);
+                //await _testDB.SaveChangesAsync();
+                //var flag= await DbContextExtend.CommitTestAsync<TestDBContext, ArticleType>(_testDB,true);
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "success";
+                }
+                else if (flag == -1)
+                {
+                    result.Message = "Data has been change , Please try again!";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
         }
 
         public ResultDto<ArticleTypeDto> GetPageData(ArticleTypeQueryModel qModel)

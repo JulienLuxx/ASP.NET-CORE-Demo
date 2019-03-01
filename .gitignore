@@ -49,3 +49,6 @@
 /Web/Test.IdentityServer/obj/Debug/netcoreapp2.2
 /Web/Test.IdentityServer/bin/Debug/netcoreapp2.2
 /Test.Domain/obj/Debug/netcoreapp2.2
+/Test.BLL/bin/Debug/netcoreapp2.2
+/Test.Core/bin/Debug/netcoreapp2.2
+/Test.Domain/bin/Debug/netcoreapp2.2
