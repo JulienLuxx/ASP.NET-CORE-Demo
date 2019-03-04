@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Test.Core.Dto;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -16,10 +17,13 @@ namespace Test.Service.Impl
 {
     public class ArticleTypeSvc : BaseSvc, IArticleTypeSvc
     {
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
         public ArticleTypeSvc(
-            TestDBContext testDB
+            TestDBContext testDB,
+            IDbContextExtendSvc dbContextExtendSvc
             ) : base( testDB)
         {
+            _dbContextExtendSvc = dbContextExtendSvc;
         }
 
         public ResultDto AddSingle(ArticleTypeDto dto)
@@ -81,6 +85,34 @@ namespace Test.Service.Impl
 
         public ResultDto Edit(ArticleTypeDto dto)
         {
+            var result = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                if (null == data)
+                {
+                    return result;
+                }
+                dto.IsDeleted = data.IsDeleted;
+                data = Mapper.Map(dto, data);
+                _testDB.Update(data);
+                var flag = _testDB.SaveChanges();
+                if (0 < flag)
+                {
+                    result.ActionResult = true;
+                    result.Message = "success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ResultDto> EditAsync(ArticleTypeDto dto)
+        {
             var res = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
@@ -93,7 +125,7 @@ namespace Test.Service.Impl
                 dto.IsDeleted = data.IsDeleted;
                 data = Mapper.Map(dto, data);
                 _testDB.Update(data);
-                var flag = _testDB.SaveChanges();
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);
                 if (0 < flag)
                 {
                     res.ActionResult = true;

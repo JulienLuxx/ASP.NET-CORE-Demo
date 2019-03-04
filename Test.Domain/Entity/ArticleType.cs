@@ -16,6 +16,8 @@ namespace Test.Domain.Entity
 
         public string EditerName { get; set; }
 
+        public int Status { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime CreateTime { get; set; }

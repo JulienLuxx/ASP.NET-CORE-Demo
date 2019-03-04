@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Impl;
 using Test.Service.Infrastructure;
@@ -31,7 +32,7 @@ namespace Test.XUnitTest
         public void GetPageDataTest()
         {
             var dbMock = new Mock<TestDBContext>();
-            var svcMock = new ArticleTypeSvc(dbMock.Object);
+            var svcMock = new ArticleTypeSvc(dbMock.Object, new DbContextExtendSvc());
             var list = new List<ArticleType>()
             {
                 new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
@@ -50,7 +51,7 @@ namespace Test.XUnitTest
         public async Task GetPageDataAsyncTest()
         {
             var mockContext = new Mock<TestDBContext>();
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             var list = new List<ArticleType>()
             {
                 new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
@@ -70,7 +71,7 @@ namespace Test.XUnitTest
         {
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
             var mockContext = new Mock<TestDBContext>();
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             var list = new List<ArticleType>()
             {
                 new ArticleType(){ Id=1,Name="1",EditerName="123",CreateTime=DateTime.Now},
@@ -93,7 +94,7 @@ namespace Test.XUnitTest
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
 
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             var dto = new ArticleTypeDto() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
             mockSvc.AddSingle(dto);
 
@@ -116,7 +117,7 @@ namespace Test.XUnitTest
             var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             var dto = new ArticleTypeDto() { Id = 1, Name = "666", EditerName = "test", CreateTime = DateTime.Now };
             mockSvc.Edit(dto);
 
@@ -138,7 +139,7 @@ namespace Test.XUnitTest
             var mockSet = new Mock<DbSet<ArticleType>>().SetupList(list);
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType).Returns(mockSet.Object);
-            var mockSvc = new ArticleTypeSvc(mockContext.Object);
+            var mockSvc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             mockSvc.Delete("1,2");
 
             mockContext.Verify(x => x.SaveChanges(), Times.Once);
@@ -187,7 +188,7 @@ namespace Test.XUnitTest
         public void GetListTest()
         {
             var db = new TestDBContext();
-            var mockSvc = new ArticleTypeSvc(db);
+            var mockSvc = new ArticleTypeSvc(db, new DbContextExtendSvc());
             var qModel = new ArticleTypeQueryModel();
             var result = mockSvc.GetPageDataAsync(qModel).GetAwaiter().GetResult();
             Assert.NotNull(result.List);
@@ -199,7 +200,7 @@ namespace Test.XUnitTest
             var mockSet = new Mock<DbSet<Article>>();
             var mockContext = new Mock<TestDBContext>();
             var data = new ArticleType() { Name = "233", EditerName = "test", CreateTime = DateTime.Now };
-            var svc = new ArticleTypeSvc(mockContext.Object);
+            var svc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
         }
 
         [Fact]
@@ -217,7 +218,7 @@ namespace Test.XUnitTest
             var mockContext = new Mock<TestDBContext>();
             mockContext.Setup(x => x.ArticleType.AsNoTracking()).Returns(query);
 
-            var svc = new ArticleTypeSvc(mockContext.Object);
+            var svc = new ArticleTypeSvc(mockContext.Object, new DbContextExtendSvc());
             var result = svc.GetPageData(new ArticleTypeQueryModel());
             Assert.Equal(2, result.List.Count());
         }
@@ -233,7 +234,7 @@ namespace Test.XUnitTest
             var addArticleType = new ArticleType();
             mockSet.Add(Arg.Do<ArticleType>(x => addArticleType = x));
 
-            var svc = new ArticleTypeSvc(mockContext);
+            var svc = new ArticleTypeSvc(mockContext, new DbContextExtendSvc());
             svc.Add(new ArticleTypeDto() { Name = "UnitTest", EditerName = "admin" });
 
             mockSet.Received(1).Add(Arg.Any<ArticleType>());
