@@ -139,9 +139,9 @@ namespace Test.Domain.Extend
                             var originalTimestamp = originalValues["Timestamp"];
                             var proposedTimestamp = proposedValues["Timestamp"];
                             var databaseTimestamp = databaseValues["Timestamp"];
-                            var oInt = int.Parse(ConvertToTimeSpanString(originalTimestamp), NumberStyles.HexNumber);
-                            var pInt = int.Parse(ConvertToTimeSpanString(proposedTimestamp), NumberStyles.HexNumber);
-                            var dInt = int.Parse(ConvertToTimeSpanString(databaseTimestamp), NumberStyles.HexNumber);
+                            var oInt = long.Parse(ConvertToTimeSpanString(originalTimestamp), NumberStyles.HexNumber);
+                            var pInt = long.Parse(ConvertToTimeSpanString(proposedTimestamp), NumberStyles.HexNumber);
+                            var dInt = long.Parse(ConvertToTimeSpanString(databaseTimestamp), NumberStyles.HexNumber);
                             if (oInt >= dInt)
                             {
                                 foreach (var property in proposedValues.Properties)
