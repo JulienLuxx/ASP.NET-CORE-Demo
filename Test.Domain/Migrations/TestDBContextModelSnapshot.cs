@@ -15,7 +15,7 @@ namespace Test.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
@@ -30,7 +30,7 @@ namespace Test.Domain.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("State");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime?>("Timestamp")
                         .IsConcurrencyToken()
@@ -38,15 +38,42 @@ namespace Test.Domain.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("TypeId");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.ArticleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("EditerName");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Status");
+
+                    b.Property<DateTime?>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleType");
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.Comment", b =>
@@ -67,7 +94,7 @@ namespace Test.Domain.Migrations
 
                     b.Property<int?>("ParentId");
 
-                    b.Property<int>("State");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime?>("Timestamp")
                         .IsConcurrencyToken()
@@ -111,9 +138,15 @@ namespace Test.Domain.Migrations
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
                 {
+                    b.HasOne("Test.Domain.Entity.ArticleType", "ArticleType")
+                        .WithMany("Articles")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Test.Domain.Entity.User", "User")
                         .WithMany("Articles")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.Comment", b =>

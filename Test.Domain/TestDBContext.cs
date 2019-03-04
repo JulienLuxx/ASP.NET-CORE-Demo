@@ -99,7 +99,7 @@ namespace Test.Domain
                 e.ToTable("Comment");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
 

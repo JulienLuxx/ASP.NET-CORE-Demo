@@ -20,7 +20,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("Add")]
-        public JsonResult Add([FromBody]ArticleTypeDto dto)
+        public JsonResult Add(ArticleTypeDto dto)
         {
             var result = _articleTypeSvc.AddSingle(dto);
             return Json(result);
@@ -38,6 +38,13 @@ namespace Test.Web.API
         {
             var result = _articleTypeSvc.Edit(dto);
             return Json(result);
+        }
+
+        [HttpPost("EditAsync")]
+        public async Task<JsonResult> EditAsync(ArticleTypeDto dto)
+        {
+            var resultTask = _articleTypeSvc.EditAsync(dto);
+            return Json(await resultTask);
         }
 
         [HttpGet("Page")]
