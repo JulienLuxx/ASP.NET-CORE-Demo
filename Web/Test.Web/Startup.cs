@@ -27,6 +27,7 @@ using Test.Core.Filter;
 using Test.Core.Infrastructure;
 using Test.Core.IOC;
 using Test.Domain;
+using Test.Domain.IOC;
 using Test.Service.Impl;
 using Test.Service.Infrastructure;
 using Test.Service.Interface;
@@ -138,6 +139,7 @@ namespace Test.Web
 
             //Module Injection
             builder.RegisterModule<UtilModule>();
+            builder.RegisterModule<DomainServiceModule>();
             builder.RegisterModule<ServiceModule>();
             builder.Populate(services);
             ApplicationContainer = builder.Build();

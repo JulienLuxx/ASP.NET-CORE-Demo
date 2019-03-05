@@ -48,6 +48,28 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto> AddSingleAsync(ArticleTypeDto dto)
+        {
+            var result = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = Mapper.Map<ArticleType>(dto);
+                _testDB.Add(data);
+                var flag = await _testDB.SaveChangesAsync();
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public ArticleType Add(ArticleTypeDto dto)
         {
             var data = new ArticleType();
@@ -70,6 +92,32 @@ namespace Test.Service.Impl
                     data.IsDeleted = true;
                 }
                 var flag = _testDB.SaveChanges();
+                if (0 < flag)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ResultDto> DeleteAsync(string idString)
+        {
+            var result = new ResultDto();
+            try
+            {
+                var idArray = idString.Split(",");
+                var dataList = await _testDB.ArticleType.Where(x => x.IsDeleted == false && idArray.Contains(x.Id.ToString())).ToListAsync();
+                foreach (var data in  dataList)
+                {
+                    data.IsDeleted = true;
+                }
+                _testDB.UpdateRange(dataList);
+                var flag = await _testDB.SaveChangesAsync();
                 if (0 < flag)
                 {
                     result.ActionResult = true;
@@ -113,30 +161,30 @@ namespace Test.Service.Impl
 
         public async Task<ResultDto> EditAsync(ArticleTypeDto dto)
         {
-            var res = new ResultDto();
+            var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefault();
+                var data = await _testDB.ArticleType.Where(x => x.IsDeleted == false && x.Id == dto.Id).FirstOrDefaultAsync();
                 if (null == data)
                 {
-                    return res;
+                    return result;
                 }
                 dto.IsDeleted = data.IsDeleted;
                 data = Mapper.Map(dto, data);
                 _testDB.Update(data);
-                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, false);
                 if (0 < flag)
                 {
-                    res.ActionResult = true;
-                    res.Message = "success";
+                    result.ActionResult = true;
+                    result.Message = "success";
                 }
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                result.Message = ex.Message;
             }
-            return res;
+            return result;
         }
 
         public ResultDto<ArticleTypeDto> GetPageData(ArticleTypeQueryModel qModel)

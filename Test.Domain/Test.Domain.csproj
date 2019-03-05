@@ -69,6 +69,7 @@
   <ItemGroup>
     <Folder Include="Infrastructure\" />
     <Folder Include="Enum\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

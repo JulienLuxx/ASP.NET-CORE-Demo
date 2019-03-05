@@ -85,7 +85,7 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Timestamp).IsRowVersion();                
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();             
             });
 
             modelBuilder.Entity<ArticleType>(e =>
@@ -94,7 +94,7 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });
 
@@ -104,17 +104,17 @@ namespace Test.Domain
                 e.HasKey(x => x.Id);
                 //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             });
 
             modelBuilder.Entity<User>(e =>
             {
-                e.ToTable("User");
+                e.ToTable("User");                
                 e.HasKey(x => x.Id);
                 //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Timestamp).IsRowVersion();
+                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
             });
             #endregion

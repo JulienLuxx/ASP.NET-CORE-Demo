@@ -26,11 +26,25 @@ namespace Test.Web.API
             return Json(result);
         }
 
+        [HttpPost("AddAsync")]
+        public async Task<JsonResult> AddAsync(ArticleTypeDto dto)
+        {
+            var resultTask = _articleTypeSvc.AddSingleAsync(dto);
+            return Json(await resultTask);
+        }
+
         [HttpPost("Delete")]
         public JsonResult Delete(string idString)
         {
             var result = _articleTypeSvc.Delete(idString);
             return Json(result);
+        }
+
+        [HttpPost("DeleteAsync")]
+        public async Task<JsonResult> DeleteAsync(string idString)
+        {
+            var resultTask = _articleTypeSvc.DeleteAsync(idString);
+            return Json(await resultTask);
         }
 
         [HttpPost("Edit")]
@@ -40,11 +54,25 @@ namespace Test.Web.API
             return Json(result);
         }
 
+        [HttpPost("EditAsync")]
+        public async Task<JsonResult> EditAsync(ArticleTypeDto dto)
+        {
+            var resultTask = _articleTypeSvc.EditAsync(dto);
+            return Json(await resultTask);
+        }
+
         [HttpGet("Page")]
         public async Task<JsonResult> GetPageAsync(ArticleTypeQueryModel qModel)
         {
-            var res = await _articleTypeSvc.GetPageDataAsync(qModel);
-            return Json(res);
+            var resultTask = _articleTypeSvc.GetPageDataAsync(qModel);
+            return Json(await resultTask);
+        }
+
+        [HttpGet("Detail")]
+        public async Task<JsonResult> GetSingleDataAsync(int id)
+        {
+            var resultTask = _articleTypeSvc.GetSingleDataAsync(id);
+            return Json(await resultTask);
         }
     }
 }

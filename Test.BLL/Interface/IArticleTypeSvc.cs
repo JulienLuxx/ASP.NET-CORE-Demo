@@ -13,9 +13,15 @@ namespace Test.Service.Interface
     {
         ResultDto AddSingle(ArticleTypeDto dto);
 
+        Task<ResultDto> AddSingleAsync(ArticleTypeDto dto);
+
         ResultDto Delete(string idString);
 
+        Task<ResultDto> DeleteAsync(string idString);
+
         ResultDto Edit(ArticleTypeDto dto);
+
+        Task<ResultDto> EditAsync(ArticleTypeDto dto);
 
         Task<ResultDto<ArticleTypeDto>> GetPageDataAsync(ArticleTypeQueryModel qModel);
 

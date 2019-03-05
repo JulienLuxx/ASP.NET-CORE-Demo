@@ -51,3 +51,5 @@
 /Test.Core/bin/Debug/netcoreapp2.2
 /Test.Domain/bin/Debug/netcoreapp2.2
 /Test.Domain/obj/Debug/netcoreapp2.2
+/Test.Domain/.vs
+/Test.Domain/obj/Release/netcoreapp2.2

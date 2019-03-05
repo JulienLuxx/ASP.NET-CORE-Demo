@@ -10,7 +10,7 @@ namespace Test.Domain.IOC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<DbContextExtendSvc>().As<IDbContextExtendSvc>().InstancePerLifetimeScope();
+            builder.RegisterType<DbContextExtendSvc>().As<IDbContextExtendSvc>().InstancePerLifetimeScope();
         }
     }
 }
