@@ -59,7 +59,7 @@ namespace Test.Domain.Extend
 
     public class DbContextExtendSvc : IDbContextExtendSvc
     {
-        public string ConvertToTimeSpanString(object obj)
+        public string ConvertToTimeSpanString(dynamic obj)
         {
             var btTsArray = obj as byte[];
             var str = BitConverter.ToString(btTsArray);
@@ -101,9 +101,9 @@ namespace Test.Domain.Extend
                             var originalValues = entry.OriginalValues;
                             var proposedValues = entry.CurrentValues;
                             var databaseValues = await entry.GetDatabaseValuesAsync();
-                            var originalTimestamp = originalValues["Timestamp"];
-                            var proposedTimestamp = proposedValues["Timestamp"];
-                            var databaseTimestamp = databaseValues["Timestamp"];
+                            dynamic originalTimestamp = originalValues["Timestamp"];
+                            dynamic proposedTimestamp = proposedValues["Timestamp"];
+                            dynamic databaseTimestamp = databaseValues["Timestamp"];
                             var oInt = long.Parse(ConvertToTimeSpanString(originalTimestamp), NumberStyles.HexNumber);
                             var pInt = long.Parse(ConvertToTimeSpanString(proposedTimestamp), NumberStyles.HexNumber);
                             var dInt = long.Parse(ConvertToTimeSpanString(databaseTimestamp), NumberStyles.HexNumber);
