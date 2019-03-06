@@ -32,6 +32,8 @@ using Test.Service.Impl;
 using Test.Service.Infrastructure;
 using Test.Service.Interface;
 using Test.Service.IOC;
+using Test.Web.Filter;
+using NLog;
 
 namespace Test.Web
 {
@@ -47,7 +49,7 @@ namespace Test.Web
         {
             Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appsettings.json").Build();
 
-            loggerRepository = LogManager.CreateRepository("NETCoreRepository");
+            loggerRepository = log4net.LogManager.CreateRepository("NETCoreRepository");
             XmlConfigurator.Configure(loggerRepository, new FileInfo(Environment.CurrentDirectory + @"\Config\log4net.config"));
         }
         public Autofac.IContainer ApplicationContainer { get; private set; }
@@ -137,6 +139,9 @@ namespace Test.Web
             //builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
             //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
 
+            
+            //Attribute&Filter Injection
+            builder.RegisterType<CustomerExceptionFilter>();
             //Module Injection
             builder.RegisterModule<UtilModule>();
             builder.RegisterModule<DomainServiceModule>();
@@ -202,8 +207,16 @@ namespace Test.Web
         #endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,  ILoggerFactory loggerFactory) 
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"))
+                .AddNLog()
+                .AddDebug();
+            //loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"))
+            //    .AddNLog()
+            //    .AddDebug();
+
+            env.ConfigureNLog(Path.Combine(env.ContentRootPath, "nlog.config"));
             //loggerFactory.AddNLog();
             //env.ConfigureNLog("nlog.config");
             if (env.IsDevelopment())
