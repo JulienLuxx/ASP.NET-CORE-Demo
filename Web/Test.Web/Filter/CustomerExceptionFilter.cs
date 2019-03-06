@@ -10,11 +10,19 @@ using Newtonsoft.Json;
 
 namespace Test.Web.Filter
 {
+    /// <summary>
+    /// ExcetionFilterAttribute
+    /// </summary>
     public class CustomerExceptionFilter : Attribute, IExceptionFilter
     {
         private readonly ILogger _logger = null;
         private readonly IHostingEnvironment _environment = null;
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="environment"></param>
         public CustomerExceptionFilter(ILogger<CustomerExceptionFilter> logger, IHostingEnvironment environment)
         {
             _environment = environment;

@@ -34,6 +34,7 @@ using Test.Service.Interface;
 using Test.Service.IOC;
 using Test.Web.Filter;
 using NLog;
+using Test.Web.Middleware;
 
 namespace Test.Web
 {
@@ -116,7 +117,7 @@ namespace Test.Web
 
             services.AddMvc(option =>
             {
-                option.Filters.Add(typeof(GlobalExceptions));
+                //option.Filters.Add(typeof(GlobalExceptions));
             });
 
             //DI Injection
@@ -141,7 +142,7 @@ namespace Test.Web
 
             
             //Attribute&Filter Injection
-            builder.RegisterType<CustomerExceptionFilter>();
+            builder.RegisterType<CustomerExceptionFilter>();/*NLogFilterAttribute*/
             //Module Injection
             builder.RegisterModule<UtilModule>();
             builder.RegisterModule<DomainServiceModule>();
@@ -217,17 +218,19 @@ namespace Test.Web
             //    .AddDebug();
 
             env.ConfigureNLog(Path.Combine(env.ContentRootPath, "nlog.config"));
-            //loggerFactory.AddNLog();
-            //env.ConfigureNLog("nlog.config");
-            if (env.IsDevelopment())
-            {
-                //app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+
+            //TryUserMiddlewareHandlerLog
+            //app.UseMiddleware<ExceptionMiddleware>();
+
+            //if (env.IsDevelopment())
+            //{
+            //    //app.UseBrowserLink();
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
 
             app.UseStaticFiles();
 
