@@ -8,12 +8,14 @@ using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
 using Test.Web.Base;
+using Test.Web.Filter;
 
 namespace Test.Web.API
 {
-    //[Authorize]
+    [Authorize]
     [Produces("application/json")]
     [Route("API/Test")]
+    [ServiceFilter(typeof(CustomerExceptionFilter))]
     public class TestController : BaseController
     {
         private readonly ICommentSvc _commentSvc;
@@ -34,11 +36,20 @@ namespace Test.Web.API
             return Json(res);
         }
 
+        [AllowAnonymous]
         [HttpPost("Edit")]
         public async Task<JsonResult> EditAsync(ArticleTypeDto dto)
         {
             var resultTask = _articleTypeSvc.EditAsync(dto);
             return Json(await resultTask);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("LogTest")]
+        public async Task<JsonResult> LogTest()
+        {
+            throw new Exception("Error!");
+            return Json(new { value1 = "", value2 = "" });
         }
     }
 }

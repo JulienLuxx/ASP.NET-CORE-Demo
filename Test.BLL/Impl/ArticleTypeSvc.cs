@@ -134,7 +134,7 @@ namespace Test.Service.Impl
                 }
                 dto.IsDeleted = data.IsDeleted;
                 data = Mapper.Map(dto, data);
-                _testDB.Update(data);
+                //_testDB.Update(data);
                 //await _testDB.SaveChangesAsync();
                 //var flag= await DbContextExtend.CommitTestAsync<TestDBContext, ArticleType>(_testDB,true);
                 var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);

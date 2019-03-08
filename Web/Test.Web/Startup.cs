@@ -27,6 +27,7 @@ using Test.Service.Impl;
 using Test.Service.Infrastructure;
 using Test.Service.Interface;
 using Test.Service.IOC;
+using Test.Web.Filter;
 
 namespace Test.Web
 {
@@ -113,6 +114,9 @@ namespace Test.Web
             //builder.RegisterType<ArticleSvc>().As<IArticleSvc>().InstancePerLifetimeScope();
             //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
 
+            //Attribute&Filter Injection
+            builder.RegisterType<CustomerExceptionFilter>();/*NLogFilterAttribute*/
+
             //Module Injection
             builder.RegisterModule<UtilModule>();
             builder.RegisterModule<DomainServiceModule>();
@@ -172,19 +176,23 @@ namespace Test.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory  loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"))
+                .AddNLog()
+                .AddDebug();
+            env.ConfigureNLog(Path.Combine(env.ContentRootPath, "nlog.config"));
             //AddNLog
             //loggerFactory.AddNLog();
             //env.ConfigureNLog("nlog.config");
 
-            if (env.IsDevelopment())
-            {
-                //app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    //app.UseBrowserLink();
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
 
             app.UseStaticFiles();
 
