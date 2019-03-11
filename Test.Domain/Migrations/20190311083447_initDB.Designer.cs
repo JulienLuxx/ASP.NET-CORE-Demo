@@ -10,8 +10,8 @@ using Test.Domain;
 namespace Test.Domain.Migrations
 {
     [DbContext(typeof(TestDBContext))]
-    [Migration("20190305015220_initDb")]
-    partial class initDb
+    [Migration("20190311083447_initDB")]
+    partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,9 +70,11 @@ namespace Test.Domain.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<byte[]>("Timestamp")
+                    b.Property<uint>("Timestamp")
                         .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnName("xmin")
+                        .HasColumnType("xid");
 
                     b.HasKey("Id");
 

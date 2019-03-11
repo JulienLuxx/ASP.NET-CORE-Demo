@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Test.Domain.Entity
@@ -22,6 +24,8 @@ namespace Test.Domain.Entity
 
         public DateTime CreateTime { get; set; }
 
+        //[ConcurrencyCheck]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public byte[] Timestamp { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }

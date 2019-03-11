@@ -55,7 +55,7 @@ namespace Test.Service.Impl
             try
             {
                 var data = Mapper.Map<ArticleType>(dto);
-                _testDB.Add(data);
+                _testDB.ArticleType.Add(data);
                 var flag = await _testDB.SaveChangesAsync();
                 if (flag > 0)
                 {
@@ -172,12 +172,17 @@ namespace Test.Service.Impl
                 }
                 dto.IsDeleted = data.IsDeleted;
                 data = Mapper.Map(dto, data);
-                _testDB.Update(data);
-                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, false);
+                //_testDB.Update(data);
+                //await _testDB.Database.ExecuteSqlCommandAsync("")
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, ArticleType>(_testDB, true);
                 if (0 < flag)
                 {
                     result.ActionResult = true;
                     result.Message = "success";
+                }
+                else if (flag == -1)
+                {
+                    result.Message = "Data has been change , Please try again!";
                 }
             }
             catch (Exception ex)

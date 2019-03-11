@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Test.Domain.Entity;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Test.Domain
 {
@@ -79,6 +80,8 @@ namespace Test.Domain
             //modelBuilder.Entity<Comment>().HasOne(x => x.Article).WithMany(y => y.Comments).HasForeignKey(x => x.ArticleId);
             #endregion
 
+            var converter = new ValueConverter<byte[], long>(v => BitConverter.ToInt64(v, 0), v => BitConverter.GetBytes(v));
+
             modelBuilder.Entity<Article>(e =>
             {
                 e.ToTable("Article");
@@ -92,11 +95,12 @@ namespace Test.Domain
             {
                 e.ToTable("ArticleType");
                 e.HasKey(x => x.Id);
-                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)
-                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
+                //e.Property(x => x.Id).ValueGeneratedOnAdd().UseMySqlIdentityColumn();//MySqlSetIncrement(Verify)                
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();//PostgreSqlSetIncrement(Verify)  
+                e.Property(x => x.Timestamp).HasColumnName("xmin").HasColumnType("xid").HasConversion(converter).IsRequired().IsRowVersion().IsConcurrencyToken().ValueGeneratedOnAddOrUpdate(); //ConcurrencyClick(Verify)          
                 e.HasMany(x => x.Articles).WithOne(y => y.ArticleType).HasForeignKey(y => y.TypeId);
             });
+
 
             modelBuilder.Entity<Comment>(e =>
             {
