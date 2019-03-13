@@ -47,6 +47,28 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto> AddSingleAsync(ArticleTypeDto dto)
+        {
+            var result = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = Mapper.Map<ArticleType>(dto);
+                await _testDB.AddAsync(data);
+                var flag = await _testDB.SaveChangesAsync();
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public ResultDto Delete(string idString)
         {
             var result = new ResultDto();

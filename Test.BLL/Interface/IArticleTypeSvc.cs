@@ -12,6 +12,8 @@ namespace Test.Service.Interface
     {
         ResultDto AddSingle(ArticleTypeDto dto);
 
+        Task<ResultDto> AddSingleAsync(ArticleTypeDto dto);
+
         ResultDto Delete(string idString);
 
         ResultDto Edit(ArticleTypeDto dto);

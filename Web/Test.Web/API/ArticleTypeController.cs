@@ -26,6 +26,13 @@ namespace Test.Web.API
             return Json(result);
         }
 
+        [HttpPost("AddAsync")]
+        public async Task<JsonResult> AddAsync(ArticleTypeDto dto)
+        {
+            var resultTask = _articleTypeSvc.AddSingleAsync(dto);
+            return Json(await resultTask);
+        }
+
         [HttpPost("Delete")]
         public JsonResult Delete(string idString)
         {
