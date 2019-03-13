@@ -142,7 +142,7 @@ namespace Test.Domain.Extend
                             var oInt = long.Parse(ConvertToTimeSpanString(originalTimestamp), NumberStyles.HexNumber);
                             var pInt = long.Parse(ConvertToTimeSpanString(proposedTimestamp), NumberStyles.HexNumber);
                             var dInt = long.Parse(ConvertToTimeSpanString(databaseTimestamp), NumberStyles.HexNumber);
-                            if (oInt >= dInt)
+                            if (oInt >= dInt||clientWin)
                             {
                                 foreach (var property in proposedValues.Properties)
                                 {
