@@ -28,7 +28,7 @@ namespace Test.Service.Infrastructure
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<UserDto, RegisterDto>();
-            CreateMap<RegisterDto, UserDto>();
+            CreateMap<RegisterDto, UserDto>()/*.ForMember(x => x.CreateTime, a => a.Ignore()).ForMember(x => x.Status, a => a.Ignore())*/;
 
 
         }

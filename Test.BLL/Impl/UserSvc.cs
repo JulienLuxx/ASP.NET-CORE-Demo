@@ -29,7 +29,7 @@ namespace Test.Service.Impl
             _encryptUtil = encryptUtil;
         }
 
-        public ResultDto Add(UserDto dto)
+        public ResultDto AddSingle(UserDto dto)
         {
             var result = new ResultDto();
             try
@@ -37,10 +37,35 @@ namespace Test.Service.Impl
                 dto.CreateTime = DateTime.Now;
                 var randomStr = new Random().Next(100000).ToString();
                 dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
-                var data = _mapper.Map<User>(dto);
+                var data = Mapper.Map<User>(dto);
                 data.SaltValue = randomStr;
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ResultDto> AddSingleAsync(UserDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                dto.CreateTime = DateTime.Now;
+                var randomStr = new Random().Next(100000).ToString();
+                dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
+                var data = Mapper.Map<User>(dto);
+                data.SaltValue = randomStr;
+                await _testDB.AddAsync(data);
+                var flag = await _testDB.SaveChangesAsync();
                 if (flag > 0)
                 {
                     result.ActionResult = true;
@@ -117,8 +142,8 @@ namespace Test.Service.Impl
                 {
                     return result;
                 }
-                var userDto = _mapper.Map<UserDto>(dto);
-                result = Add(userDto);
+                var userDto = Mapper.Map<UserDto>(dto);
+                result =await AddSingleAsync(userDto);
             }
             catch (Exception ex)
             {

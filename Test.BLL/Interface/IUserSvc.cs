@@ -10,7 +10,9 @@ namespace Test.Service.Interface
 {
     public interface IUserSvc : IDependency 
     {
-        ResultDto Add(UserDto dto);
+        ResultDto AddSingle(UserDto dto);
+
+        Task<ResultDto> AddSingleAsync(UserDto dto);
 
         Task<ResultDto> ChangePasswordAsync(ChangePasswordDto dto);
 
