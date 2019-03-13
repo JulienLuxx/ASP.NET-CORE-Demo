@@ -9,6 +9,7 @@ using Test.Core.Encrypt;
 using Test.Domain;
 using Test.Domain.Entity;
 using Test.Domain.Enum;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 
@@ -17,22 +18,25 @@ namespace Test.Service.Impl
     public class UserSvc : BaseSvc, IUserSvc
     {
         private IEncryptUtil _encryptUtil { get; set; }
+
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="encryptUtil"></param>
+        /// <param name="dbContextExtendSvc"></param>
         public UserSvc(
-            IMapper mapper, 
             TestDBContext testDB, 
-            IEncryptUtil encryptUtil
-            ) : base(mapper, testDB)
+            IEncryptUtil encryptUtil,
+            IDbContextExtendSvc dbContextExtendSvc
+            ) : base(testDB)
         {
             _encryptUtil = encryptUtil;
+            _dbContextExtendSvc = dbContextExtendSvc;
         }
 
-        public ResultDto Add(UserDto dto)
+        public ResultDto AddSingle(UserDto dto)
         {
             var result = new ResultDto();
             try
@@ -40,10 +44,35 @@ namespace Test.Service.Impl
                 dto.SetDefaultValue();
                 var randomStr = new Random().Next(100000).ToString();
                 dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
-                var data = _mapper.Map<User>(dto);
+                var data = Mapper.Map<User>(dto);
                 data.SaltValue = randomStr;
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
+                if (flag > 0)
+                {
+                    result.ActionResult = true;
+                    result.Message = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ResultDto> AddSingleAsync(UserDto dto)
+        {
+            var result = new ResultDto();
+            try
+            {
+                dto.SetDefaultValue();
+                var randomStr = new Random().Next(100000).ToString();
+                dto.Password = _encryptUtil.GetMd5By32(dto.Password + randomStr);
+                var data = Mapper.Map<User>(dto);
+                data.SaltValue = randomStr;
+                await _testDB.AddAsync(data);
+                var flag = await _testDB.SaveChangesAsync();
                 if (flag > 0)
                 {
                     result.ActionResult = true;
@@ -89,7 +118,7 @@ namespace Test.Service.Impl
                     }
 
 
-                    var flag = _testDB.SaveChanges();
+                    var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, User>(_testDB, true);
                     if (flag > 0)
                     {
                         result.ActionResult = true;
@@ -159,8 +188,8 @@ namespace Test.Service.Impl
                     result.Message = "MailBox already exist!";
                     return result;
                 }
-                var userDto = _mapper.Map<UserDto>(dto);
-                result = Add(userDto);
+                var userDto = Mapper.Map<UserDto>(dto);
+                result = await AddSingleAsync(userDto);
             }
             catch (Exception ex)
             {

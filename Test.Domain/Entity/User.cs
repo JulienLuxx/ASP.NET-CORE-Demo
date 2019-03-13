@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Test.Domain.Entity
 {
-    public class User
+    public class User:IEntity
     {
         public User()
         {

@@ -14,7 +14,7 @@ namespace Test.Service.Interface
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        ResultDto Add(UserDto dto);
+        ResultDto AddSingle(UserDto dto);
 
         Task<ResultDto> ChangePasswordAsync(ChangePasswordDto dto);
 
