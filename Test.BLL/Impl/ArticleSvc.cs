@@ -11,6 +11,7 @@ using Test.Core.Dto;
 using Test.Core.Tree;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -21,22 +22,25 @@ namespace Test.Service.Impl
     {
         private ITreeUtil _util { get; set; }
 
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
+
         private ICommentSvc _commentSvc { get; set; }
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="mapper"></param>
         /// <param name="testDB"></param>
         /// <param name="util"></param>
+        /// <param name="dbContextExtendSvc"></param>
         /// <param name="commentSvc"></param>
         public ArticleSvc(
-            IMapper mapper,
             TestDBContext testDB,
             ITreeUtil util,
+            IDbContextExtendSvc dbContextExtendSvc,
             ICommentSvc commentSvc
-            ) :base(mapper,testDB)
+            ) :base(testDB)
         {
             _util = util;
+            _dbContextExtendSvc = dbContextExtendSvc;
             _commentSvc = commentSvc;
         }
 
@@ -61,7 +65,7 @@ namespace Test.Service.Impl
             }
             try
             {
-                var data = _mapper.Map<Article>(dto);
+                var data = Mapper.Map<Article>(dto);
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
@@ -80,7 +84,7 @@ namespace Test.Service.Impl
         public async Task<ResultDto> AddSingleAsync(ArticleDto dto)
         {
             var result = new ResultDto();
-            var data = _mapper.Map<Article>(dto);
+            var data = Mapper.Map<Article>(dto);
             await _testDB.AddAsync(data);
             var flag = await _testDB.SaveChangesAsync();
             if (flag > 0)

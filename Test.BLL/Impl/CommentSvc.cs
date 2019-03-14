@@ -9,6 +9,7 @@ using Test.Core.Dto;
 using Test.Core.Tree;
 using Test.Domain;
 using Test.Domain.Entity;
+using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -18,18 +19,21 @@ namespace Test.Service.Impl
     public class CommentSvc : BaseSvc,ICommentSvc
     {
         private ITreeUtil _util { get; set; }
+
+        private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="mapper"></param>
         /// <param name="testDB"></param>
+        /// <param name="dbContextExtendSvc"></param>
         /// <param name="util"></param>
         public CommentSvc(
-            IMapper mapper,
             TestDBContext testDB,
+            IDbContextExtendSvc dbContextExtendSvc,
             ITreeUtil util
-            ) : base(mapper,testDB)
+            ) : base(testDB)
         {
+            _dbContextExtendSvc = dbContextExtendSvc;
             _util = util;
         }
 

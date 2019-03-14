@@ -30,4 +30,15 @@ namespace Test.Core.Dto
 
         public string Message { get; set; }
     }
+
+    public class ResultBaseDto
+    {
+        public int ActionResult { get; set; }
+
+        public string Message { get; set; }
+
+        public bool HaveData { get; set; }
+
+        public dynamic Data { get; set; }
+    }
 }

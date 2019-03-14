@@ -12,6 +12,7 @@ namespace Test.Service.Impl
         /// <summary>
         /// AutoMapperInterface
         /// </summary>
+        [Obsolete]
         protected readonly IMapper _mapper;
 
         //protected TestDBContext TestDB = new TestDBContext();

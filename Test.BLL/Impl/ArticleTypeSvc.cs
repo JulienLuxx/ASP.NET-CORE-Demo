@@ -93,6 +93,19 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto> DeleteAsync()
+        {
+            var result = new ResultDto();
+            try
+            { }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
         public ResultDto Edit(ArticleTypeDto dto)
         {
             var result = new ResultDto();

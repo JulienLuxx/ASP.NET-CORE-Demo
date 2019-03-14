@@ -118,13 +118,16 @@ namespace Test.Service.Impl
                     }
 
 
-                    var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, User>(_testDB, true);
+                    var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, User>(_testDB, false);
                     if (flag > 0)
                     {
                         result.ActionResult = true;
                         result.Message = "Success";
                     }
-
+                    else if (-1 == flag)
+                    {
+                        result.Message = "Data has been change , Please try again!";
+                    }
                 }
             }
             catch (Exception ex)
