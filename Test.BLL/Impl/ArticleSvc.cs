@@ -25,6 +25,7 @@ namespace Test.Service.Impl
         private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
 
         private ICommentSvc _commentSvc { get; set; }
+
         /// <summary>
         /// Ctor
         /// </summary>
