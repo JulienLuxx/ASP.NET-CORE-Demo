@@ -23,21 +23,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20190111082909_tmp.cs" />
-    <Compile Include="Migrations\20190111082909_tmp.Designer.cs" />
-    <Compile Include="Migrations\20190227072231_tmp2.cs" />
-    <Compile Include="Migrations\20190227072231_tmp2.Designer.cs" />
+    <Compile Include="Migrations\20190417142602_initDb.cs" />
+    <Compile Include="Migrations\20190417142602_initDb.designer.cs" />
     <Compile Include="Migrations\TestDBContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

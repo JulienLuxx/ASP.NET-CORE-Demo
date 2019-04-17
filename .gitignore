@@ -33,3 +33,6 @@
 /Test.Domain/Migrations/TestDBContextModelSnapshot.cs
 /UnitTest/TestProject.XUnitTest/obj
 /UnitTest/TestProject.XUnitTest/bin/Debug/netcoreapp2.2
+/Test.BLL/obj/Test.Service.csproj.nuget.dgspec.json
+/Test.Domain/obj/Test.Domain.csproj.nuget.dgspec.json
+/Web/Test.Web/obj/Test.Web.csproj.nuget.dgspec.json
