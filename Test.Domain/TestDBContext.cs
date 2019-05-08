@@ -29,7 +29,8 @@ namespace Test.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
-            optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Data Source=192.168.3.165;Initial Catalog=TestDB;User ID=sa;Password=zzz;", x => x.UseRowNumberForPaging());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

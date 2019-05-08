@@ -172,7 +172,8 @@ namespace Test.Service.Impl
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id=x.Id,
-                Title=x.Title,
+                UserId = x.UserId,
+                Title =x.Title,
                 Content=x.Content,
                 TypeId=x.TypeId,
                 CreateTime=x.CreateTime
@@ -191,10 +192,11 @@ namespace Test.Service.Impl
             var query = _testDB.Article.AsNoTracking().Include(x => x.ArticleType).Where(x => x.IsDeleted == false);
             query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
             query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
-            query = string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
+            query = !string.IsNullOrEmpty(qModel.TypeName) ? query.Where(x => x.ArticleType.Name.Contains(qModel.TypeName)) : query;
             var queryData = query.Select(x => new ArticleDto()
             {
                 Id = x.Id,
+                UserId=x.UserId,
                 Title = x.Title,
                 Content = x.Content,
                 TypeId = x.TypeId,

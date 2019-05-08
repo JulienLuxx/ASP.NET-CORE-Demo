@@ -43,7 +43,7 @@ namespace Test.Service.Impl
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = _mapper.Map<Comment>(dto);
+                var data = Mapper.Map<Comment>(dto);
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)
@@ -134,9 +134,10 @@ namespace Test.Service.Impl
             var queryData = query.Select(x => new CommentDto()
             {
                 Id = x.Id,
-                ArticleId=x.ArticleId,
+                ArticleId = x.ArticleId,
                 Content = x.Content,
                 Status = x.Status,
+                ParentId = x.ParentId ?? 0,
                 CreateTime = x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
