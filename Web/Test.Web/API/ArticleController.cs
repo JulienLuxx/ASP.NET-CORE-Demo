@@ -40,17 +40,24 @@ namespace Test.Web.API
             return Json(result);
         }
 
-        [HttpPost("Edits")]
-        public JsonResult Edit(string dataJson)
-        {
-            var result = _articleSvc.Edit(dataJson);
-            return Json(result);
-        }
+        //[HttpPost("Edits")]
+        //public JsonResult Edit(string dataJson)
+        //{
+        //    var result = _articleSvc.Edit(dataJson);
+        //    return Json(result);
+        //}
 
         [HttpPost("Edit")]
         public JsonResult Edit([FromBody]ArticleDto dto)
         {
             var result = _articleSvc.Edit(dto);
+            return Json(result);
+        }
+
+        [HttpPost("EditAsync")]
+        public JsonResult EditAsync([FromBody]ArticleDto dto)
+        {
+            var result = _articleSvc.EditAsync(dto);
             return Json(result);
         }
 

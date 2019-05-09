@@ -147,7 +147,7 @@ namespace Test.Service.Impl
                 dto.UserId = data.UserId;
                 dto.TypeId = data.TypeId;
                 dto.Status = data.Status;
-                data = _mapper.Map(dto, data);
+                data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag= _testDB.SaveChanges();
                 if (0 < flag)
@@ -161,6 +161,36 @@ namespace Test.Service.Impl
                 res.Message = ex.Message;
             }
             return res;
+        }
+
+        public async Task<ResultDto> EditAsync(ArticleDto dto)
+        {
+            var result = new ResultDto();
+            dto.CreateTime = DateTime.Now;
+            try
+            {
+                var data = await _testDB.Article.Where(x => !x.IsDeleted && x.Id == dto.Id).FirstOrDefaultAsync();
+                if (null == data)
+                {
+                    return result;
+                }
+                dto.IsDeleted = data.IsDeleted;
+                dto.UserId = data.UserId;
+                dto.TypeId = data.TypeId;
+                dto.Status = data.Status;
+                data = Mapper.Map(dto, data);
+                var flag = await _dbContextExtendSvc.CommitTestAsync<TestDBContext, Article>(_testDB, true);
+                if (0 < flag)
+                {
+                    result.ActionResult = true;
+                    result.Message = "success";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
         }
 
         public ResultDto<ArticleDto> GetPageData(ArticleQueryModel qModel)

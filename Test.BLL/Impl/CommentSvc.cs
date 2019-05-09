@@ -97,7 +97,7 @@ namespace Test.Service.Impl
                     return result;
                 }
                 dto.IsDeleted = data.IsDelete;
-                data = _mapper.Map(dto, data);
+                data = Mapper.Map(dto, data);
                 _testDB.Update(data);
                 var flag= _testDB.SaveChanges();
                 if (0 < flag)
@@ -155,12 +155,12 @@ namespace Test.Service.Impl
             var dataList = await _testDB.Comment.AsNoTracking().Where(x => x.IsDelete == false).ToListAsync();
             if (dataList.Where(x=>x.Id==id).Any()) 
             {
-                var dtoList = _mapper.Map<List<CommentDto>>(dataList);
+                var dtoList = Mapper.Map<List<CommentDto>>(dataList);
                 treeDtoList = GetCommentTrees(dtoList, id);
                 var data = dataList.Where(x => x.Id == id).FirstOrDefault();
                 if (null != data)
                 {
-                    var treeDto = _mapper.Map<CommentTreeDto>(data);
+                    var treeDto = Mapper.Map<CommentTreeDto>(data);
                     treeDtoList.Insert(0, treeDto);
                 }
                 result.ActionResult = true;
