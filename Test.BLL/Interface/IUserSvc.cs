@@ -13,6 +13,8 @@ namespace Test.Service.Interface
 
         Task<ResultDto> ChangePasswordAsync(ChangePasswordDto dto);
 
+        Task<ResultDto<UserDto>> GetListAsync();
+
         Task<ResultDto<LoginUserDto>> LoginAsync(LoginDto dto);
 
         Task<ResultDto> RegisterAsync(RegisterDto dto);

@@ -126,7 +126,7 @@ namespace Test.Service.Impl
 
         public async Task<ResultDto<ArticleDto>> GetPageDataAsync(ArticleQueryModel qModel)
         {
-            var res = new ResultDto<ArticleDto>();
+            var result = new ResultDto<ArticleDto>();
             var query = _testDB.Article.AsNoTracking().Where(x => x.IsDeleted == false);
             query = qModel.Status.HasValue ? query.Where(x => x.Status == qModel.Status) : query;
             query = qModel.UserId.HasValue ? query.Where(x => x.UserId == qModel.UserId) : query;
@@ -141,10 +141,10 @@ namespace Test.Service.Impl
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
-            res.ActionResult = true;
-            res.Message = "Success";
-            res.List = await queryData.ToListAsync();
-            return res;
+            result.ActionResult = true;
+            result.Message = "Success";
+            result.List = await queryData.ToListAsync();
+            return result;
         }
 
         public ResultDto<ArticleDetailDto> GetSingleData(int Id)

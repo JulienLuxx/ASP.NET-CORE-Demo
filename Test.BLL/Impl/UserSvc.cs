@@ -108,6 +108,25 @@ namespace Test.Service.Impl
             return result;
         }
 
+        public async Task<ResultDto<UserDto>> GetListAsync()
+        {
+            var result = new ResultDto<UserDto>() { ActionResult=true};
+
+            var query = _testDB.User;
+
+            result.List = await query.Select(s => new UserDto()
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Password = s.Password,
+                Status = s.Status,
+                Mobile = s.Mobile,
+                MailBox = s.MailBox
+            }).ToListAsync();
+
+            return result;
+        }
+
         public async Task<ResultDto> RegisterAsync(RegisterDto dto) 
         {
             var result = new ResultDto();
@@ -154,7 +173,7 @@ namespace Test.Service.Impl
                 }
                 else if (!data.Password.Equals(_encryptUtil.GetMd5By32(dto.Password + data.SaltValue)))
                 {
-                    result.Message = "UserNameOrPassword error";
+                    result.Message = "UserNameOrPassword incorrect";
                     return result;
                 }
 

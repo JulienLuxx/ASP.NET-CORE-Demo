@@ -25,6 +25,13 @@ namespace Test.Web.API
             return Json(await resultTask);
         }
 
+        [HttpGet("GetList")]
+        public async Task<JsonResult> GetList()
+        {
+            var resultTask = _userSvc.GetListAsync();
+            return Json(await resultTask);
+        }
+
         [HttpPost("Register")]
         public async Task<JsonResult> Register(RegisterDto dto)
         {
