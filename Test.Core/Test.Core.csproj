@@ -10,11 +10,8 @@
 
   <ItemGroup>
     <Compile Remove="Logs\**" />
-    <Compile Remove="新文件夹\**" />
     <EmbeddedResource Remove="Logs\**" />
-    <EmbeddedResource Remove="新文件夹\**" />
     <None Remove="Logs\**" />
-    <None Remove="新文件夹\**" />
   </ItemGroup>
 
   <ItemGroup>

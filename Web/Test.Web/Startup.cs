@@ -103,9 +103,16 @@ namespace Test.Web
                     }
                 }
                 //TryAddAuthorization
-                //option.AddSecurityDefinition(Configuration["Identity:Scheme"], new ApiKeyScheme()
+                option.AddSecurityDefinition(Configuration["Identity:Scheme"], new ApiKeyScheme()
+                {
+                    Description = "JWT Bearer 授权 \"Authorization:     Bearer+空格+token\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                //option.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 //{
-                //    Description = "JWT Bearer 授权 \"Authorization:     Bearer+空格+token\"",
+                //    Description = "Authorization format : Bearer {token}",
                 //    Name = "Authorization",
                 //    In = "header",
                 //    Type = "apiKey"

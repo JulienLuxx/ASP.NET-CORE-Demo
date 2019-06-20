@@ -18,7 +18,7 @@ namespace Test.XUnitTest
 {
     public class ArticleTypeUnitTest
     {
-        private List<ArticleType> _sampleList;
+        private List<ArticleType> _sampleList { get; set; }
         public ArticleTypeUnitTest()
         {
             _sampleList= new List<ArticleType>()

@@ -136,7 +136,7 @@ namespace Test.Service.Impl
                 CreateTime = x.CreateTime
             });
             queryData = queryData.OrderBy(o => o.CreateTime);
-            queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
+            queryData = queryData.Skip((qModel.PageIndex - 1) * qModel.PageSize).Take(qModel.PageSize);
             result.ActionResult = true;
             result.Message = "Success";
             result.List = await queryData.ToListAsync();

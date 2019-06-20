@@ -12,6 +12,7 @@ using Test.Domain.Extend;
 using Test.Service.Dto;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
+using Test.Core.Test;
 
 namespace Test.Service.Impl
 {
@@ -186,7 +187,10 @@ namespace Test.Service.Impl
                 EditerName=x.EditerName,
                 CreateTime = x.CreateTime,                
             });
-            queryData = queryData.OrderBy(o => o.CreateTime);
+            if (!string.IsNullOrEmpty(qModel.OrderByColumn) && !string.IsNullOrWhiteSpace(qModel.OrderByColumn))
+            {
+                queryData = queryData.OrderBy(qModel.OrderByColumn, qModel.IsDesc);
+            }
             queryData = queryData.Skip((qModel.Page - 1) * qModel.PageSize).Take(qModel.PageSize);
             result.ActionResult = true;
             result.Message = "Success";

@@ -12,8 +12,13 @@ namespace Test.Service.QueryModel
             PageSize = PageSize == 0 ? 20 : PageSize;
         }
         public int Page { get; set; }
+
         public int PageSize { get; set; }
 
         public int TotalCount { get; set; }
+
+        public string OrderByColumn { get; set; }
+
+        public bool IsDesc { get; set; }
     }
 }
