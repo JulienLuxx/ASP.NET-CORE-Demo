@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Test.Domain.Entity;
 using Test.Service.Dto;
+using Test.Service.QueryModel;
 
 namespace Test.Service.Infrastructure
 {
@@ -29,6 +30,8 @@ namespace Test.Service.Infrastructure
             CreateMap<UserDto, User>();
             CreateMap<UserDto, RegisterDto>();
             CreateMap<RegisterDto, UserDto>();
+
+            CreateMap<ArticleTypeQueryModel, IDictionary<string, string>>();
 
 
         }

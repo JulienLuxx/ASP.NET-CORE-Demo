@@ -124,6 +124,8 @@ namespace Test.Web
                 //option.Filters.Add(typeof(GlobalExceptions));
             });
 
+            services.AddHttpClient();
+
             //DI Injection
             //services.AddScoped<IArticleSvc, ArticleSvc>();
             //services.AddScoped<ICommentSvc, CommentSvc>();

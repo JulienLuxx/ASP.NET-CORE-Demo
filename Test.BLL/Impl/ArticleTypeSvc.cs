@@ -185,6 +185,7 @@ namespace Test.Service.Impl
                 Id = x.Id,
                 Name = x.Name,
                 EditerName=x.EditerName,
+                Status=x.Status,
                 CreateTime = x.CreateTime,                
             });
             if (!string.IsNullOrEmpty(qModel.OrderByColumn) && !string.IsNullOrWhiteSpace(qModel.OrderByColumn))

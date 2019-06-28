@@ -16,6 +16,11 @@ namespace Test.Domain
         //public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
         //{ }
 
+        //~TestDBContext()
+        //{
+        //    this.Dispose();
+        //}
+
         public TestDBContext() { }
 
         public virtual DbSet<Article> Article { get; set; }

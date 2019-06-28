@@ -27,7 +27,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("AddAsync")]
-        public async Task<JsonResult> AddAsync(ArticleTypeDto dto)
+        public async Task<JsonResult> AddAsync([FromBody]ArticleTypeDto dto)
         {
             var resultTask = _articleTypeSvc.AddSingleAsync(dto);
             return Json(await resultTask);
