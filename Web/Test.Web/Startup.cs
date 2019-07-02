@@ -37,7 +37,7 @@ namespace Test.Web
 {
     public class Startup
     {
-        public static ILoggerRepository loggerRepository { get; set; }
+        //public static ILoggerRepository loggerRepository { get; set; }
         public IConfiguration Configuration { get; }
         //public Startup(IConfiguration configuration)
         //{
@@ -47,8 +47,8 @@ namespace Test.Web
         {
             Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appsettings.json").Build();
 
-            loggerRepository = LogManager.CreateRepository("NETCoreRepository");
-            XmlConfigurator.Configure(loggerRepository, new FileInfo(Environment.CurrentDirectory + @"\Config\log4net.config"));
+            //loggerRepository = LogManager.CreateRepository("NETCoreRepository");
+            //XmlConfigurator.Configure(loggerRepository, new FileInfo(Environment.CurrentDirectory + @"\Config\log4net.config"));
         }
         public Autofac.IContainer ApplicationContainer { get; private set; }
 
@@ -126,6 +126,14 @@ namespace Test.Web
 
             services.AddHttpClient();
 
+            //services.AddLogging(builders=> 
+            //{
+            //    builders.AddNLog();
+            //    builders.AddConsole();
+            //    builders.AddConfiguration(Configuration.GetSection("Logging"));
+            //    builders.AddDebug();
+            //});
+
             //DI Injection
             //services.AddScoped<IArticleSvc, ArticleSvc>();
             //services.AddScoped<ICommentSvc, CommentSvc>();
@@ -142,7 +150,7 @@ namespace Test.Web
             //builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
 
             //Attribute&Filter Injection
-            builder.RegisterType<CustomerExceptionFilter>();/*NLogFilterAttribute*/
+            //builder.RegisterType<CustomerExceptionFilter>();/*NLogFilterAttribute*/
             //Module Injection
             builder.RegisterModule<UtilModule>();
             builder.RegisterModule<DomainServiceModule>();
@@ -169,7 +177,7 @@ namespace Test.Web
 
         //    //注册AutoMapper
         //    services.AddAutoMapper();
-            
+
         //    //Add Swagger
         //    services.AddSwaggerGen(c =>
         //    {
@@ -196,12 +204,20 @@ namespace Test.Web
         //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) 
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"))
                 .AddNLog()
                 .AddDebug();
+
+
+            //loggingBuilder.AddConsole().AddConfiguration(Configuration.GetSection("Logging")).AddDebug().AddNLog();
+
             env.ConfigureNLog(Path.Combine(env.ContentRootPath, "nlog.config"));
+
+            //loggerFactory.AddNLog();
+            //env.ConfigureNLog("nlog.config");
+
             //loggerFactory.AddNLog();
             //env.ConfigureNLog("nlog.config");
             //if (env.IsDevelopment())
@@ -218,6 +234,8 @@ namespace Test.Web
 
             //Init AutoMapper,Add Profile
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

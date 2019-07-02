@@ -167,7 +167,7 @@ namespace Test.Service.Impl
 
         public async Task<dynamic> GetListByUser()
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

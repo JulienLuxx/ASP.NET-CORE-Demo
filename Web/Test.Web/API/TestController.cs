@@ -14,13 +14,14 @@ using Test.Service.Interface;
 using Test.Service.QueryModel;
 using Test.Web.Base;
 using Test.Web.Filter;
+using Microsoft.Extensions.Logging;
 
 namespace Test.Web.API
 {
     [Authorize]
     [Produces("application/json")]
     [Route("API/Test")]
-    [ServiceFilter(typeof(CustomerExceptionFilter))]
+    //[ServiceFilter(typeof(CustomerExceptionFilter))]
     public class TestController : BaseController
     {
         private readonly ICommentSvc _commentSvc;
@@ -29,11 +30,14 @@ namespace Test.Web.API
 
         private IMapUtil _mapUtil { get; set; }
 
-        public TestController(ICommentSvc commentSvc, IHttpClientFactory clientFactory, IMapUtil mapUtil)  
+        //private ILogger<TestController> _logger { get; set; }
+
+        public TestController(ICommentSvc commentSvc, IHttpClientFactory clientFactory, IMapUtil mapUtil/*,ILogger<TestController> logger*/)  
         {
             _commentSvc = commentSvc;
             _clientFactory = clientFactory;
             _mapUtil = mapUtil;
+            //_logger = logger;
         }
 
         [HttpGet("Page")]
@@ -50,15 +54,27 @@ namespace Test.Web.API
         [HttpGet("LogTest")]
         public async Task<JsonResult> LogTest()
         {
-            throw new Exception("Error!");
-            return Json(new { value1 = "", value2 = "" });
+            //throw new Exception("Error!");
+            //return Json(new { value1 = "", value2 = "" });
+            //try
+            //{
+            //throw new NotImplementedException();
+            //}
+            //catch (Exception ex)
+            //{
+            //    //_logger.LogError(ex.Message);
+            //    return Json(ex.Message);
+            //}
+            await _commentSvc.GetListByUser();
+            return Json("233");
         }
 
         [AllowAnonymous]
         [HttpGet("HttpClientGetTest")]
         public async Task<dynamic> HttpClientGetTestAsync()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, @"http://localhost:54238/API/ArticleType/Page");
+            var httpMethod = new HttpMethod("GET");
+            var request = new HttpRequestMessage(httpMethod, @"http://localhost:54238/API/ArticleType/Page");
             var param = new ArticleTypeQueryModel() { PageSize = 1 };
             
             var jsonParam = JsonConvert.SerializeObject(param);

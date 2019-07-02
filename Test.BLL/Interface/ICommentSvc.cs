@@ -20,5 +20,7 @@ namespace Test.Service.Interface
         Task<ResultDto<CommentDto>> GetPageDataAsync(CommentQueryModel qModel);
 
         Task<ResultDto<CommentTreeDto>> GetSingleDataAsync(int id);
+
+        Task<dynamic> GetListByUser();
     }
 }
