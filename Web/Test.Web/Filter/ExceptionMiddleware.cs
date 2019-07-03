@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Http.Internal;
+using System.Net;
 
 namespace Test.Web
 {
@@ -27,7 +31,7 @@ namespace Test.Web
             try
             {
                 await _next.Invoke(context);
-                var features = context.Features;
+                //var features = context.Features;
                 await HandleLog(context);
             }
             catch (Exception e)
@@ -38,6 +42,29 @@ namespace Test.Web
 
         private async Task HandleLog(HttpContext context)
         {
+            var info = string.Empty;
+            var jsonParam = string.Empty;
+            var param = new Dictionary<string, string>();
+            if (context.Request.ContentLength.HasValue)
+            {
+                var bytes = new byte[context.Request.Body.Length];
+                context.Request.EnableRewind();
+                context.Request.Body.Seek(0, 0);
+                await context.Request.Body.ReadAsync(bytes, 0, bytes.Length);
+                jsonParam= Encoding.UTF8.GetString(bytes);
+                param = JsonConvert.DeserializeObject<Dictionary<string,string>>(jsonParam);
+            }
+            IDictionary<string, string> QueryDict = new Dictionary<string, string>();
+            if (context.Request.QueryString.HasValue)
+            {
+                QueryDict = context.Request.Query.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
+            }
+
+            if (_environment.IsDevelopment())
+            {
+                info = JsonConvert.SerializeObject(new { ClientAddress = context.Connection.RemoteIpAddress.ToString()+":"+context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Query = QueryDict, Param = param });
+                _logger.LogInformation(info);
+            }
 
         }
 
@@ -45,24 +72,25 @@ namespace Test.Web
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/json;charset=utf-8;";
-            string error = "";
+            string error = string.Empty;
 
             void ReadException(Exception ex)
             {
                 error += string.Format("{0} | {1} | {2}", ex.Message, ex.StackTrace, ex.InnerException);
-                if (ex.InnerException != null)
+                if (null != ex.InnerException) 
                 {
                     ReadException(ex.InnerException);
                 }
             }
 
             ReadException(e);
-            _logger.LogError(error);
+            //_logger.LogError(error);
 
             if (_environment.IsDevelopment())
             {
                 var json = new { message = e.Message, detail = error };
                 error = JsonConvert.SerializeObject(json);
+                _logger.LogError(error);
             }
             else
             {
