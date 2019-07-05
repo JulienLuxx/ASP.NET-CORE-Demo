@@ -63,12 +63,12 @@ namespace Test.Web
 
             services.AddMvcCore().AddAuthorization().AddJsonFormatters();
 
-            services.AddAuthentication(Configuration["Identity:Scheme"]).AddIdentityServerAuthentication(option =>
-            {
-                option.RequireHttpsMetadata = false;
-                option.Authority = Configuration["Identity:Url"];
-                option.ApiName = Configuration["Service:Name"];
-            });
+            //services.AddAuthentication(Configuration["Identity:Scheme"]).AddIdentityServerAuthentication(option =>
+            //{
+            //    option.RequireHttpsMetadata = false;
+            //    option.Authority = Configuration["Identity:Url"];
+            //    option.ApiName = Configuration["Service:Name"];
+            //});
 
             services.AddCors(option =>
             {
@@ -126,7 +126,8 @@ namespace Test.Web
 
             services.AddHttpClient();
 
-            //services.AddLogging(builders=> 
+            /*It doesnot work*/
+            //services.AddLogging(builders =>
             //{
             //    builders.AddNLog();
             //    builders.AddConsole();
@@ -243,7 +244,7 @@ namespace Test.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test");
             });
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseCors("AllowAllOrigins");
 
             app.UseMvc(routes =>

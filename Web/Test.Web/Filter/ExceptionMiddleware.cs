@@ -28,31 +28,42 @@ namespace Test.Web
 
         public async Task Invoke(HttpContext context)
         {
+            var guid = Guid.NewGuid();
             try
             {
                 await _next.Invoke(context);
                 //var features = context.Features;
-                await HandleLog(context);
+
+                await HandleLog(guid, context);
+                
             }
             catch (Exception e)
             {
-                await HandleException(context, e);
+                await HandleException(guid, context, e);
             }
         }
 
-        private async Task HandleLog(HttpContext context)
+        private async Task HandleLog(Guid guid, HttpContext context) 
         {
             var info = string.Empty;
-            var jsonParam = string.Empty;
+            //var jsonParam = string.Empty;
             var param = new Dictionary<string, string>();
             if (context.Request.ContentLength.HasValue)
             {
-                var bytes = new byte[context.Request.Body.Length];
-                context.Request.EnableRewind();
-                context.Request.Body.Seek(0, 0);
-                await context.Request.Body.ReadAsync(bytes, 0, bytes.Length);
-                jsonParam= Encoding.UTF8.GetString(bytes);
-                param = JsonConvert.DeserializeObject<Dictionary<string,string>>(jsonParam);
+                if (context.Request.HasFormContentType)
+                {
+                    var form = context.Request.Form;
+                    param = form.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
+                }
+                else if (context.Request.ContentLength > 0) 
+                {
+                    var bytes = new byte[context.Request.Body.Length];
+                    context.Request.EnableRewind();
+                    context.Request.Body.Seek(0, 0);
+                    await context.Request.Body.ReadAsync(bytes, 0, bytes.Length);
+                    var jsonParam = Encoding.UTF8.GetString(bytes);
+                    param = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonParam);
+                }
             }
             IDictionary<string, string> QueryDict = new Dictionary<string, string>();
             if (context.Request.QueryString.HasValue)
@@ -62,13 +73,14 @@ namespace Test.Web
 
             if (_environment.IsDevelopment())
             {
-                info = JsonConvert.SerializeObject(new { ClientAddress = context.Connection.RemoteIpAddress.ToString()+":"+context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Query = QueryDict, Param = param });
+                info = JsonConvert.SerializeObject(new { Id = guid, ClientAddress = context.Connection.RemoteIpAddress.ToString() + ":" + context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Query = QueryDict, Param = param });
                 _logger.LogInformation(info);
+                //_logger.LogTrace(info);
             }
 
         }
 
-        private async Task HandleException(HttpContext context, Exception e)
+        private async Task HandleException(Guid guid, HttpContext context, Exception e) 
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/json;charset=utf-8;";
@@ -88,7 +100,7 @@ namespace Test.Web
 
             if (_environment.IsDevelopment())
             {
-                var json = new { message = e.Message, detail = error };
+                var json = new { Id = guid, Message = e.Message, Detail = error };
                 error = JsonConvert.SerializeObject(json);
                 _logger.LogError(error);
             }

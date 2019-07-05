@@ -18,7 +18,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Test.Web.API
 {
-    [Authorize]
+    //[Authorize]
     [Produces("application/json")]
     [Route("API/Test")]
     //[ServiceFilter(typeof(CustomerExceptionFilter))]
@@ -119,6 +119,53 @@ namespace Test.Web.API
             {
                 return "error";
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("HttpClientPostFormTest")]
+        public async Task<dynamic> HttpClientPostFormTestAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, @"http://localhost:54238/API/Test2/Add");
+            var param = new ArticleTypeDto()
+            {
+                Name = "HttpClientTest",
+                EditerName = "HttpClient",
+                Status = 1,
+                CreateTime = DateTime.Now
+            };
+            var dict = _mapUtil.DynamicToDictionary(param);
+            request.Content = new FormUrlEncodedContent(dict);
+            //var jsonParam = JsonConvert.SerializeObject(param);
+            //request.Content = new StringContent(jsonParam, Encoding.UTF8, "application/json");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsAsync<dynamic>();
+                return result;
+            }
+            else
+            {
+                return "error";
+            }
+        }
+    }
+
+    [Produces("multipart/form-data",new string[] { "application/json", "application/x-www-form-urlencoded" })]
+    [Route("API/Test2")]
+    public class Test2Controller : Controller
+    {
+        private IArticleTypeSvc _articleTypeSvc { get; set; }
+        public Test2Controller(IArticleTypeSvc articleTypeSvc)
+        {
+            _articleTypeSvc = articleTypeSvc;
+        }
+
+        [HttpPost("Add")]
+        public async Task<JsonResult> Add([FromForm]ArticleTypeDto dto)
+        {
+            var result = await _articleTypeSvc.AddSingleAsync(dto);
+            return Json(result);
         }
     }
 }
