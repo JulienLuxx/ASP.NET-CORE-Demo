@@ -149,6 +149,32 @@ namespace Test.Web.API
                 return "error";
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet("HttpClientByteTest")]
+        public async Task<dynamic> HttpClientByteTestAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, @"http://localhost:54238/API/Test2/Add");
+            var param = new ArticleTypeDto()
+            {
+                Name = "HttpClientTest",
+                EditerName = "HttpClient",
+                Status = 1,
+                CreateTime = DateTime.Now
+            };
+
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsAsync<dynamic>();
+                return result;
+            }
+            else
+            {
+                return "error";
+            }
+        }
     }
 
     [Produces("multipart/form-data",new string[] { "application/json", "application/x-www-form-urlencoded" })]
@@ -162,7 +188,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("Add")]
-        public async Task<JsonResult> Add([FromForm]ArticleTypeDto dto)
+        public async Task<JsonResult> Add([FromBody]ArticleTypeDto dto)
         {
             var result = await _articleTypeSvc.AddSingleAsync(dto);
             return Json(result);

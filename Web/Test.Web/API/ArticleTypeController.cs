@@ -9,7 +9,7 @@ using Test.Service.QueryModel;
 
 namespace Test.Web.API
 {
-    [Produces("application/json")]
+    [Produces("application/json", new string[] { "multipart/form-data", "application/x-www-form-urlencoded" })]
     [Route("API/ArticleType")]
     public class ArticleTypeController : Controller
     {
@@ -20,7 +20,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("Add")]
-        public JsonResult Add(ArticleTypeDto dto)
+        public JsonResult Add([FromForm]ArticleTypeDto dto)
         {
             var result = _articleTypeSvc.AddSingle(dto);
             return Json(result);
