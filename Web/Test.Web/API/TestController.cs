@@ -15,6 +15,7 @@ using Test.Service.QueryModel;
 using Test.Web.Base;
 using Test.Web.Filter;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Test.Web.API
 {
@@ -81,6 +82,7 @@ namespace Test.Web.API
             //request.Content = new StringContent(jsonParam, Encoding.UTF8, "application/json");
             var dict = _mapUtil.DynamicToDictionary(param);
             request.Content = new FormUrlEncodedContent(dict);
+            var u = QueryHelpers.AddQueryString(@"http://localhost:54238/API/ArticleType/Page", dict);
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)

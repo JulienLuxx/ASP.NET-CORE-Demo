@@ -5,6 +5,7 @@ using System.Text;
 using Test.Core.Encrypt;
 using Test.Core.Tree;
 using Test.Core.Map;
+using Test.Core.HttpUtl;
 
 namespace Test.Core.IOC
 {
@@ -18,6 +19,7 @@ namespace Test.Core.IOC
             builder.RegisterType<TreeUtil>().As<ITreeUtil>().InstancePerLifetimeScope();
             builder.RegisterType<EncryptUtil>().As<IEncryptUtil>().InstancePerLifetimeScope();
             builder.RegisterType<MapUtil>().As<IMapUtil>().InstancePerLifetimeScope();
+            builder.RegisterType<HttpClientUtil>().As<IHttpClientUtil>().InstancePerLifetimeScope();
         }
     }
 }

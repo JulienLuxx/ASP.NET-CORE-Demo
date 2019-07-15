@@ -56,3 +56,7 @@
 /Test.BLL/obj
 /Web/Test.Web/obj
 /Web/Test.IdentityServer/obj
+/Test.BLL/bin/Release/netcoreapp2.2
+/Test.Core/bin/Release/netcoreapp2.2
+/Test.Domain/bin/Release/netcoreapp2.2
+/Web/Test.Web/bin/Release/netcoreapp2.2
