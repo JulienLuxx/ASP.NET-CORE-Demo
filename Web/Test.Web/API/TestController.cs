@@ -16,6 +16,7 @@ using Test.Web.Base;
 using Test.Web.Filter;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.WebUtilities;
+using Test.Core.HttpUtl;
 
 namespace Test.Web.API
 {
@@ -25,19 +26,22 @@ namespace Test.Web.API
     //[ServiceFilter(typeof(CustomerExceptionFilter))]
     public class TestController : BaseController
     {
-        private readonly ICommentSvc _commentSvc;
+        private ICommentSvc _commentSvc { get; set; }
 
         private IHttpClientFactory _clientFactory { get; set; }
 
         private IMapUtil _mapUtil { get; set; }
 
+        private IHttpClientUtil _httpClientUtil { get; set; }
+
         //private ILogger<TestController> _logger { get; set; }
 
-        public TestController(ICommentSvc commentSvc, IHttpClientFactory clientFactory, IMapUtil mapUtil/*,ILogger<TestController> logger*/)  
+        public TestController(ICommentSvc commentSvc, IHttpClientFactory clientFactory, IMapUtil mapUtil,IHttpClientUtil httpClientUtil/*,ILogger<TestController> logger*/)  
         {
             _commentSvc = commentSvc;
             _clientFactory = clientFactory;
             _mapUtil = mapUtil;
+            _httpClientUtil = httpClientUtil;
             //_logger = logger;
         }
 
@@ -177,6 +181,27 @@ namespace Test.Web.API
                 return "error";
             }
         }
+
+        [HttpGet("HttpClientMFormTest")]
+        public async Task<dynamic> HttpClientMFormTestAsync()
+        {
+            var param = new ArticleTypeDto()
+            {
+                Name = "HttpClientTest",
+                EditerName = "HttpClient",
+                Status = 1,
+                CreateTime = DateTime.Now
+            };
+            var result = await _httpClientUtil.SendAsync(param, @"http://localhost:54238/API/Test2/Add", new HttpMethod("POST"), MediaTypeEnum.MultipartFormData);
+            if (null != result)
+            {
+                return result;
+            }
+            else
+            {
+                return "error";
+            }
+        }
     }
 
     [Produces("multipart/form-data",new string[] { "application/json", "application/x-www-form-urlencoded" })]
@@ -190,7 +215,7 @@ namespace Test.Web.API
         }
 
         [HttpPost("Add")]
-        public async Task<JsonResult> Add([FromBody]ArticleTypeDto dto)
+        public async Task<JsonResult> Add([FromForm]ArticleTypeDto dto)
         {
             var result = await _articleTypeSvc.AddSingleAsync(dto);
             return Json(result);
