@@ -22,6 +22,7 @@ namespace Test.Service.IOC
             builder.RegisterType<ArticleTypeSvc>().As<IArticleTypeSvc>().InstancePerLifetimeScope();
             builder.RegisterType<CommentSvc>().As<ICommentSvc>().InstancePerLifetimeScope();
             builder.RegisterType<UserSvc>().As<IUserSvc>().InstancePerLifetimeScope();
+            builder.RegisterType<LogSvc>().As<ILogSvc>().InstancePerLifetimeScope();
         }
     }
 }

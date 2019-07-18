@@ -31,6 +31,8 @@ namespace Test.Domain
 
         public virtual DbSet<User> User { get; set; }
 
+        public virtual DbSet<Log> Log { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
