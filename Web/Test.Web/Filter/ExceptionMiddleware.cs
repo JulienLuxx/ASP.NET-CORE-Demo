@@ -65,15 +65,16 @@ namespace Test.Web
                     param = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonParam);
                 }
             }
-            IDictionary<string, string> QueryDict = new Dictionary<string, string>();
+            //IDictionary<string, string> QueryDict = new Dictionary<string, string>();
             if (context.Request.QueryString.HasValue)
             {
-                QueryDict = context.Request.Query.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
+                //QueryDict = context.Request.Query.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
+                param = context.Request.Query.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
             }
 
             if (_environment.IsDevelopment())
             {
-                info = JsonConvert.SerializeObject(new { Id = guid, ClientAddress = context.Connection.RemoteIpAddress.ToString() + ":" + context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Query = QueryDict, Param = param });
+                info = JsonConvert.SerializeObject(new { Id = guid, ClientAddress = context.Connection.RemoteIpAddress.ToString() + ":" + context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path/*, Query = QueryDict*/, Param = param });
                 _logger.LogInformation(info);
                 //_logger.LogTrace(info);
             }

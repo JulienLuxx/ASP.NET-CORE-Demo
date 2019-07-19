@@ -85,8 +85,9 @@ namespace Test.Web.API
             var jsonParam = JsonConvert.SerializeObject(param);
             //request.Content = new StringContent(jsonParam, Encoding.UTF8, "application/json");
             var dict = _mapUtil.DynamicToDictionary(param);
-            request.Content = new FormUrlEncodedContent(dict);
+            //request.Content = new FormUrlEncodedContent(dict);
             var u = QueryHelpers.AddQueryString(@"http://localhost:54238/API/ArticleType/Page", dict);
+            request.RequestUri = new Uri(u);
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
