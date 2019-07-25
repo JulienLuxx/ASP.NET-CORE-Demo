@@ -73,7 +73,7 @@ namespace Test.Web
             _logger.LogInformation(info);
         }
 
-        private async Task HandleException(Guid guid, HttpContext context, Exception e) 
+        private async Task HandleException(Guid guid, HttpContext context, Exception exception) 
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/json;charset=utf-8;";
@@ -88,15 +88,14 @@ namespace Test.Web
                 }
             }
 
-            ReadException(e);
-            //_logger.LogError(error);
+            ReadException(exception);
 
             if (_environment.IsDevelopment())
             {
                 error = JsonConvert.SerializeObject(new
                 {
                     Id = guid,
-                    message = e.Message,
+                    message = exception.Message,
                     detail = error
                 });
                 _logger.LogError(error);
@@ -106,7 +105,7 @@ namespace Test.Web
                 error = JsonConvert.SerializeObject(new
                 {
                     Id = guid,
-                    message = e.Message,
+                    message = exception.Message,
                     detail = error
                 });
                 _logger.LogError(error);
