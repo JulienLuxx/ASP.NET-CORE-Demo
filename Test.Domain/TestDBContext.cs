@@ -13,13 +13,9 @@ namespace Test.Domain
 {
     public class TestDBContext : DbContext
     {
-        //public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
-        //{ }
 
-        //~TestDBContext()
-        //{
-        //    this.Dispose();
-        //}
+        public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
+        { }
 
         public TestDBContext() { }
 
@@ -35,12 +31,13 @@ namespace Test.Domain
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
-            //MSSql
-            //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
-            //MySql
-            //RemberToAdd(TreatTinyAsBoolean=True)ForCompatibility
-            optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=2134006;TreatTinyAsBoolean=True");
+            base.OnConfiguring(optionsBuilder);
+            //    //UseLazyLoadProxies,ConfigureIgnoreDetachLazyLoadingWarning
+            //    //MSSql
+            //    //optionsBuilder.UseLazyLoadingProxies().ConfigureWarnings(action => action.Ignore(CoreEventId.DetachedLazyLoadingWarning)).UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TestDB;Trusted_Connection=True;");
+            //    //MySql
+            //    //RemberToAdd(TreatTinyAsBoolean=True)ForCompatibility
+            //    optionsBuilder.UseMySql(@"server=localhost;database=TestDB;user=root;password=2134006;TreatTinyAsBoolean=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -56,7 +56,7 @@ namespace Test.Web
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestDBContext>();
+            services.AddDbContext<TestDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("MysqlConnection")));
 
             //注册AutoMapper
             services.AddAutoMapper();
@@ -70,9 +70,9 @@ namespace Test.Web
             //    option.ApiName = Configuration["Service:Name"];
             //});
 
-            services.AddCors(option =>
+            services.AddCors(options =>
             {
-                option.AddPolicy("AllowAllOrigins",
+                options.AddPolicy("AllowAllOrigins",
                     policyBuilder =>
                     {
                         policyBuilder
@@ -83,9 +83,9 @@ namespace Test.Web
             });
 
             //Add Swagger
-            services.AddSwaggerGen(option =>
+            services.AddSwaggerGen(options =>
             {
-                option.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "Test"
@@ -101,11 +101,11 @@ namespace Test.Web
                     var xmlFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, filePath);
                     if (File.Exists(xmlFilePath))
                     {
-                        option.IncludeXmlComments(xmlFilePath);
+                        options.IncludeXmlComments(xmlFilePath);
                     }
                 }
                 //TryAddAuthorization
-                option.AddSecurityDefinition(Configuration["Identity:Scheme"], new ApiKeyScheme()
+                options.AddSecurityDefinition(Configuration["Identity:Scheme"], new ApiKeyScheme()
                 {
                     Description = "JWT Bearer 授权 \"Authorization:     Bearer+空格+token\"",
                     Name = "Authorization",
@@ -241,9 +241,9 @@ namespace Test.Web
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Test");
             });
 
             //app.UseAuthentication();
