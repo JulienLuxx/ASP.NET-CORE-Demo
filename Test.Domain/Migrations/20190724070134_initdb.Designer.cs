@@ -10,14 +10,14 @@ using Test.Domain;
 namespace Test.Domain.Migrations
 {
     [DbContext(typeof(TestDBContext))]
-    [Migration("20190304022114_InitTmp")]
-    partial class InitTmp
+    [Migration("20190724070134_initdb")]
+    partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
@@ -107,6 +107,30 @@ namespace Test.Domain.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Test.Domain.Entity.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Application");
+
+                    b.Property<string>("Callsite");
+
+                    b.Property<string>("Exception");
+
+                    b.Property<string>("Level");
+
+                    b.Property<DateTime>("Logged");
+
+                    b.Property<string>("Logger");
+
+                    b.Property<string>("Message");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("Test.Domain.Entity.User", b =>

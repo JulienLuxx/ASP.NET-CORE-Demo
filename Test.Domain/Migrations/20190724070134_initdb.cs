@@ -4,22 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Test.Domain.Migrations
 {
-    public partial class InitTmp : Migration
+    public partial class initdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Comment");
-
-            migrationBuilder.DropTable(
-                name: "Article");
-
-            migrationBuilder.DropTable(
-                name: "ArticleType");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
             migrationBuilder.CreateTable(
                 name: "ArticleType",
                 columns: table => new
@@ -36,6 +24,25 @@ namespace Test.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Log",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Application = table.Column<string>(nullable: true),
+                    Logged = table.Column<DateTime>(nullable: false),
+                    Level = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    Logger = table.Column<string>(nullable: true),
+                    Callsite = table.Column<string>(nullable: true),
+                    Exception = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Log", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,6 +143,9 @@ namespace Test.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "Log");
 
             migrationBuilder.DropTable(
                 name: "Article");
