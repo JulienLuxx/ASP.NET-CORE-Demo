@@ -53,3 +53,7 @@
 /Test.Domain/obj/Debug/netcoreapp2.2
 /Test.Domain/.vs
 /Test.Domain/obj/Release/netcoreapp2.2
+/Test.BLL/obj/Test.Service.csproj.nuget.dgspec.json
+/Test.Domain/obj/Test.Domain.csproj.nuget.dgspec.json
+/Web/Test.IdentityServer/obj/Test.IdentityServer.csproj.nuget.dgspec.json
+/Web/Test.Web/obj/Test.Web.csproj.nuget.dgspec.json

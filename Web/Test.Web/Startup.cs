@@ -220,7 +220,7 @@ namespace Test.Web
             env.ConfigureNLog(Path.Combine(env.ContentRootPath, "nlog.config"));
 
             //TryUserMiddlewareHandlerLog
-            //app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             //if (env.IsDevelopment())
             //{

@@ -61,6 +61,7 @@ namespace Test.Web.Middleware
             {
                 var json = new { message = exception.Message, detail = error };
                 error = JsonConvert.SerializeObject(json);
+                _logger.LogError(error);
             }
             else
             {
