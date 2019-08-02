@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Linq;
-//using Test.Domain.Entity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Test.Domain.Entity;
 using System.Data;
@@ -14,8 +13,8 @@ namespace Test.Domain
 {
     public class TestDBContext : DbContext
     {
-        //public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
-        //{ }
+        public TestDBContext(DbContextOptions<TestDBContext> options) : base(options)
+        { }
 
         public TestDBContext() { }
 
@@ -26,6 +25,8 @@ namespace Test.Domain
         public virtual DbSet<Comment> Comment { get; set; }
 
         public virtual DbSet<User> User { get; set; }
+
+        public virtual DbSet<Log> Log { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -120,6 +121,13 @@ namespace Test.Domain
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
                 e.Property(x => x.Timestamp).IsRowVersion().IsConcurrencyToken();
                 e.HasMany(x => x.Articles).WithOne(y => y.User).HasForeignKey(y => y.UserId);
+            });
+
+            modelBuilder.Entity<Log>(e =>
+            {
+                e.ToTable("Log");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
             });
             #endregion
         }
