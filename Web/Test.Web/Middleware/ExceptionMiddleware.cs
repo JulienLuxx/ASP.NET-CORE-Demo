@@ -39,9 +39,9 @@ namespace Test.Web.Middleware
                 //var features = context.Features;
                 await HandleLog(guid, context);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                await HandleExcetion(context, e);
+                await HandleExcetion(guid, context, ex);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Test.Web.Middleware
             _logger.LogInformation(info);
         }
 
-        private async Task HandleExcetion(HttpContext context, Exception exception)
+        private async Task HandleExcetion(Guid guid,HttpContext context, Exception exception)
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/json;charset=utf-8;";
