@@ -59,7 +59,8 @@ namespace Test.Web
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestDBContext>();
+            //services.AddDbContext<TestDBContext>();
+            services.AddDbContext<TestDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             //注册AutoMapper
             services.AddAutoMapper();

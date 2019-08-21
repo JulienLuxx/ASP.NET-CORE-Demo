@@ -91,24 +91,18 @@ namespace Test.Web.Middleware
 
             ReadException(exception);
 
+            error = JsonConvert.SerializeObject(new
+            {
+                Id = guid,
+                message = exception.Message,
+                detail = error
+            });
             if (_environment.IsDevelopment())
             {
-                error = JsonConvert.SerializeObject(new
-                {
-                    Id = guid,
-                    message = exception.Message,
-                    detail = error
-                });
                 _logger.LogError(error);
             }
             else
             {
-                error = JsonConvert.SerializeObject(new
-                {
-                    Id = guid,
-                    message = exception.Message,
-                    detail = error
-                });
                 _logger.LogError(error);
                 error = "抱歉，出错了";
             }
