@@ -43,6 +43,12 @@
     <Compile Remove="Migrations\20180920080426_AddUserSaltValue.Designer.cs" />
     <Compile Remove="Migrations\20181219102052_initDb.cs" />
     <Compile Remove="Migrations\20181219102052_initDb.Designer.cs" />
+    <Compile Remove="Migrations\20190718021140_initdb.cs" />
+    <Compile Remove="Migrations\20190718021140_initdb.Designer.cs" />
+    <Compile Remove="Migrations\20190731072106_AddLog.cs" />
+    <Compile Remove="Migrations\20190731072106_AddLog.Designer.cs" />
+    <Compile Remove="Migrations\20190805014557_initdb.cs" />
+    <Compile Remove="Migrations\20190805014557_initdb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,7 +70,6 @@
   <ItemGroup>
     <Folder Include="Infrastructure\" />
     <Folder Include="Enum\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
