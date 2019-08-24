@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Test.Core.IOC;
@@ -33,7 +34,9 @@ namespace Test.IdentityServer
         {
             //IdentityConfiguration.Configuration = Configuration;
 
-            services.AddDbContext<TestDBContext>();
+            //services.AddDbContext<TestDBContext>();
+
+            services.AddDbContext<TestDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper();
 

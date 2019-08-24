@@ -56,7 +56,9 @@ namespace Test.Web
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("MysqlConnection")));
+            services.AddDbContext<TestDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             //注册AutoMapper
             services.AddAutoMapper();

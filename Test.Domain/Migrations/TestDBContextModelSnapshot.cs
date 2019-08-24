@@ -15,8 +15,7 @@ namespace Test.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Test.Domain.Entity.Article", b =>
                 {
@@ -32,11 +31,12 @@ namespace Test.Domain.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<DateTime?>("Timestamp")
+                    b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasMaxLength(256);
 
                     b.Property<int>("TypeId");
 
@@ -59,15 +59,17 @@ namespace Test.Domain.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("EditerName");
+                    b.Property<string>("EditerName")
+                        .HasMaxLength(512);
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(512);
 
                     b.Property<int>("Status");
 
-                    b.Property<DateTime?>("Timestamp")
+                    b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
@@ -88,7 +90,8 @@ namespace Test.Domain.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("Creator");
+                    b.Property<string>("Creator")
+                        .HasMaxLength(256);
 
                     b.Property<bool>("IsDelete");
 
@@ -96,7 +99,7 @@ namespace Test.Domain.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<DateTime?>("Timestamp")
+                    b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
@@ -110,21 +113,28 @@ namespace Test.Domain.Migrations
             modelBuilder.Entity("Test.Domain.Entity.Log", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Application");
+                    b.Property<string>("Application")
+                        .HasMaxLength(64);
 
-                    b.Property<string>("Callsite");
+                    b.Property<string>("Callsite")
+                        .HasMaxLength(512);
 
-                    b.Property<string>("Exception");
+                    b.Property<string>("Exception")
+                        .HasMaxLength(512);
 
-                    b.Property<string>("Level");
+                    b.Property<string>("Level")
+                        .HasMaxLength(64);
 
                     b.Property<DateTime>("Logged");
 
-                    b.Property<string>("Logger");
+                    b.Property<string>("Logger")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .HasMaxLength(512);
 
                     b.HasKey("Id");
 
@@ -139,19 +149,24 @@ namespace Test.Domain.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<string>("MailBox");
+                    b.Property<string>("MailBox")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Mobile");
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("SaltValue");
+                    b.Property<string>("SaltValue")
+                        .HasMaxLength(256);
 
                     b.Property<int>("Status");
 
-                    b.Property<DateTime?>("Timestamp")
+                    b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 

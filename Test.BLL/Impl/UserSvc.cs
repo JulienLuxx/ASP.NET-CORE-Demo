@@ -132,13 +132,13 @@ namespace Test.Service.Impl
             var result = new ResultDto();
             try
             {
-                var mobileTask = _testDB.User.AsNoTracking().Where(x => x.Mobile.Equals(dto.Mobile)).AnyAsync();
-                var mailBoxTask = _testDB.User.AsNoTracking().Where(x => x.MailBox.Equals(dto.MailBox)).AnyAsync();
-                if (await mobileTask)
+                var mobileTask =await _testDB.User.AsNoTracking().Where(x => x.Mobile.Equals(dto.Mobile)).CountAsync();
+                var mailBoxTask =await _testDB.User.AsNoTracking().Where(x => x.MailBox.Equals(dto.MailBox)).CountAsync();
+                if (mobileTask>0)
                 {
                     return result;
                 }
-                if (await mailBoxTask)
+                if (mailBoxTask>0)
                 {
                     return result;
                 }

@@ -27,6 +27,7 @@ namespace Test.Domain.Entity
         public bool IsDeleted { get; set; }
 
         //[StringLength(200)]
+        //[DataType(DataType.Text)]
         public string Title { get; set; }
 
         //[StringLength(10000)]
