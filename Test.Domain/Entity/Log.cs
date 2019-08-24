@@ -20,7 +20,7 @@ namespace Test.Domain.Entity
 
         public string Logger { get; set; }
 
-        public string Callsite { get; set; }
+        public string CallSite { get; set; }
 
         public string Exception { get; set; }
     }

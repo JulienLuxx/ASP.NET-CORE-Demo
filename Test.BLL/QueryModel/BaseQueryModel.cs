@@ -8,10 +8,10 @@ namespace Test.Service.QueryModel
     {
         public BaseQueryModel()
         {
-            Page = Page == 0 ? 1 : Page;
+            PageIndex = PageIndex == 0 ? 1 : PageIndex;
             PageSize = PageSize == 0 ? 20 : PageSize;
         }
-        public int Page { get; set; }
+        public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
     }

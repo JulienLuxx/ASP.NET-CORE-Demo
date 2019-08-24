@@ -158,7 +158,7 @@ namespace Test.Domain
                 e.Property(x => x.Level).HasMaxLength(64);
                 e.Property(x => x.Message).HasMaxLength(512);
                 e.Property(x=>x.Logger).HasMaxLength(256);
-                e.Property(x=>x.Callsite).HasMaxLength(512);
+                e.Property(x=>x.CallSite).HasMaxLength(512);
                 e.Property(x=>x.Exception).HasMaxLength(512);
             });
             #endregion
