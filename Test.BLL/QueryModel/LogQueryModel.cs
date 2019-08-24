@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Test.Service.QueryModel
 {
-    public class LogQueryModel : BaseQueryModel
+    public class LogQueryModel : BasePageQueryModel
     {
     }
 }
