@@ -70,7 +70,7 @@ namespace Test.Web.Middleware
             {
                 param = context.Request.Query.ToDictionary(x => x.Key, y => y.Value.FirstOrDefault());
             }
-            info = JsonConvert.SerializeObject(new { Id = guid, ClientAddress = context.Connection.RemoteIpAddress.ToString() + ":" + context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Param = param });
+            info = JsonConvert.SerializeObject(new { Id = guid, ClientAddress = context.Connection.RemoteIpAddress.ToString() + ":" + context.Connection.RemotePort.ToString(), RequestUrl = context.Request.Host + context.Request.Path, Param = param });            
             _logger.LogInformation(info);
         }
 

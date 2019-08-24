@@ -12,6 +12,8 @@ namespace Test.Domain.Entity
 
         public string Logged { get; set; }
 
+        //public DateTime ts { get; set; }
+
         public string Level { get; set; }
 
         public string Message { get; set; }
