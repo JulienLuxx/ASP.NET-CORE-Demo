@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Core.Dto;
+using Test.Core.Test;
 using Test.Domain;
 using Test.Service.Interface;
 using Test.Service.QueryModel;
@@ -20,7 +21,9 @@ namespace Test.Service.Impl
         public async Task<dynamic> GetPageDataAsync(LogQueryModel qModel)
         {
             var query = _testDB.Log.AsNoTracking();
-            query = query.OrderByDescending(x => x.Id).Skip((qModel.PageIndex - 1) * qModel.PageSize).Take(qModel.PageSize);
+
+            query = !string.IsNullOrEmpty(qModel.OrderByColumn) ? query.OrderBy(qModel.OrderByColumn, qModel.IsDesc) : query.OrderByDescending(o => o.Id);
+            query = query.Skip((qModel.PageIndex - 1) * qModel.PageSize).Take(qModel.PageSize);
             var result = new ResultDto<dynamic>()
             {
                 ActionResult = true,

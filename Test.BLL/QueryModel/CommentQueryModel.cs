@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Test.Service.QueryModel
 {
-    public class CommentQueryModel : BaseQueryModel
+    public class CommentQueryModel : BasePageQueryModel
     {
         public int? State { get; set; }
     }

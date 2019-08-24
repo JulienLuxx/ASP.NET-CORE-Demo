@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="Dto\BaseDto.cs" />
+    <Compile Remove="QueryModel\BaseQueryModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
