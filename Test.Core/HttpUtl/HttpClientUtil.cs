@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,13 @@ using Test.Core.Map;
 
 namespace Test.Core.HttpUtl
 {
+    public class HttpResult
+    {
+        public List<string> Cookies { get; set; }
+
+        public string Result { get; set; }
+    }
+
     public class HttpClientUtil : IHttpClientUtil 
     {
         private IHttpClientFactory _clientFactory { get; set; }
@@ -19,7 +27,7 @@ namespace Test.Core.HttpUtl
             _mapUtil = mapUtil;
         }
 
-        public async Task<dynamic> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType) 
+        public async Task<HttpResult> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType, string[] cookies = null, string userAgent = null) 
         {
             var request = new HttpRequestMessage(httpMethod, @url);
             if ((HttpMethod.Get.Equals(httpMethod)))
@@ -63,12 +71,28 @@ namespace Test.Core.HttpUtl
             {
                 throw new NotImplementedException();
             }
+            if (null != cookies && cookies.Any())
+            {
+                request.Headers.Add("Set-Cookie", cookies);
+            }
+            if (!string.IsNullOrEmpty(userAgent)&&!string.IsNullOrWhiteSpace(userAgent))
+            {
+                request.Headers.UserAgent.ParseAdd(userAgent);
+            }
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                return result;
+                var cookieFlag = response.Headers.TryGetValues("Set-Cookie", out var setCookies);
+                if (cookieFlag)
+                {
+                    return new HttpResult { Result = result, Cookies = setCookies.ToList() };
+                }
+                else
+                {
+                    return new HttpResult { Result = result, Cookies = new List<string>() };
+                }
             }
             else
             {

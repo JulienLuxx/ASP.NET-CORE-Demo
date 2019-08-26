@@ -8,6 +8,6 @@ namespace Test.Core.HttpUtl
 {
     public interface IHttpClientUtil
     {
-        Task<dynamic> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType);
+        Task<HttpResult> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType, string[] cookies = null, string userAgent = null);
     }
 }
