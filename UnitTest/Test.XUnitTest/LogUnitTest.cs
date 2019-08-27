@@ -6,5 +6,7 @@ namespace Test.XUnitTest
 {
     public class LogUnitTest
     {
+        public LogUnitTest()
+        { }
     }
 }

@@ -9,5 +9,7 @@ namespace Test.Core.Map
         IDictionary<string, string> ObjectToDictionary(object obj);
 
         IDictionary<string, string> DynamicToDictionary(dynamic obj);
+
+        List<string> DynamicToStringList(dynamic obj);
     }
 }

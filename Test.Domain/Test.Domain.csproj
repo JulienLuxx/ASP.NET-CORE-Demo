@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="CommandListener.cs" />
     <Compile Remove="ContextPool.cs" />
+    <Compile Remove="DbCommandInterceptor.cs" />
     <Compile Remove="Infrastructure\IDependency.cs" />
     <Compile Remove="Migrations\20180606093606_FirstMigration.cs" />
     <Compile Remove="Migrations\20180606093606_FirstMigration.Designer.cs" />

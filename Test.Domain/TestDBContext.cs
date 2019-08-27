@@ -19,6 +19,8 @@ namespace Test.Domain
             _options = options;
         }
 
+        
+
         public TestDBContext() { }
 
         public virtual DbSet<Article> Article { get; set; }

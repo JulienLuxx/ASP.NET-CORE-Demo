@@ -62,6 +62,8 @@ namespace Test.Web
             //services.AddDbContext<TestDBContext>();
             services.AddDbContext<TestDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
             //注册AutoMapper
             services.AddAutoMapper();
 

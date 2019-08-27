@@ -27,7 +27,7 @@ namespace Test.Core.HttpUtl
             _mapUtil = mapUtil;
         }
 
-        public async Task<HttpResult> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType, string[] cookies = null, string userAgent = null) 
+        public async Task<HttpResult> SendAsync(dynamic param, string url, HttpMethod httpMethod, MediaTypeEnum mediaType, string[] cookieStrArray= null, string userAgent = null) 
         {
             var request = new HttpRequestMessage(httpMethod, @url);
             if ((HttpMethod.Get.Equals(httpMethod)))
@@ -71,9 +71,9 @@ namespace Test.Core.HttpUtl
             {
                 throw new NotImplementedException();
             }
-            if (null != cookies && cookies.Any())
+            if (null != cookieStrArray && cookieStrArray.Any())
             {
-                request.Headers.Add("Set-Cookie", cookies);
+                request.Headers.Add("Set-Cookie", cookieStrArray);
             }
             if (!string.IsNullOrEmpty(userAgent)&&!string.IsNullOrWhiteSpace(userAgent))
             {
