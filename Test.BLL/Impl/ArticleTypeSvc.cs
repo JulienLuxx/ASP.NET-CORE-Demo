@@ -17,6 +17,7 @@ namespace Test.Service.Impl
 {
     public class ArticleTypeSvc : BaseSvc, IArticleTypeSvc
     {
+        private IMapper _mapper { get; set; }
         private IDbContextExtendSvc _dbContextExtendSvc { get; set; }
         public ArticleTypeSvc(
             TestDBContext testDB,
@@ -26,13 +27,23 @@ namespace Test.Service.Impl
             _dbContextExtendSvc = dbContextExtendSvc;
         }
 
+        public ArticleTypeSvc(
+            IMapper mapper,
+            TestDBContext testDB,
+            IDbContextExtendSvc dbContextExtendSvc
+            ) : base(testDB)
+        {
+            _mapper = mapper;
+            _dbContextExtendSvc = dbContextExtendSvc;
+        }
+
         public ResultDto AddSingle(ArticleTypeDto dto)
         {
             var result = new ResultDto();
             dto.CreateTime = DateTime.Now;
             try
             {
-                var data = Mapper.Map<ArticleType>(dto);
+                var data = _mapper.Map<ArticleType>(dto);
                 _testDB.Add(data);
                 var flag = _testDB.SaveChanges();
                 if (flag > 0)

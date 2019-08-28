@@ -66,6 +66,7 @@ namespace Test.Web
 
             //注册AutoMapper
             services.AddAutoMapper();
+            //services.AddAutoMapper(typeof(CustomizeProfile));
 
             services.AddMvcCore().AddAuthorization().AddJsonFormatters();
 
@@ -237,7 +238,7 @@ namespace Test.Web
 
             app.UseStaticFiles();
 
-            //Init AutoMapper,Add Profile
+            //Init AutoMapper,Add Profile(Obsolete)
             Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
 
             app.UseSwagger();

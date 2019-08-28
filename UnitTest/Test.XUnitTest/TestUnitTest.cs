@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,16 @@ namespace Test.XUnitTest
         IArticleTypeSvc _mockSvc { get; set; }
         public TestUnitTest()
         {
-            Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAutoMapper(typeof(CustomizeProfile));
+            var services = serviceCollection.BuildServiceProvider();
+            var mapper = services.GetService<IMapper>();
+
+            //Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
             _mockSet = new Mock<DbSet<ArticleType>>();
             _mockContext = new Mock<TestDBContext>();
             _mockContext.Setup(x => x.ArticleType).Returns(_mockSet.Object);
-            _mockSvc = new ArticleTypeSvc(_mockContext.Object, new DbContextExtendSvc());
+            _mockSvc = new ArticleTypeSvc(mapper,_mockContext.Object, new DbContextExtendSvc());
         }
 
         [Fact]
