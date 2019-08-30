@@ -152,16 +152,16 @@ namespace Test.Domain
 
             modelBuilder.Entity<Log>(e =>
             {
-                e.ToTable("Log");
-                e.HasKey(x => x.Id);
+                //e.ToTable("Log");
+                //e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd().UseNpgsqlIdentityAlwaysColumn();
-                e.Property(x => x.Application).HasMaxLength(64);
-                e.Property(x => x.Logged).HasMaxLength(128);
-                e.Property(x => x.Level).HasMaxLength(64);
-                e.Property(x => x.Message).HasMaxLength(512);
-                e.Property(x=>x.Logger).HasMaxLength(256);
-                e.Property(x=>x.CallSite).HasMaxLength(512);
-                e.Property(x=>x.Exception).HasMaxLength(512);
+                //e.Property(x => x.Application).HasMaxLength(64);
+                //e.Property(x => x.Logged).HasMaxLength(128);
+                //e.Property(x => x.Level).HasMaxLength(64);
+                //e.Property(x => x.Message).HasMaxLength(512);
+                //e.Property(x=>x.Logger).HasMaxLength(256);
+                //e.Property(x=>x.CallSite).HasMaxLength(512);
+                //e.Property(x=>x.Exception).HasMaxLength(512);
             });
             #endregion
         }

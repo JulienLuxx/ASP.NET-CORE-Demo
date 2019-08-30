@@ -97,10 +97,11 @@ namespace Test.Web
                     Version = "v1",
                     Title = "Test"
                 });
-                var xmlFilePaths = new List<string>() {
+                var xmlFilePaths = new Span<string>(new string[]
+                 {
                     "Test.Web.xml",
                     "Test.Service.xml"
-                };
+                });
                 foreach (var filePath in xmlFilePaths)
                 {
                     var xmlFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, filePath);
