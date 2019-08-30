@@ -16,23 +16,22 @@ using Xunit;
 
 namespace Test.XUnitTest
 {
-    public class TestUnitTest
+    public class TestUnitTest : BaseUnitTest
     {
         Mock<DbSet<ArticleType>> _mockSet { get; set; }
         Mock<TestDBContext> _mockContext { get; set; }
         IArticleTypeSvc _mockSvc { get; set; }
-        public TestUnitTest()
+        public TestUnitTest() : base()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAutoMapper(typeof(CustomizeProfile));
-            var services = serviceCollection.BuildServiceProvider();
-            var mapper = services.GetService<IMapper>();
+            _serviceCollection.AddScoped<IDbContextExtendSvc, DbContextExtendSvc>();
+            BuilderServiceProvider();
+            var mapper = _serviceProvider.GetService<IMapper>();
+            var dbContextExtendSvc = _serviceProvider.GetService<IDbContextExtendSvc>();
 
-            //Mapper.Initialize(x => x.AddProfile<CustomizeProfile>());
             _mockSet = new Mock<DbSet<ArticleType>>();
             _mockContext = new Mock<TestDBContext>();
             _mockContext.Setup(x => x.ArticleType).Returns(_mockSet.Object);
-            _mockSvc = new ArticleTypeSvc(mapper,_mockContext.Object, new DbContextExtendSvc());
+            _mockSvc = new ArticleTypeSvc(mapper, _mockContext.Object, dbContextExtendSvc);
         }
 
         [Fact]
